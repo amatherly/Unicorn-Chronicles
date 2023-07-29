@@ -37,21 +37,21 @@ public class Maze : MonoBehaviour
     private void PopulateMaze()
     {
         // myRooms[0, 0] = GameObject.FindGameObjectWithTag("Room 1-1").GetComponent<Room>();
-        myRooms[0, 1] = GameObject.FindGameObjectWithTag("Room 1-2").GetComponent<Room>();
-        myRooms[0, 2] = GameObject.FindGameObjectWithTag("Room 1-3").GetComponent<Room>();
-        myRooms[0, 3] = GameObject.FindGameObjectWithTag("Room 1-4").GetComponent<Room>();
-        myRooms[1, 0] = GameObject.FindGameObjectWithTag("Room 2-1").GetComponent<Room>();
-        myRooms[1, 1] = GameObject.FindGameObjectWithTag("Room 2-2").GetComponent<Room>();
-        myRooms[1, 2] = GameObject.FindGameObjectWithTag("Room 2-3").GetComponent<Room>();
-        myRooms[1, 3] = GameObject.FindGameObjectWithTag("Room 2-4").GetComponent<Room>();
-        myRooms[2, 0] = GameObject.FindGameObjectWithTag("Room 3-1").GetComponent<Room>();
-        myRooms[2, 1] = GameObject.FindGameObjectWithTag("Room 3-2").GetComponent<Room>();
-        myRooms[2, 2] = GameObject.FindGameObjectWithTag("Room 3-3").GetComponent<Room>();
-        myRooms[2, 3] = GameObject.FindGameObjectWithTag("Room 3-4").GetComponent<Room>();
-        myRooms[3, 0] = GameObject.FindGameObjectWithTag("Room 4-1").GetComponent<Room>();
-        myRooms[3, 1] = GameObject.FindGameObjectWithTag("Room 4-2").GetComponent<Room>();
-        myRooms[3, 2] = GameObject.FindGameObjectWithTag("Room 4-3").GetComponent<Room>();
-        myRooms[3, 3] = GameObject.FindGameObjectWithTag("Room 4-4").GetComponent<Room>();
+        myRooms[0, 1] = GameObject.Find("Room 1-2").GetComponent<Room>();
+        myRooms[0, 2] = GameObject.Find("Room 1-3").GetComponent<Room>();
+        myRooms[0, 3] = GameObject.Find("Room 1-4").GetComponent<Room>();
+        myRooms[1, 0] = GameObject.Find("Room 2-1").GetComponent<Room>();
+        myRooms[1, 1] = GameObject.Find("Room 2-2").GetComponent<Room>();
+        myRooms[1, 2] = GameObject.Find("Room 2-3").GetComponent<Room>();
+        myRooms[1, 3] = GameObject.Find("Room 2-4").GetComponent<Room>();
+        myRooms[2, 0] = GameObject.Find("Room 3-1").GetComponent<Room>();
+        myRooms[2, 1] = GameObject.Find("Room 3-2").GetComponent<Room>();
+        myRooms[2, 2] = GameObject.Find("Room 3-3").GetComponent<Room>();
+        myRooms[2, 3] = GameObject.Find("Room 3-4").GetComponent<Room>();
+        myRooms[3, 0] = GameObject.Find("Room 4-1").GetComponent<Room>();
+        myRooms[3, 1] = GameObject.Find("Room 4-2").GetComponent<Room>();
+        myRooms[3, 2] = GameObject.Find("Room 4-3").GetComponent<Room>();
+        myRooms[3, 3] = GameObject.Find("Room 4-4").GetComponent<Room>();
     }
 
     //FIXME

@@ -16,7 +16,7 @@ public class Room : MonoBehaviour
     private int myCol;
 
     [SerializeField]
-    private int myDoorCount;
+    private List<DoorController> myDoors;
 
 
     // Start is called before the first frame update

@@ -36,6 +36,10 @@ public class DoorController : MonoBehaviour
     [SerializeField]
     private GameObject myNavPopup;
 
+
+    // TEMP
+    private static System.Random rand = new System.Random();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -104,6 +108,19 @@ public class DoorController : MonoBehaviour
                 myHasAttempted = true;
                 myQuestionFactory.DisplayWindow();
                 //myLockState = !myQuestionFactory.MyQuestionWindowController.MyIsCorrect;
+
+
+                // TEMP
+                int temp = rand.Next(0, 2);
+                if (temp == 0)
+                {
+                    myLockState = true;
+                }
+                else
+                {
+                    myLockState = false;
+                }
+
             }
 
             if (myOpenState)
