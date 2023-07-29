@@ -109,7 +109,7 @@ public class QuestionWindowController : MonoBehaviour
         if (theAnswerInput != null)
         {
             myAnswerInput = theAnswerInput;
-            CheckAnswer(); 
+            CheckAnswer();
         }
     }
 }
