@@ -5,11 +5,10 @@ public class PlayerController : MonoBehaviour
 {
     private float mySpeed;
     private bool myCanMove;
-    private Room myCurrentRoom;
     private CharacterController myCharacterController;
     private Animator myAnimator;
     private TMP_Text myItemCountText;
-    
+
     [SerializeField]
     private int myItemCount;
 
@@ -28,13 +27,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckForInput();
-    
+
 
         // Get input axes
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 moveDirection = new Vector3 (moveHorizontal, 0, moveVertical);
+        Vector3 moveDirection = new Vector3(moveHorizontal, 0, moveVertical);
 
         float inputMagnitude = moveDirection.magnitude;
 
@@ -72,12 +71,6 @@ public class PlayerController : MonoBehaviour
     {
         get => myCanMove;
         set => myCanMove = value;
-    }
-
-    public Room MyCurrentRoom
-    {
-        get => myCurrentRoom;
-        set => myCurrentRoom = value;
     }
 
     public int MyItemCount

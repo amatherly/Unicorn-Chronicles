@@ -17,12 +17,8 @@ public class Maze : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Temp until we get rooms going
-        MyCurrentRoom = GetComponentInChildren<Room>();
-
         myRooms = new Room[4, 4];
         PopulateMaze();
-
     }
 
     // Update is called once per frame

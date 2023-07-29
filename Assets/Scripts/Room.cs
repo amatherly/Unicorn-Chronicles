@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
 
-    private PlayerController myPlayer;
+    private Maze myMaze;
 
     private bool myHasVisited;
 
@@ -15,20 +15,21 @@ public class Room : MonoBehaviour
     [SerializeField]
     private int myCol;
 
-    private List<Door> myDoors = new List<Door>();
+    [SerializeField]
+    private int myDoorCount;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        myPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        myMaze = GameObject.FindGameObjectWithTag("Maze").GetComponent<Maze>();
         myHasVisited = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public string GetQuestion()
@@ -52,7 +53,7 @@ public class Room : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            myPlayer.MyCurrentRoom = this;
+            myMaze.MyCurrentRoom = this;
             myHasVisited = true;
         }
     }

@@ -14,20 +14,21 @@ public class DoorController : MonoBehaviour
     private bool myLockState;
 
     [SerializeField]
+    private bool myHasAttempted;
+
+    [SerializeField]
     private bool myHorizontalState;
 
     private bool myProximityTrigger;
-
 
     private float mySpeed;
 
     private float myRotationAmount;
 
-    [SerializeField]
     private Vector3 myStartingRotation;
 
     private GameObject myPlayer;
-    
+
     private QuestionFactory myQuestionFactory;
 
     private Coroutine myAnimation;
@@ -40,6 +41,7 @@ public class DoorController : MonoBehaviour
     {
         myOpenState = false;
         myLockState = false;
+        myHasAttempted = false;
         myProximityTrigger = false;
         mySpeed = 1f;
         myRotationAmount = 90f;
@@ -80,10 +82,10 @@ public class DoorController : MonoBehaviour
         }
     }
 
-    public bool SetProximityTrigger(bool theProximity)
+    public bool SetProximityTrigger
     {
-        myNavPopup.GameObject().SetActive(theProximity);
-        return myProximityTrigger = theProximity;
+        get => myProximityTrigger;
+        set => myProximityTrigger = value;
     }
 
     public bool MyLockState
@@ -95,25 +97,22 @@ public class DoorController : MonoBehaviour
     private void CheckForInput()
     {
 
-        if (Input.GetKeyDown(KeyCode.E) && myProximityTrigger && !myOpenState)
+        if (Input.GetKeyDown(KeyCode.E) && myProximityTrigger)
         {
-            myQuestionFactory.DisplayWindow();
-
-            if (myLockState)
+            if (!myHasAttempted)
             {
-                myLockState = false;
-                Open(myPlayer.transform.position);
+                myHasAttempted = true;
+                myQuestionFactory.DisplayWindow();
+                //myLockState = !myQuestionFactory.MyQuestionWindowController.MyIsCorrect;
             }
-            else
+
+            if (myOpenState)
             {
-                if (!myOpenState)
-                {
-                    Open(myPlayer.transform.position);
-                }
-                else
-                {
-                    Close();
-                }
+                Close();
+            }
+            else if (!myLockState)
+            {
+                Open(myPlayer.transform.position);
             }
         }
 
@@ -124,8 +123,8 @@ public class DoorController : MonoBehaviour
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation;
 
-        if ((myHorizontalState && (thePlayerPosition.z - transform.position.z) < 0)
-            || (!myHorizontalState && (thePlayerPosition.x - transform.position.x) < 0))
+        if (myHorizontalState && (thePlayerPosition.z > transform.position.z)
+            || !myHorizontalState && (thePlayerPosition.x > transform.position.x))
         {
             endRotation = Quaternion.Euler(new Vector3(0, myStartingRotation.y - myRotationAmount, 0));
         }
@@ -161,13 +160,12 @@ public class DoorController : MonoBehaviour
         }
     }
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            SetProximityTrigger(true);
+            myProximityTrigger = true;
+            myNavPopup.GameObject().SetActive(true);
         }
     }
 
@@ -175,7 +173,8 @@ public class DoorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-           SetProximityTrigger(false);
+            myProximityTrigger = false;
+            myNavPopup.GameObject().SetActive(false);
         }
     }
 }
