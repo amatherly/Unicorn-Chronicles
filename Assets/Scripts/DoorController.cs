@@ -44,7 +44,7 @@ public class DoorController : MonoBehaviour
     void Start()
     {
         myOpenState = false;
-        myLockState = false;
+        myLockState = true;
         myHasAttempted = false;
         myProximityTrigger = false;
         mySpeed = 1f;
@@ -96,6 +96,11 @@ public class DoorController : MonoBehaviour
     {
         get => myLockState;
         set => myLockState = value;
+    }
+
+    public bool MyHasAttempted
+    {
+        get => myHasAttempted;
     }
 
     private void CheckForInput()

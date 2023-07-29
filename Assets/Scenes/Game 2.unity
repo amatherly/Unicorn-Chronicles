@@ -3416,6 +3416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 1
   myCol: 2
   myDoors:
@@ -3520,6 +3521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 3
   myCol: 1
   myDoors:
@@ -3784,6 +3786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 1
   myCol: 4
   myDoors:
@@ -4321,6 +4324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 1
   myCol: 3
   myDoors:
@@ -4729,6 +4733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 4
   myCol: 4
   myDoors:
@@ -4792,6 +4797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 3
   myCol: 3
   myDoors:
@@ -5185,6 +5191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 1
   myCol: 1
   myDoors:
@@ -5974,6 +5981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 2
   myCol: 1
   myDoors:
@@ -6239,6 +6247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 3
   myCol: 2
   myDoors:
@@ -6601,6 +6610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 2
   myCol: 3
   myDoors:
@@ -6698,6 +6708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 3
   myCol: 4
   myDoors:
@@ -6859,6 +6870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 4
   myCol: 3
   myDoors:
@@ -7098,6 +7110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 2
   myCol: 4
   myDoors:
@@ -7134,6 +7147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 4
   myCol: 2
   myDoors:
@@ -7220,6 +7234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 2
   myCol: 2
   myDoors:
@@ -7864,6 +7879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2e9f05f702c3d4da976bab288ca815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHasVisited: 0
   myRow: 4
   myCol: 1
   myDoors:

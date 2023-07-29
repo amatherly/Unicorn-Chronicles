@@ -24,7 +24,6 @@ public class Maze : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckLoseCondition();
     }
 
     public Room MyCurrentRoom
@@ -54,10 +53,51 @@ public class Maze : MonoBehaviour
         myRooms[3, 3] = GameObject.Find("Room 4-4").GetComponent<Room>();
     }
 
-    //FIXME
-    private bool CheckLoseCondition()
+    private bool CheckLoseCondition(int theRow, int theCol)
     {
-        return false;
+        bool result = true;
+        bool[,] hasChecked = new bool[4, 4];
+        hasChecked[theRow, theCol] = true;
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (myRooms[theRow, theCol].MyDoors[i] != null)
+            {
+                DoorController curr = (DoorController)myRooms[theRow, theCol].MyDoors[i];
+                if (!curr.MyLockState || !curr.MyHasAttempted)
+                {
+                    result = false;
+                    switch (i)
+                    {
+                        case 0:
+                            if (!hasChecked[theRow + 1, theCol])
+                            {
+                                result = CheckLoseCondition(theRow + 1, theCol);
+                            }
+                            break;
+                        case 1:
+                            if (!hasChecked[theRow, theCol + 1])
+                            {
+                                result = CheckLoseCondition(theRow, theCol + 1);
+                            }
+                            break;
+                        case 2:
+                            if (!hasChecked[theRow - 1, theCol])
+                            {
+                                result = CheckLoseCondition(theRow - 1, theCol);
+                            }
+                            break;
+                        case 3:
+                            if (!hasChecked[theRow, theCol - 1])
+                            {
+                                result = CheckLoseCondition(theRow + 1, theCol - 1);
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
 }
