@@ -14,9 +14,15 @@ public class Question
     {
         QuestionFactory.MyInstance.RemoveCurrentQuestion();
         Debug.Log("The user answered: " + theAnswerInput + ". The correct answer is: " +  myAnswer);
+
         bool result = theAnswerInput == myAnswer;
         myMaze.MyCurrentDoor.MyLockState = !result;
         myMaze.MyLoseCondition = myMaze.CheckLoseCondition(1, 4, new bool[4, 4]);
+        if (result)
+        {
+            myMaze.MyCurrentDoor.Open();
+        }
+
         return result;
     }
 

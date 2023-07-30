@@ -59,7 +59,7 @@ public class DoorController : MonoBehaviour
         CheckForInput();
     }
 
-    public void Open(Vector3 theUserPosition)
+    public void Open()
     {
         if (!myOpenState)
         {
@@ -68,7 +68,7 @@ public class DoorController : MonoBehaviour
                 StopCoroutine(myAnimation);
             }
 
-            myAnimation = StartCoroutine(DoRotationOpen(theUserPosition));
+            myAnimation = StartCoroutine(DoRotationOpen());
         }
     }
 
@@ -119,19 +119,19 @@ public class DoorController : MonoBehaviour
             }
             else if (!myLockState)
             {
-                Open(myPlayer.transform.position);
+                Open();
             }
         }
 
     }
 
-    private IEnumerator DoRotationOpen(Vector3 thePlayerPosition)
+    private IEnumerator DoRotationOpen()
     {
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation;
 
-        if (myHorizontalState && (thePlayerPosition.z > transform.position.z)
-            || !myHorizontalState && (thePlayerPosition.x > transform.position.x))
+        if (myHorizontalState && (myPlayer.transform.position.z > transform.position.z)
+            || !myHorizontalState && (myPlayer.transform.position.x > transform.position.x))
         {
             endRotation = Quaternion.Euler(new Vector3(0, myStartingRotation.y - myRotationAmount, 0));
         }
