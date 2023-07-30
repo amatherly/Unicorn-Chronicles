@@ -11,6 +11,8 @@ public class Maze : MonoBehaviour
 
     private Room myCurrentRoom;
 
+    private DoorController myCurrentDoor;
+
     [SerializeField]
     private Room[,] myRooms;
 
@@ -25,12 +27,27 @@ public class Maze : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (myLoseCondition)
+        {
+            Debug.Log("wow you're bad at this");
+        }
     }
 
     public Room MyCurrentRoom
     {
         get => myCurrentRoom;
         set => myCurrentRoom = value;
+    }
+
+    public DoorController MyCurrentDoor
+    {
+        get => myCurrentDoor;
+        set => myCurrentDoor = value;
+    }
+
+    public bool MyLoseCondition
+    {
+        set => myLoseCondition = value;
     }
 
     // stupid code but whatever
