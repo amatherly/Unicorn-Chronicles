@@ -2529,7 +2529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -8351,6 +8351,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestionFactory
       objectReference: {fileID: 0}
+    - target: {fileID: 4190095228532321507, guid: 3584c290dc2d4f040915abd134bbc7fc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4190095228532321508, guid: 3584c290dc2d4f040915abd134bbc7fc, type: 3}
       propertyPath: myWindows.Array.size
       value: 3
@@ -8528,6 +8532,10 @@ PrefabInstance:
       value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 4590506528201755596, guid: 3584c290dc2d4f040915abd134bbc7fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2048330542}
+    - target: {fileID: 4590506528201755596, guid: 3584c290dc2d4f040915abd134bbc7fc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetAnswerInput
       objectReference: {fileID: 0}
@@ -8619,6 +8627,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5365440121357464143, guid: 3584c290dc2d4f040915abd134bbc7fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2048330542}
     - target: {fileID: 5365440121357464143, guid: 3584c290dc2d4f040915abd134bbc7fc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetAnswerInput

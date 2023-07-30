@@ -38,10 +38,6 @@ public class DoorController : MonoBehaviour
     [SerializeField]
     private GameObject myNavPopup;
 
-
-    // TEMP
-    private static System.Random rand = new System.Random();
-
     // Start is called before the first frame update
     void Start()
     {
@@ -115,26 +111,6 @@ public class DoorController : MonoBehaviour
             {
                 myHasAttempted = true;
                 myQuestionFactory.DisplayWindow();
-                //myLockState = !myQuestionFactory.MyQuestionWindowController.MyIsCorrect;
-
-
-                // TEMP
-                int temp = rand.Next(0, 1);
-                if (temp == 0)
-                {
-                    myLockState = true;
-                    bool[,] check = new bool[4, 4];
-                    if (myMaze.CheckLoseCondition(1, 4, check))
-                    {
-                        Debug.Log("you lose lmao what a chump");
-                    }
-
-                }
-                else
-                {
-                    myLockState = false;
-                }
-
             }
 
             if (myOpenState)
@@ -196,7 +172,9 @@ public class DoorController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             myProximityTrigger = true;
+            myMaze.MyCurrentDoor = this;
             myNavPopup.GameObject().SetActive(true);
+
         }
     }
 
@@ -205,6 +183,7 @@ public class DoorController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             myProximityTrigger = false;
+            myMaze.MyCurrentDoor = null;
             myNavPopup.GameObject().SetActive(false);
         }
     }

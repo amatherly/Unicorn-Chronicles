@@ -10,10 +10,12 @@ namespace Singleton
     public class QuestionFactory : MonoBehaviour
     {
         private static QuestionFactory myInstance = null;
+        private static Maze MAZE;
         private static Random RANDOM = new Random();
         private static DataService myDataService;
 
         private Question myCurrentQuestion;
+        
         private bool isNewGame = true;
 
         private IEnumerable<Question> myQuestions;
@@ -26,7 +28,8 @@ namespace Singleton
         {
             if (isNewGame)
             {
-                myDataService = new DataService("TriviaMaseDb.db");
+                myDataService = new DataService("data.sqlite");
+
                 InitializeQuestionArray();
                 myQuestionWindowController = GetComponent<QuestionWindowController>();
             }
@@ -35,6 +38,7 @@ namespace Singleton
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private void Awake()
         {
+            myDataService = new DataService("data.sqlite");
             if (myInstance != null && myInstance != this)
             {
                 Debug.Log("There is already an instance of the factory in the scene");
@@ -54,6 +58,7 @@ namespace Singleton
             foreach (Question q in myQuestions)
             {
                 temp.Add(q);
+                q.ToString();
             }
             myRandomizedQuestions = temp.OrderBy(a => RANDOM.Next()).ToList();
         }
