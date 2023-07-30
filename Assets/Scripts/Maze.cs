@@ -19,6 +19,7 @@ public class Maze : MonoBehaviour
     {
         myRooms = new Room[4, 4];
         PopulateMaze();
+        myCurrentRoom = myRooms[3, 0];
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class Maze : MonoBehaviour
     // stupid code but whatever
     private void PopulateMaze()
     {
-        // myRooms[0, 0] = GameObject.FindGameObjectWithTag("Room 1-1").GetComponent<Room>();
+        myRooms[0, 0] = GameObject.Find("Room 1-1").GetComponent<Room>();
         myRooms[0, 1] = GameObject.Find("Room 1-2").GetComponent<Room>();
         myRooms[0, 2] = GameObject.Find("Room 1-3").GetComponent<Room>();
         myRooms[0, 3] = GameObject.Find("Room 1-4").GetComponent<Room>();
@@ -53,46 +54,55 @@ public class Maze : MonoBehaviour
         myRooms[3, 3] = GameObject.Find("Room 4-4").GetComponent<Room>();
     }
 
-    private bool CheckLoseCondition(int theRow, int theCol)
+    public bool CheckLoseCondition(int theRow, int theCol, bool[,] theCheck)
     {
         bool result = true;
-        bool[,] hasChecked = new bool[4, 4];
-        hasChecked[theRow, theCol] = true;
-
-        for (int i = 0; i < 4; i++)
+        theCheck[theRow - 1, theCol - 1] = true;
+        if (theRow == myCurrentRoom.MyRow && theCol == myCurrentRoom.MyCol)
         {
-            if (myRooms[theRow, theCol].MyDoors[i] != null)
+            result = false;
+        }
+        else
+        {
+            for (int i = 0; i < 4 && result; i++)
             {
-                DoorController curr = (DoorController)myRooms[theRow, theCol].MyDoors[i];
-                if (!curr.MyLockState || !curr.MyHasAttempted)
+                if (myRooms[theRow - 1, theCol - 1].MyDoors[i].name != "no-door")
                 {
-                    result = false;
-                    switch (i)
+                    DoorController curr = myRooms[theRow - 1, theCol - 1].MyDoors[i].GetComponent<DoorController>();
+
+                    if (!curr.MyLockState || !curr.MyHasAttempted)
                     {
-                        case 0:
-                            if (!hasChecked[theRow + 1, theCol])
-                            {
-                                result = CheckLoseCondition(theRow + 1, theCol);
-                            }
-                            break;
-                        case 1:
-                            if (!hasChecked[theRow, theCol + 1])
-                            {
-                                result = CheckLoseCondition(theRow, theCol + 1);
-                            }
-                            break;
-                        case 2:
-                            if (!hasChecked[theRow - 1, theCol])
-                            {
-                                result = CheckLoseCondition(theRow - 1, theCol);
-                            }
-                            break;
-                        case 3:
-                            if (!hasChecked[theRow, theCol - 1])
-                            {
-                                result = CheckLoseCondition(theRow + 1, theCol - 1);
-                            }
-                            break;
+                        switch (i)
+                        {
+                            // NORTH
+                            case 0:
+                                if (!theCheck[theRow - 2, theCol - 1] && result)
+                                {
+                                    result = CheckLoseCondition(theRow - 1, theCol, theCheck);
+                                }
+                                break;
+                            // EAST
+                            case 1:
+                                if (!theCheck[theRow - 1, theCol] && result)
+                                {
+                                    result = CheckLoseCondition(theRow, theCol + 1, theCheck);
+                                }
+                                break;
+                            // SOUTH
+                            case 2:
+                                if (!theCheck[theRow, theCol - 1] && result)
+                                {
+                                    result = CheckLoseCondition(theRow + 1, theCol, theCheck);
+                                }
+                                break;
+                            // WEST
+                            case 3:
+                                if (!theCheck[theRow - 1, theCol - 2] && result)
+                                {
+                                    result = CheckLoseCondition(theRow, theCol - 1, theCheck);
+                                }
+                                break;
+                        }
                     }
                 }
             }

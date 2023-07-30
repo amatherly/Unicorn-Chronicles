@@ -29,6 +29,8 @@ public class DoorController : MonoBehaviour
 
     private GameObject myPlayer;
 
+    private Maze myMaze;
+
     private QuestionFactory myQuestionFactory;
 
     private Coroutine myAnimation;
@@ -51,6 +53,7 @@ public class DoorController : MonoBehaviour
         myRotationAmount = 90f;
         myStartingRotation = transform.rotation.eulerAngles;
         myPlayer = GameObject.FindGameObjectWithTag("Player");
+        myMaze = GameObject.FindGameObjectWithTag("Maze").GetComponent<Maze>();
         myQuestionFactory = QuestionFactory.MyInstance;
     }
 
@@ -116,10 +119,16 @@ public class DoorController : MonoBehaviour
 
 
                 // TEMP
-                int temp = rand.Next(0, 2);
+                int temp = rand.Next(0, 1);
                 if (temp == 0)
                 {
                     myLockState = true;
+                    bool[,] check = new bool[4, 4];
+                    if (myMaze.CheckLoseCondition(1, 4, check))
+                    {
+                        Debug.Log("you lose lmao what a chump");
+                    }
+
                 }
                 else
                 {
