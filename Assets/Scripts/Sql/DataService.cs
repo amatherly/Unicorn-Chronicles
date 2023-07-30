@@ -74,7 +74,6 @@ public class DataService
     {
         myConnection.DropTable<Question>();
         myConnection.CreateTable<Question>();
-
         myConnection.InsertAll(new[]
         {
             new Question
