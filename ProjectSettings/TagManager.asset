@@ -9,6 +9,7 @@ TagManager:
   - QuestionWindow
   - Item
   - QuestionFactory
+  - Maze
   layers:
   - Default
   - TransparentFX

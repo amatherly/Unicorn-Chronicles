@@ -29,6 +29,8 @@ public class DoorController : MonoBehaviour
 
     private GameObject myPlayer;
 
+    private Maze myMaze;
+
     private QuestionFactory myQuestionFactory;
 
     private Coroutine myAnimation;
@@ -40,13 +42,14 @@ public class DoorController : MonoBehaviour
     void Start()
     {
         myOpenState = false;
-        myLockState = false;
+        myLockState = true;
         myHasAttempted = false;
         myProximityTrigger = false;
         mySpeed = 1f;
         myRotationAmount = 90f;
         myStartingRotation = transform.rotation.eulerAngles;
         myPlayer = GameObject.FindGameObjectWithTag("Player");
+        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
         myQuestionFactory = QuestionFactory.MyInstance;
     }
 
@@ -56,7 +59,7 @@ public class DoorController : MonoBehaviour
         CheckForInput();
     }
 
-    public void Open(Vector3 theUserPosition)
+    public void Open()
     {
         if (!myOpenState)
         {
@@ -65,7 +68,7 @@ public class DoorController : MonoBehaviour
                 StopCoroutine(myAnimation);
             }
 
-            myAnimation = StartCoroutine(DoRotationOpen(theUserPosition));
+            myAnimation = StartCoroutine(DoRotationOpen());
         }
     }
 
@@ -94,6 +97,11 @@ public class DoorController : MonoBehaviour
         set => myLockState = value;
     }
 
+    public bool MyHasAttempted
+    {
+        get => myHasAttempted;
+    }
+
     private void CheckForInput()
     {
 
@@ -103,7 +111,6 @@ public class DoorController : MonoBehaviour
             {
                 myHasAttempted = true;
                 myQuestionFactory.DisplayWindow();
-                //myLockState = !myQuestionFactory.MyQuestionWindowController.MyIsCorrect;
             }
 
             if (myOpenState)
@@ -112,19 +119,19 @@ public class DoorController : MonoBehaviour
             }
             else if (!myLockState)
             {
-                Open(myPlayer.transform.position);
+                Open();
             }
         }
 
     }
 
-    private IEnumerator DoRotationOpen(Vector3 thePlayerPosition)
+    private IEnumerator DoRotationOpen()
     {
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation;
 
-        if (myHorizontalState && (thePlayerPosition.z > transform.position.z)
-            || !myHorizontalState && (thePlayerPosition.x > transform.position.x))
+        if (myHorizontalState && (myPlayer.transform.position.z > transform.position.z)
+            || !myHorizontalState && (myPlayer.transform.position.x > transform.position.x))
         {
             endRotation = Quaternion.Euler(new Vector3(0, myStartingRotation.y - myRotationAmount, 0));
         }
@@ -165,7 +172,9 @@ public class DoorController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             myProximityTrigger = true;
+            myMaze.MyCurrentDoor = this;
             myNavPopup.GameObject().SetActive(true);
+
         }
     }
 
@@ -174,6 +183,7 @@ public class DoorController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             myProximityTrigger = false;
+            myMaze.MyCurrentDoor = null;
             myNavPopup.GameObject().SetActive(false);
         }
     }

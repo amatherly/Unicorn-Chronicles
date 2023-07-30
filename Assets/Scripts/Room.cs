@@ -7,7 +7,11 @@ public class Room : MonoBehaviour
 
     private Maze myMaze;
 
+    [SerializeField]
     private bool myHasVisited;
+
+    [SerializeField]
+    private bool myWinRoom;
 
     [SerializeField]
     private int myRow;
@@ -16,7 +20,7 @@ public class Room : MonoBehaviour
     private int myCol;
 
     [SerializeField]
-    private int myDoorCount;
+    private List<GameObject> myDoors;
 
 
     // Start is called before the first frame update
@@ -40,13 +44,16 @@ public class Room : MonoBehaviour
     public int MyRow
     {
         get => myRow;
-        set => myRow = value;
     }
 
     public int MyCol
     {
         get => myCol;
-        set => myCol = value;
+    }
+
+    public List<GameObject> MyDoors
+    {
+        get => myDoors;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,6 +62,10 @@ public class Room : MonoBehaviour
         {
             myMaze.MyCurrentRoom = this;
             myHasVisited = true;
+            if (myWinRoom)
+            {
+                //win message or something idk
+            }
         }
     }
 }

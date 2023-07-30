@@ -8,12 +8,22 @@ public class Question
     public int myQuestionID;
     private string myQuestion;
     private string myAnswer;
+    private Maze myMaze = GameObject.Find("Maze").GetComponent<Maze>();
     
     public bool CheckUserAnswer(string theAnswerInput)
     {
         QuestionFactory.MyInstance.RemoveCurrentQuestion();
-        Debug.Log("The user answered: " + theAnswerInput + ". The correct answer is: " +  myAnswer); 
-        return theAnswerInput == myAnswer;
+        Debug.Log("The user answered: " + theAnswerInput + ". The correct answer is: " +  myAnswer);
+
+        bool result = theAnswerInput == myAnswer;
+        myMaze.MyCurrentDoor.MyLockState = !result;
+        myMaze.MyLoseCondition = myMaze.CheckLoseCondition(1, 4, new bool[4, 4]);
+        if (result)
+        {
+            myMaze.MyCurrentDoor.Open();
+        }
+
+        return result;
     }
 
 	
