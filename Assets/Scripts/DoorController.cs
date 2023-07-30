@@ -49,7 +49,7 @@ public class DoorController : MonoBehaviour
         myRotationAmount = 90f;
         myStartingRotation = transform.rotation.eulerAngles;
         myPlayer = GameObject.FindGameObjectWithTag("Player");
-        myMaze = GameObject.FindGameObjectWithTag("Maze").GetComponent<Maze>();
+        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
         myQuestionFactory = QuestionFactory.MyInstance;
     }
 
