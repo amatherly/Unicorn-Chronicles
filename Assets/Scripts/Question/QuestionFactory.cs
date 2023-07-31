@@ -14,17 +14,14 @@ namespace Singleton
         private static Maze MAZE;
         private static Random RANDOM = new Random();
         private static DataService myDataService;
-
-        private Question myCurrentQuestion;
         
-        private bool isNewGame = true;
-
+        private QuestionWindowController myQuestionWindowController;
+        private Question myCurrentQuestion;
         private IEnumerable<Question> myQuestions;
         private List<Question> myRandomizedQuestions;
-
-        private QuestionWindowController myQuestionWindowController;
         
-
+        private bool isNewGame = true;
+        
         void Start()
         {
             if (isNewGame)
@@ -53,14 +50,7 @@ namespace Singleton
         private void InitializeQuestionArray()
         {
             myQuestions = myDataService.GetQuestion();
-            List<Question> temp = myQuestions.ToList();
-
-            foreach (Question q in myQuestions)
-            {
-                temp.Add(q);
-                q.ToString();
-            }
-            myRandomizedQuestions = temp.OrderBy(a => RANDOM.Next()).ToList();
+            myRandomizedQuestions = myQuestions.OrderBy(a => RANDOM.Next()).ToList();
         }
 
 
@@ -70,7 +60,7 @@ namespace Singleton
             myQuestionWindowController.InitializeWindow(myCurrentQuestion);
         }
 
-        public Question GetRandomQuestion()
+        private Question GetRandomQuestion()
         {
             if (myQuestions != null)
             {
@@ -84,7 +74,7 @@ namespace Singleton
         {
             if (myRandomizedQuestions != null)
             {
-                myRandomizedQuestions.Remove(myCurrentQuestion);
+                myRandomizedQuestions.RemoveAll(x=>x.MyQuestion == myCurrentQuestion.MyQuestion);
             }
             else
             {
