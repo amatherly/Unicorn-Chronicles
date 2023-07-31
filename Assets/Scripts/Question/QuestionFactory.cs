@@ -90,5 +90,6 @@ namespace Singleton
             get => myInstance;
             set => myInstance = value;
         }
+        
     }
 }
