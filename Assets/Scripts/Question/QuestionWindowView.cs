@@ -19,6 +19,7 @@ public class QuestionWindowView : MonoBehaviour
     {
         myResultWindow.SetActive(false);
         gameObject.SetActive(true);
+        UIControllerInGame.MyInstance.PauseGame();
     }
 
     public void SetQuestionText(string questionText)
@@ -56,6 +57,6 @@ public class QuestionWindowView : MonoBehaviour
     {
         myResultWindow.SetActive(true);
         resultText.SetText(isCorrect ? "Correct!" : "Incorrect!");
-        Time.timeScale = 1;
+        UIControllerInGame.MyInstance.ResumeGame();
     }
 }

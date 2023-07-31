@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,28 +6,21 @@ public class PlayerController : MonoBehaviour
     private bool myCanMove;
     private CharacterController myCharacterController;
     private Animator myAnimator;
-    private TMP_Text myItemCountText;
-
-    [SerializeField]
     private int myItemCount;
-
-    // Start is called before the first frame update
+    
     private void Start()
     {
         myCharacterController = GetComponent<CharacterController>();
         myAnimator = GetComponent<Animator>();
-        myItemCountText = GetComponentInChildren<TMP_Text>();
         mySpeed = 50f;
         myCanMove = true;
         myItemCount = 0;
     }
-
-    // Update is called once per frame
+    
     private void Update()
     {
         CheckForInput();
-
-
+        
         // Get input axes
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -52,8 +44,6 @@ public class PlayerController : MonoBehaviour
         {
             myAnimator.SetBool("isWalking", false);
         }
-
-        // myItemCountText.SetText("Items: " + myItemCount.ToString());
     }
 
     private void CheckForInput()
@@ -63,13 +53,11 @@ public class PlayerController : MonoBehaviour
 
     public float MySpeed
     {
-        get => mySpeed;
         set => mySpeed = value;
     }
 
     public bool MyCanMove
     {
-        get => myCanMove;
         set => myCanMove = value;
     }
 
