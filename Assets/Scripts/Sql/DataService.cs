@@ -70,38 +70,38 @@ public class DataService
         Debug.Log("Final PATH: " + dbPath);
     }
 
-    public void CreateDB()
-    {
-        myConnection.DropTable<Question>();
-        myConnection.CreateTable<Question>();
-        myConnection.InsertAll(new[]
-        {
-            new Question
-            {
-                myQuestionID = 1,
-                MyQuestion = "2 + 4 = 6",
-                MyAnswer = "true"
-            },
-            new Question
-            {
-                myQuestionID = 1,
-                MyQuestion = "2 + 4 = 8",
-                MyAnswer = "false"
-            },
-            new Question
-            {
-                myQuestionID = 3,
-                MyQuestion = "What is 2 + 4?",
-                MyAnswer = "6"
-            },
-            new Question
-            {
-                myQuestionID = 3,
-                MyQuestion = "What is 2 + 4",
-                MyAnswer = "6"
-            }
-        });
-    }
+    // public void CreateDB()
+    // {
+    //     myConnection.DropTable<Question>();
+    //     myConnection.CreateTable<Question>();
+    //     myConnection.InsertAll(new[]
+    //     {
+    //         new Question
+    //         {
+    //             myQuestionID = 1,
+    //             MyQuestion = "2 + 4 = 6",
+    //             MyAnswer = "true"
+    //         },
+    //         new Question
+    //         {
+    //             myQuestionID = 1,
+    //             MyQuestion = "2 + 4 = 8",
+    //             MyAnswer = "false"
+    //         },
+    //         new Question
+    //         {
+    //             myQuestionID = 3,
+    //             MyQuestion = "What is 2 + 4?",
+    //             MyAnswer = "6"
+    //         },
+    //         new Question
+    //         {
+    //             myQuestionID = 3,
+    //             MyQuestion = "What is 2 + 4",
+    //             MyAnswer = "6"
+    //         }
+    //     });
+    // }
 
     public IEnumerable<Question> GetQuestion()
     {
@@ -123,12 +123,12 @@ public class DataService
         return myConnection.Table<Question>().FirstOrDefault(x => x.myQuestionID == 3);
     }
 
-    public Question CreateQuestion()
-    {
-        var p = new Question
-        {
-        };
-        myConnection.Insert(p);
-        return p;
-    }
+    // public Question CreateQuestion()
+    // {
+    //     var p = new Question
+    //     {
+    //     };
+    //     myConnection.Insert(p);
+    //     return p;
+    // }
 }

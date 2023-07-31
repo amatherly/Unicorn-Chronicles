@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using SQLite4Unity3d;
 using Random = System.Random;
 
 using UnityEngine;
@@ -13,32 +14,28 @@ namespace Singleton
         private static Maze MAZE;
         private static Random RANDOM = new Random();
         private static DataService myDataService;
-
-        private Question myCurrentQuestion;
         
-        private bool isNewGame = true;
-
+        private QuestionWindowController myQuestionWindowController;
+        private Question myCurrentQuestion;
         private IEnumerable<Question> myQuestions;
         private List<Question> myRandomizedQuestions;
-
-        private QuestionWindowController myQuestionWindowController;
         
-
+        private bool isNewGame = true;
+        
         void Start()
         {
             if (isNewGame)
             {
                 myDataService = new DataService("data.sqlite");
-
                 InitializeQuestionArray();
                 myQuestionWindowController = GetComponent<QuestionWindowController>();
+                isNewGame = false;
             }
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private void Awake()
         {
-            myDataService = new DataService("data.sqlite");
             if (myInstance != null && myInstance != this)
             {
                 Debug.Log("There is already an instance of the factory in the scene");
@@ -53,14 +50,7 @@ namespace Singleton
         private void InitializeQuestionArray()
         {
             myQuestions = myDataService.GetQuestion();
-            List<Question> temp = myQuestions.ToList();
-
-            foreach (Question q in myQuestions)
-            {
-                temp.Add(q);
-                q.ToString();
-            }
-            myRandomizedQuestions = temp.OrderBy(a => RANDOM.Next()).ToList();
+            myRandomizedQuestions = myQuestions.OrderBy(a => RANDOM.Next()).ToList();
         }
 
 
@@ -70,7 +60,7 @@ namespace Singleton
             myQuestionWindowController.InitializeWindow(myCurrentQuestion);
         }
 
-        public Question GetRandomQuestion()
+        private Question GetRandomQuestion()
         {
             if (myQuestions != null)
             {
@@ -82,7 +72,14 @@ namespace Singleton
 
         public void RemoveCurrentQuestion()
         {
-            myRandomizedQuestions.Remove(myCurrentQuestion);
+            if (myRandomizedQuestions != null)
+            {
+                myRandomizedQuestions.RemoveAll(x=>x.MyQuestion == myCurrentQuestion.MyQuestion);
+            }
+            else
+            {
+                Debug.Log("The question list is empty!");
+            }
         }
         
         public static QuestionFactory MyInstance
