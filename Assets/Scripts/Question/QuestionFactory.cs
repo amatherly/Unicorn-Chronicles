@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using SQLite4Unity3d;
 using Random = System.Random;
 
 using UnityEngine;
@@ -29,16 +30,15 @@ namespace Singleton
             if (isNewGame)
             {
                 myDataService = new DataService("data.sqlite");
-
                 InitializeQuestionArray();
                 myQuestionWindowController = GetComponent<QuestionWindowController>();
+                isNewGame = false;
             }
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private void Awake()
         {
-            myDataService = new DataService("data.sqlite");
             if (myInstance != null && myInstance != this)
             {
                 Debug.Log("There is already an instance of the factory in the scene");
@@ -82,7 +82,14 @@ namespace Singleton
 
         public void RemoveCurrentQuestion()
         {
-            myRandomizedQuestions.Remove(myCurrentQuestion);
+            if (myRandomizedQuestions != null)
+            {
+                myRandomizedQuestions.Remove(myCurrentQuestion);
+            }
+            else
+            {
+                Debug.Log("The question list is empty!");
+            }
         }
         
         public static QuestionFactory MyInstance
