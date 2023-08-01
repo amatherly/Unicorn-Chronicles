@@ -145,8 +145,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myOpenState: 1
   myLockState: 0
+  myHasAttempted: 0
   myHorizontalState: 0
-  myStartingRotation: {x: 0, y: 0, z: 0}
+  myNavPopup: {fileID: 2569510510437645809, guid: 9297ec5f75f724af4a50fce4dcb83d1b, type: 3}
 --- !u!65 &9062532909392242841
 BoxCollider:
   m_ObjectHideFlags: 0

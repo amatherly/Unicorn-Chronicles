@@ -173,7 +173,7 @@ public class DoorController : MonoBehaviour
         {
             myProximityTrigger = true;
             myMaze.MyCurrentDoor = this;
-            myNavPopup.GameObject().SetActive(true);
+            myNavPopup.gameObject.SetActive(true);
 
         }
     }
@@ -184,7 +184,7 @@ public class DoorController : MonoBehaviour
         {
             myProximityTrigger = false;
             myMaze.MyCurrentDoor = null;
-            myNavPopup.GameObject().SetActive(false);
+            myNavPopup.gameObject.SetActive(false);
         }
     }
 }
