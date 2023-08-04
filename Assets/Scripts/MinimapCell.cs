@@ -22,27 +22,7 @@ public class MinimapCell : MonoBehaviour
 
     private void ColorChange()
     {
-        bool locked = true;
-        DoorController door;
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (myRoom.GetComponent<Room>().MyDoors[i].name != "no-door")
-            {
-                door = myRoom.GetComponent<Room>().MyDoors[i].GetComponent<DoorController>();
-                if (!door.MyLockState || !door.MyHasAttempted)
-                {
-                    locked = false;
-                }
-            }
-        }
-
         Color newColor = Color.white;
-
-        if (locked)
-        {
-            newColor = Color.red;
-        }
 
         if (myRoom.GetComponent<Room>().MyHasVisited)
         {
