@@ -8,8 +8,6 @@ public class ItemController : MonoBehaviour
 {
     private PlayerController myPlayer;
 
-    private GameObject myItem;
-
     private float mySpeed;
 
     private float myHeight;
