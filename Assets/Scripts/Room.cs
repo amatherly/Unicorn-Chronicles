@@ -36,9 +36,9 @@ public class Room : MonoBehaviour
 
     }
 
-    public string GetQuestion()
+    public bool Equals(Room theRoom)
     {
-        return "default text, no question loaded";
+        return theRoom.MyRow == myRow && theRoom.MyCol == myCol;
     }
 
     public int MyRow
@@ -49,6 +49,11 @@ public class Room : MonoBehaviour
     public int MyCol
     {
         get => myCol;
+    }
+
+    public bool MyHasVisited
+    {
+        get => myHasVisited;
     }
 
     public List<GameObject> MyDoors

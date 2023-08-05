@@ -50,7 +50,6 @@ public class Maze : MonoBehaviour
         set => myLoseCondition = value;
     }
 
-    // stupid code but whatever
     private void PopulateMaze()
     {
         myRooms[0, 0] = GameObject.Find("Room 1-1").GetComponent<Room>();
@@ -73,6 +72,11 @@ public class Maze : MonoBehaviour
 
     public bool CheckLoseCondition(int theRow, int theCol, bool[,] theCheck)
     {
+        const int NORTH = 0;
+        const int EAST = 1;
+        const int SOUTH = 2;
+        const int WEST = 3;
+
         bool result = true;
         theCheck[theRow - 1, theCol - 1] = true;
         if (theRow == myCurrentRoom.MyRow && theCol == myCurrentRoom.MyCol)
@@ -91,29 +95,25 @@ public class Maze : MonoBehaviour
                     {
                         switch (i)
                         {
-                            // NORTH
-                            case 0:
+                            case NORTH:
                                 if (!theCheck[theRow - 2, theCol - 1] && result)
                                 {
                                     result = CheckLoseCondition(theRow - 1, theCol, theCheck);
                                 }
                                 break;
-                            // EAST
-                            case 1:
+                            case EAST:
                                 if (!theCheck[theRow - 1, theCol] && result)
                                 {
                                     result = CheckLoseCondition(theRow, theCol + 1, theCheck);
                                 }
                                 break;
-                            // SOUTH
-                            case 2:
+                            case SOUTH:
                                 if (!theCheck[theRow, theCol - 1] && result)
                                 {
                                     result = CheckLoseCondition(theRow + 1, theCol, theCheck);
                                 }
                                 break;
-                            // WEST
-                            case 3:
+                            case WEST:
                                 if (!theCheck[theRow - 1, theCol - 2] && result)
                                 {
                                     result = CheckLoseCondition(theRow, theCol - 1, theCheck);
