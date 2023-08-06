@@ -30,7 +30,7 @@ public class Door : MonoBehaviour
     private GameObject myPlayer;
 
     private Coroutine myAnimation;
-
+    
     [SerializeField]
     private GameObject myNavPopup;
 
@@ -88,7 +88,7 @@ public class Door : MonoBehaviour
         get => myLockState;
         set => myLockState = value;
     }
-
+    
     public bool MyHasAttempted
     {
         get => myHasAttempted;
@@ -141,4 +141,5 @@ public class Door : MonoBehaviour
             time += Time.deltaTime * ROTATE_SPEED;
         }
     }
+    
 }
