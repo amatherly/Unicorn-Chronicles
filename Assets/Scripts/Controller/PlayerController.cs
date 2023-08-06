@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
-        CheckForInput();
         
         // Get input axes
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -44,11 +43,6 @@ public class PlayerController : MonoBehaviour
         {
             myAnimator.SetBool("isWalking", false);
         }
-    }
-
-    private void CheckForInput()
-    {
-
     }
 
     public float MySpeed
