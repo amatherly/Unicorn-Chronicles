@@ -24,7 +24,7 @@ public class MinimapDoor : MonoBehaviour
     private void ColorChange()
     {
         Color newColor = Color.yellow;
-        DoorController door = myDoor.GetComponent<DoorController>();
+        Door door = myDoor.GetComponent<Door>();
 
         if (door.MyHasAttempted && !door.MyLockState)
         {

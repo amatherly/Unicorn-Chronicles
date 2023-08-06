@@ -11,7 +11,7 @@ public class Maze : MonoBehaviour
 
     private Room myCurrentRoom;
 
-    private DoorController myCurrentDoor;
+    private Door myCurrentDoor;
 
     [SerializeField]
     private Room[,] myRooms;
@@ -31,6 +31,11 @@ public class Maze : MonoBehaviour
         {
             Debug.Log("wow you're bad at this");
         }
+
+        if (myCurrentRoom.MyWinRoom)
+        {
+            Debug.Log("You win!");
+        }
     }
 
     public Room MyCurrentRoom
@@ -39,7 +44,7 @@ public class Maze : MonoBehaviour
         set => myCurrentRoom = value;
     }
 
-    public DoorController MyCurrentDoor
+    public Door MyCurrentDoor
     {
         get => myCurrentDoor;
         set => myCurrentDoor = value;
@@ -89,7 +94,7 @@ public class Maze : MonoBehaviour
             {
                 if (myRooms[theRow - 1, theCol - 1].MyDoors[i].name != "no-door")
                 {
-                    DoorController curr = myRooms[theRow - 1, theCol - 1].MyDoors[i].GetComponent<DoorController>();
+                    Door curr = myRooms[theRow - 1, theCol - 1].MyDoors[i].GetComponent<Door>();
 
                     if (!curr.MyLockState || !curr.MyHasAttempted)
                     {
