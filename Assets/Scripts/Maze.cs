@@ -12,13 +12,9 @@ public class Maze : MonoBehaviour
     private Room myCurrentRoom;
 
     private Door myCurrentDoor;
-    
-    public List<DoorController> doorsInMaze; // This list should contain all door objects in the maze
-
 
     [SerializeField]
     private Room[,] myRooms;
-    
 
     // Start is called before the first frame update
     void Start()

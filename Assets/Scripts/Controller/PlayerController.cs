@@ -7,8 +7,6 @@ public class PlayerController : MonoBehaviour
     private CharacterController myCharacterController;
     private Animator myAnimator;
     private int myItemCount;
-    private Maze myMaze; 
-
     
     private void Start()
     {
@@ -17,8 +15,6 @@ public class PlayerController : MonoBehaviour
         mySpeed = 50f;
         myCanMove = true;
         myItemCount = 0;
-        myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
-
     }
     
     private void Update()
@@ -47,46 +43,6 @@ public class PlayerController : MonoBehaviour
         {
             myAnimator.SetBool("isWalking", false);
         }
-    }
-    
-    public void SaveGame()
-    {
-        if (myMaze == null)
-        {
-            Debug.LogError("Maze object is not initialized.");
-            return;
-        }
-    
-        // Save Player specific data
-        PlayerPrefs.SetFloat("PlayerSpeed", mySpeed);
-        PlayerPrefs.SetInt("PlayerItemCount", myItemCount);
-        PlayerPrefs.SetString("PlayerPosition", JsonUtility.ToJson(transform.position));
-        // Save door states in maze
-        foreach (var door in myMaze.doorsInMaze)
-        {
-            door.SaveDoorState();
-        }
-        
-        
-        // TODO Save the questions state
-        PlayerPrefs.Save();
-    }
-
-    public void LoadGame()
-    {
-        // Load Player specific data
-        transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
-        mySpeed = PlayerPrefs.GetFloat("PlayerSpeed", mySpeed); 
-        myItemCount =
-            PlayerPrefs.GetInt("PlayerItemCount", myItemCount); 
-        // Load door states in maze
-        foreach (var door in myMaze.doorsInMaze)
-        {
-            door.LoadDoorState();
-        }
-        
-        // TODO Load the questions state 
-
     }
 
     public float MySpeed
