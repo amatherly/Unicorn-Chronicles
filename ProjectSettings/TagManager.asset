@@ -10,7 +10,7 @@ TagManager:
   - Item
   - QuestionFactory
   - Maze
-  - LoseScreen
+  - TreasureChest
   layers:
   - Default
   - TransparentFX
