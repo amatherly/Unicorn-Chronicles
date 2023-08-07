@@ -100,9 +100,13 @@ public class QuestionWindowController : MonoBehaviour
             UIControllerInGame.MyInstance.PlayUISound(INCORRECT_SOUND);
         }
         
-        
         myMaze.MyCurrentDoor.MyLockState = !myIsCorrect;
-        
+
+        if (myIsCorrect)
+        {
+            myMaze.MyCurrentDoor.Open();
+        }
+
         QuestionFactory.MyInstance.RemoveCurrentQuestion();
         Destroy(myView.gameObject);
     }

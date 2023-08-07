@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     private int myItemCount;
     private Maze myMaze; 
-    public Transform playerCharacterTransform; 
+    public Transform myTransform; 
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetString("PlayerPosition", JsonUtility.ToJson(transform.position));
 
         // Save door states in maze
-        foreach (var door in myMaze.doorsInMaze)
+        foreach (var door in myMaze.myAllDoors)
         {
             door.SaveDoorState();
         }
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
             PlayerPrefs.GetInt("PlayerItemCount", myItemCount); 
         
         // Load door states in maze
-        foreach (var door in myMaze.doorsInMaze)
+        foreach (var door in myMaze.myAllDoors)
         {
             door.LoadDoorState();
         }
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.DeleteKey("PlayerPosition");
         
         // Delete saved states for each door
-        foreach (var door in myMaze.doorsInMaze)
+        foreach (var door in myMaze.myAllDoors)
         {
             string doorID = door.gameObject.name;  // Use the door's GameObject name as a unique identifier.
             PlayerPrefs.DeleteKey(doorID + "_LockState");
@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
         transform.position = defaultPosition; 
         // Set Scale
         Vector3 newScale = new Vector3(1, 1, 1);
-        playerCharacterTransform.localScale = newScale;
+        myTransform.localScale = newScale;
         
         
         // mySpeed = 50f;
