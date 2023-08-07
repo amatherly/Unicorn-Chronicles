@@ -8,13 +8,8 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     private int myItemCount;
     private Maze myMaze; 
-<<<<<<< Updated upstream
-=======
     public Transform playerCharacterTransform; 
 
->>>>>>> Stashed changes
-
-    
     private void Start()
     {
         myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
@@ -23,12 +18,9 @@ public class PlayerController : MonoBehaviour
         mySpeed = 50f;
         myCanMove = true;
         myItemCount = 0;
-<<<<<<< Updated upstream
+
         myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
 
-=======
-        
->>>>>>> Stashed changes
     }
     
     private void Update()
@@ -58,11 +50,7 @@ public class PlayerController : MonoBehaviour
             myAnimator.SetBool("isWalking", false);
         }
     }
-    
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
+
     public void SaveGame()
     {
         if (myMaze == null)
@@ -75,12 +63,8 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerSpeed", mySpeed);
         PlayerPrefs.SetInt("PlayerItemCount", myItemCount);
         PlayerPrefs.SetString("PlayerPosition", JsonUtility.ToJson(transform.position));
-<<<<<<< Updated upstream
+
         // Save door states in maze
-=======
-        
-       
->>>>>>> Stashed changes
         foreach (var door in myMaze.doorsInMaze)
         {
             door.SaveDoorState();
@@ -90,26 +74,16 @@ public class PlayerController : MonoBehaviour
         // TODO Save the questions state
         PlayerPrefs.Save();
     }
-<<<<<<< Updated upstream
 
-=======
-    
->>>>>>> Stashed changes
     public void LoadGame()
     {
         // Load Player specific data
         transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
-<<<<<<< Updated upstream
         mySpeed = PlayerPrefs.GetFloat("PlayerSpeed", mySpeed); 
         myItemCount =
             PlayerPrefs.GetInt("PlayerItemCount", myItemCount); 
+        
         // Load door states in maze
-=======
-        mySpeed = PlayerPrefs.GetFloat("PlayerSpeed", mySpeed); // Provide a default value (the current speed)
-        myItemCount =
-            PlayerPrefs.GetInt("PlayerItemCount", myItemCount); // Provide a default value (the current item count)
-
->>>>>>> Stashed changes
         foreach (var door in myMaze.doorsInMaze)
         {
             door.LoadDoorState();
@@ -118,8 +92,7 @@ public class PlayerController : MonoBehaviour
         // TODO Load the questions state 
 
     }
-<<<<<<< Updated upstream
-=======
+
     
     
     /**
@@ -187,7 +160,6 @@ public class PlayerController : MonoBehaviour
         // }
 
     }
->>>>>>> Stashed changes
 
     public float MySpeed
     {
