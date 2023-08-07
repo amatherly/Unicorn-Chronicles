@@ -32,12 +32,12 @@ public class Maze : MonoBehaviour
     {
         if (myLoseCondition)
         {
-            Debug.Log("wow you're bad at this");
+            //Lose Screen
         }
 
         if (myCurrentRoom.MyWinRoom)
         {
-            Debug.Log("You win!");
+            // Win Screen
         }
     }
 
