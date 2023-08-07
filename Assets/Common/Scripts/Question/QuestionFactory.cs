@@ -48,10 +48,7 @@ namespace Singleton
         {
             myQuestions = myDataService.GetQuestion();
             myRandomizedQuestions = myQuestions.OrderBy(a => RANDOM.Next()).ToList();
-            foreach (Question q in myQuestions)
-            {
-                Debug.Log(q.ToString());
-            }
+
         }
 
 
