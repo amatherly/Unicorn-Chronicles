@@ -19,6 +19,10 @@ public class Maze : MonoBehaviour
     [SerializeField]
     private Room[,] myRooms;
     
+<<<<<<< Updated upstream
+=======
+    public List<DoorController> doorsInMaze; // list of all doors in maze object
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +52,11 @@ public class Maze : MonoBehaviour
         set => myCurrentRoom = value;
     }
 
+    public Room GetDefaultRoom
+    {
+        get => myRooms[3,0];
+    }
+
     public Door MyCurrentDoor
     {
         get => myCurrentDoor;
@@ -56,6 +65,7 @@ public class Maze : MonoBehaviour
 
     public bool MyLoseCondition
     {
+        get => myLoseCondition;
         set => myLoseCondition = value;
     }
 
