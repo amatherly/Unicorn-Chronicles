@@ -76,8 +76,13 @@ public class Door : MonoBehaviour
         get => myProximityTrigger;
         set => myProximityTrigger = value;
     }
+    
+    public Vector3 MyStartingRotation
+    {
+        get => myStartingRotation; 
+    }
 
-    public bool MyOpenState
+        public bool MyOpenState
     {
         get => myOpenState;
         set => myOpenState = value;
