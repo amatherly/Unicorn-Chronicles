@@ -27,14 +27,14 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myMaze = GameObject.FindGameObjectWithTag("Maze").GetComponent<Maze>();
+        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
         myHasVisited = false;
     }
     
 
-    public string GetQuestion()
+    public bool Equals(Room theRoom)
     {
-        return "default text, no question loaded";
+        return theRoom.MyRow == myRow && theRoom.MyCol == myCol;
     }
 
     public int MyRow
@@ -47,21 +47,19 @@ public class Room : MonoBehaviour
         get => myCol;
     }
 
+    public bool MyHasVisited
+    {
+        get => myHasVisited;
+        set => myHasVisited = value;
+    }
+
+    public bool MyWinRoom
+    {
+        get => myWinRoom;
+    }
+
     public List<GameObject> MyDoors
     {
         get => myDoors;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            myMaze.MyCurrentRoom = this;
-            myHasVisited = true;
-            if (myWinRoom)
-            {
-                //win message or something idk
-            }
-        }
     }
 }

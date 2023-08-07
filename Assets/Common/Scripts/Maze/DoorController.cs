@@ -1,168 +1,53 @@
 using System.Collections;
-
+using System.Collections.Generic;
 using Singleton;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
 
-    [SerializeField]
-    private bool myOpenState;
-
-    [SerializeField]
-    private bool myLockState;
-
-    [SerializeField]
-    private bool myHasAttempted;
-
-    [SerializeField]
-    private bool myHorizontalState;
-
-    private bool myProximityTrigger;
-
-    private float mySpeed;
-
-    private float myRotationAmount;
-
-    private Vector3 myStartingRotation;
-
-    private GameObject myPlayer;
-
-    private Maze myMaze;
+    private Door myDoor;
 
     private QuestionFactory myQuestionFactory;
 
-    private Coroutine myAnimation;
+    private Maze myMaze;
+    
+    private Door door;
+    
+    public string doorID; // Unique door id
 
-    [SerializeField]
-    private GameObject myNavPopup;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        myOpenState = false;
-        myLockState = true;
-        myHasAttempted = false;
-        myProximityTrigger = false;
-        mySpeed = 1f;
-        myRotationAmount = 90f;
-        myStartingRotation = transform.rotation.eulerAngles;
-        myPlayer = GameObject.FindGameObjectWithTag("Player");
-        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
+        myDoor = GetComponent<Door>();
         myQuestionFactory = QuestionFactory.MyInstance;
+        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckForInput();
     }
 
-    public void Open()
-    {
-        if (!myOpenState)
-        {
-            if (myAnimation != null)
-            {
-                StopCoroutine(myAnimation);
-            }
-
-            myAnimation = StartCoroutine(DoRotationOpen());
-        }
-    }
-
-    public void Close()
-    {
-        if (myOpenState)
-        {
-            if (myAnimation != null)
-            {
-                StopCoroutine(myAnimation);
-            }
-
-            myAnimation = StartCoroutine(DoRotationClose());
-        }
-    }
-
-    public bool SetProximityTrigger
-    {
-        get => myProximityTrigger;
-        set => myProximityTrigger = value;
-    }
-
-    public bool MyLockState
-    {
-        get => myLockState;
-        set => myLockState = value;
-    }
-
-    public bool MyHasAttempted
-    {
-        get => myHasAttempted;
-    }
-
     private void CheckForInput()
     {
 
-        if (Input.GetKeyDown(KeyCode.E) && myProximityTrigger)
+        if (Input.GetKeyDown(KeyCode.E) && myDoor.MyProximityTrigger)
         {
-            if (!myHasAttempted)
+            if (!myDoor.MyHasAttempted)
             {
-                myHasAttempted = true;
+                myDoor.MyHasAttempted = true;
                 myQuestionFactory.DisplayWindow();
             }
 
-            if (myOpenState)
+            if (myDoor.MyOpenState)
             {
-                Close();
+                myDoor.Close();
             }
-            else if (!myLockState)
+            else if (!myDoor.MyLockState)
             {
-                Open();
+                myDoor.Open();
             }
-        }
-
-    }
-
-    private IEnumerator DoRotationOpen()
-    {
-        Quaternion startRotation = transform.rotation;
-        Quaternion endRotation;
-
-        if (myHorizontalState && (myPlayer.transform.position.z > transform.position.z)
-            || !myHorizontalState && (myPlayer.transform.position.x > transform.position.x))
-        {
-            endRotation = Quaternion.Euler(new Vector3(0, myStartingRotation.y - myRotationAmount, 0));
-        }
-        else
-        {
-            endRotation = Quaternion.Euler(new Vector3(0, myStartingRotation.y + myRotationAmount, 0));
-        }
-
-        myOpenState = true;
-        float time = 0;
-
-        while (time < 1)
-        {
-            transform.rotation = Quaternion.Slerp(startRotation, endRotation, time);
-            yield return null;
-            time += Time.deltaTime * mySpeed;
-        }
-    }
-
-    private IEnumerator DoRotationClose()
-    {
-        Quaternion startRotation = transform.rotation;
-        Quaternion endRotation = Quaternion.Euler(myStartingRotation);
-
-        myOpenState = false;
-        float time = 0;
-
-        while (time < 1)
-        {
-            transform.rotation = Quaternion.Slerp(startRotation, endRotation, time);
-            yield return null;
-            time += Time.deltaTime * mySpeed;
         }
     }
 
@@ -170,9 +55,9 @@ public class DoorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            myProximityTrigger = true;
-            myMaze.MyCurrentDoor = this;
-            myNavPopup.gameObject.SetActive(true);
+            myDoor.MyProximityTrigger = true;
+            myMaze.MyCurrentDoor = myDoor;
+            myDoor.MyNavPopup.SetActive(true);
 
         }
     }
@@ -181,9 +66,77 @@ public class DoorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            myProximityTrigger = false;
+            myDoor.MyProximityTrigger = false;
             myMaze.MyCurrentDoor = null;
-            myNavPopup.gameObject.SetActive(false);
+            myDoor.MyNavPopup.SetActive(false);
+        }
+    } 
+
+    
+    public void SaveDoorState() 
+    { 
+        doorID = this.gameObject.name;  // Use the door's GameObject name as a unique identifier.
+
+        PlayerPrefs.SetInt(doorID + "_LockState", myDoor.MyLockState ? 1 : 0);
+        PlayerPrefs.SetInt(doorID + "_HasAttempted", myDoor.MyHasAttempted ? 1 : 0);
+
+        // Save position
+        PlayerPrefs.SetFloat(doorID + "_PosX", transform.position.x);
+        PlayerPrefs.SetFloat(doorID + "_PosY", transform.position.y);
+        PlayerPrefs.SetFloat(doorID + "_PosZ", transform.position.z);
+
+        // Save rotation (assuming Euler angles are sufficient)
+        PlayerPrefs.SetFloat(doorID + "_RotX", transform.eulerAngles.x);
+        PlayerPrefs.SetFloat(doorID + "_RotY", transform.eulerAngles.y);
+        PlayerPrefs.SetFloat(doorID + "_RotZ", transform.eulerAngles.z);
+
+        // Save scale (this might not be necessary for doors, but included for completeness)
+        PlayerPrefs.SetFloat(doorID + "_ScaleX", transform.localScale.x);
+        PlayerPrefs.SetFloat(doorID + "_ScaleY", transform.localScale.y);
+        PlayerPrefs.SetFloat(doorID + "_ScaleZ", transform.localScale.z);
+
+        PlayerPrefs.Save();
+    } 
+      
+
+    
+    public void LoadDoorState()
+    {
+        doorID = this.gameObject.name;  // Use the door's GameObject name as a unique identifier.
+
+        // Check if the PlayerPrefs has the necessary key to determine if the door's state was saved previously
+        if (PlayerPrefs.HasKey(doorID + "_LockState"))
+        {
+            // Load lock state and attempted state
+            myDoor.MyLockState = PlayerPrefs.GetInt(doorID + "_LockState") == 1;
+            myDoor.MyHasAttempted = PlayerPrefs.GetInt(doorID + "_HasAttempted") == 1;
+
+            // Load position
+            Vector3 position;
+            position.x = PlayerPrefs.GetFloat(doorID + "_PosX");
+            position.y = PlayerPrefs.GetFloat(doorID + "_PosY");
+            position.z = PlayerPrefs.GetFloat(doorID + "_PosZ");
+            transform.position = position;
+
+            // Load rotation
+            Vector3 eulerAngles;
+            eulerAngles.x = PlayerPrefs.GetFloat(doorID + "_RotX");
+            eulerAngles.y = PlayerPrefs.GetFloat(doorID + "_RotY");
+            eulerAngles.z = PlayerPrefs.GetFloat(doorID + "_RotZ");
+            transform.rotation = Quaternion.Euler(eulerAngles);
+
+            // Load scale
+            Vector3 scale;
+            scale.x = PlayerPrefs.GetFloat(doorID + "_ScaleX");
+            scale.y = PlayerPrefs.GetFloat(doorID + "_ScaleY");
+            scale.z = PlayerPrefs.GetFloat(doorID + "_ScaleZ");
+            transform.localScale = scale;
+        }
+        else
+        {
+            Debug.Log("No saved state found for door with ID: " + doorID);
         }
     }
+    
+
 }

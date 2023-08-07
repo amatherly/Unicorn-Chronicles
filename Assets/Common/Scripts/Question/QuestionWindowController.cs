@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Singleton;
 using UnityEngine;
@@ -8,7 +9,8 @@ public class QuestionWindowController : MonoBehaviour
 {
     private static Random RANDOM = new Random();
     private static UIControllerInGame myUIController;
-    private static Maze MAZE = Maze.MyInstance;
+    private  Maze myMaze;
+
 
     private static int CORRECT_SOUND = 2;
     private static int INCORRECT_SOUND = 3;
@@ -24,6 +26,11 @@ public class QuestionWindowController : MonoBehaviour
     [SerializeField] private GameObject multipleChoiceWindowPrefab;
     [SerializeField] private GameObject inputFieldWindowPrefab;
 
+    private void Start()
+    {
+        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
+
+    }
 
     public void InitializeWindow(Question theQuestion)
     {
@@ -94,7 +101,8 @@ public class QuestionWindowController : MonoBehaviour
         }
         
         
-        Maze.MyInstance.SetDoorLockState(myIsCorrect);
+        myMaze.MyCurrentDoor.MyLockState = !myIsCorrect;
+        
         QuestionFactory.MyInstance.RemoveCurrentQuestion();
         Destroy(myView.gameObject);
     }
