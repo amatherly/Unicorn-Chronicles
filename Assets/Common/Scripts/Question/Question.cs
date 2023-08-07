@@ -32,7 +32,6 @@ public class Question
 
     public bool CheckUserAnswer(string theAnswerInput)
     {
-        Debug.Log("The user answered: " + theAnswerInput + ". The correct answer is: " + myAnswer);
         bool result = theAnswerInput == myAnswer;
         return result;
     }
