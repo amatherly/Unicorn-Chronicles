@@ -1,5 +1,7 @@
 ﻿using SQLite4Unity3d;
 using UnityEngine;
+using System.IO;
+
 #if !UNITY_EDITOR
 #endif
 using System.Collections.Generic;

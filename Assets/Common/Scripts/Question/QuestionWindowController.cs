@@ -1,4 +1,3 @@
-
 using System.Linq;
 using Singleton;
 using UnityEngine;
@@ -11,7 +10,6 @@ public class QuestionWindowController : MonoBehaviour
     private static UIControllerInGame myUIController;
     private static Maze MAZE = Maze.MyInstance;
 
-    private static int POPUP_SOUND = 0;
     private static int CORRECT_SOUND = 2;
     private static int INCORRECT_SOUND = 3;
     

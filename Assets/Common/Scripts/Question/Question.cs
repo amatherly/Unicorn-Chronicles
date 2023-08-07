@@ -1,6 +1,4 @@
 ﻿using System;
-using Singleton;
-using SQLite4Unity3d;
 using UnityEngine;
 
 public class Question
