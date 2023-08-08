@@ -16,7 +16,7 @@ public class Maze : MonoBehaviour
     [SerializeField]
     private Room[,] myRooms;
 
-    public List<DoorController> doorsInMaze; // list of all doors in maze object
+    public List<DoorController> myAllDoors; // list of all doors in maze object
 
 
     // Start is called before the first frame update

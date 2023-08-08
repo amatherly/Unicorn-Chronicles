@@ -5,25 +5,21 @@ using UnityEngine;
 namespace Singleton
 {
     public class PlayerController : MonoBehaviour
+
     {
         // MAKE STATIC
         private static PlayerController myInstance = null;
-
-
-
         private Maze myMaze;
         private CharacterController myCharacterController;
         private Animator myAnimator;
-        
         private float mySpeed;
         private float myRotationSpeed;
-        
-        
+     
         // STATE
         private bool myCanMove;
         private Transform myCameraTransform;
         private int myItemCount;
-        public Transform playerCharacterTransform;
+        public Transform myTransform; 
 
         private void Start()
         {
@@ -107,6 +103,7 @@ namespace Singleton
             // TODO Save the questions state
             PlayerPrefs.Save();
         }
+        
 
         public void LoadGame()
         {
@@ -126,6 +123,7 @@ namespace Singleton
 
         }
 
+
         public void RotateCameraTowardDoor(Transform theObject)
         {
             // if (Input.GetAxis("Horizontal") > 0)
@@ -141,11 +139,11 @@ namespace Singleton
 
 
 
-        /**
-     * Deletes saved data (previously saved game) and
-     * allows user to start a new game.
-     * TODO FINISH ME :)
-     */
+       /**
+        * Deletes saved data (previously saved game) and
+        * allows user to start a new game.
+        * TODO FINISH ME :)
+        */
         public void NewGame()
         {
             // Clear saved data from PlayerPrefs
