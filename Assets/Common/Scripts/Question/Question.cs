@@ -1,14 +1,12 @@
-﻿
-using System;
+﻿using System;
+using UnityEngine;
 
 public class Question
 {
+    
     private int myQuestionID;
     private string myQuestion;
     private string myAnswer;
-
-    public bool myIsAnswered { get; set; }
-
 
     
     public Question() // Default Constructor
@@ -18,7 +16,7 @@ public class Question
     
     public Question(in int theQuestionID, in string theQuestion, in string theAnswer)
     {
-        if (theQuestion == null || theAnswer == null)
+        if (theQuestionID == null || theQuestion == null || theAnswer == null)
         {
             throw new ArgumentException("Parameter can't be null. You passed in ID:" + theQuestionID + " Question: " +
                                         theQuestion + " Answer " + theAnswer);
@@ -30,23 +28,11 @@ public class Question
             myAnswer = theAnswer;
         }
     }
+    
 
-    
-    // public Question() // Default Constructor for testing
-    // {
-    //     
-    // }
-    //
-    // public Question(in int theQuestionID, in string theQuestion, in string theAnswer) // Testing only
-    // {
-    //     myQuestionID = theQuestionID;
-    //     myQuestion = theQuestion;
-    //     myAnswer = theAnswer;
-    // }
-    
     public bool CheckUserAnswer(string theAnswerInput)
     {
-        bool result = (theAnswerInput == myAnswer);
+        bool result = theAnswerInput == myAnswer;
         return result;
     }
 
@@ -71,8 +57,6 @@ public class Question
     
     public override string ToString()
     {
-        return $"Question: {myQuestion} Answer: {myAnswer} ID: {myQuestionID}";
+        return "Question: " + myQuestion + " Answer: " + myAnswer + " ID: " + myQuestionID;
     }
-    
-    
 }
