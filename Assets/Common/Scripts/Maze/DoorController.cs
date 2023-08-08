@@ -56,7 +56,7 @@ public class DoorController : MonoBehaviour
             myDoor.MyProximityTrigger = true;
             myMaze.MyCurrentDoor = myDoor;
             myDoor.MyNavPopup.SetActive(true);
-
+            PlayerController.MyInstance.RotateCameraTowardDoor(myDoor.transform);
         }
     }
 
@@ -67,6 +67,7 @@ public class DoorController : MonoBehaviour
             myDoor.MyProximityTrigger = false;
             myMaze.MyCurrentDoor = null;
             myDoor.MyNavPopup.SetActive(false);
+            PlayerController.MyInstance.RotateCameraTowardDoor(PlayerController.MyInstance.transform);
         }
     } 
 

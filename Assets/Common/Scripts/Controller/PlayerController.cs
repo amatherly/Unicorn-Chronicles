@@ -1,179 +1,230 @@
+using System;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+
+namespace Singleton
 {
-    private float mySpeed;
-    private bool myCanMove;
-    private CharacterController myCharacterController;
-    private Animator myAnimator;
-    private int myItemCount;
-    private Maze myMaze; 
-    public Transform myTransform; 
+    public class PlayerController : MonoBehaviour
 
-    private void Start()
     {
-        myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
-        myCharacterController = GetComponent<CharacterController>();
-        myAnimator = GetComponent<Animator>();
-        mySpeed = 50f;
-        myCanMove = true;
-        myItemCount = 0;
+        // MAKE STATIC
+        private static PlayerController myInstance = null;
+        private Maze myMaze;
+        private CharacterController myCharacterController;
+        private Animator myAnimator;
+        private float mySpeed;
+        private float myRotationSpeed;
+     
+        // STATE
+        private bool myCanMove;
+        private Transform myCameraTransform;
+        private int myItemCount;
+        public Transform myTransform; 
 
-        myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
-
-    }
-    
-    private void Update()
-    {
-        
-        // Get input axes
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        Vector3 moveDirection = new Vector3(moveHorizontal, 0, moveVertical);
-
-        float inputMagnitude = moveDirection.magnitude;
-
-        if (inputMagnitude > 0)
+        private void Start()
         {
-            myAnimator.SetBool("isWalking", true);
-            if (myCanMove)
+            myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
+            myCharacterController = GetComponent<CharacterController>();
+            myAnimator = GetComponent<Animator>();
+            myCameraTransform = GameObject.Find("CM vcam2").transform;
+            mySpeed = 50f;
+            myRotationSpeed = 5f;
+            myCanMove = true;
+            myItemCount = 0;
+
+            myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
+        }
+        
+                
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private void Awake()
+        {
+            if (myInstance != null && myInstance != this)
             {
-                _ = myCharacterController.Move(new Vector3(moveHorizontal, 0, moveVertical) * mySpeed * Time.deltaTime);
-                float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-                Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * mySpeed);
+                Debug.Log("There is already an instance of the UIController in the scene!");
+            }
+            else
+            {
+                MyInstance = this;
+                DontDestroyOnLoad(gameObject);
             }
         }
-        else
+
+        private void Update()
         {
-            myAnimator.SetBool("isWalking", false);
+
+            // Get input axes
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+
+            Vector3 moveDirection = new Vector3(moveHorizontal, 0, moveVertical);
+
+            float inputMagnitude = moveDirection.magnitude;
+
+            if (inputMagnitude > 0)
+            {
+                myAnimator.SetBool("isWalking", true);
+                if (myCanMove)
+                {
+                    _ = myCharacterController.Move(new Vector3(moveHorizontal, 0, moveVertical) * mySpeed *
+                                                   Time.deltaTime);
+                    float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+                    Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation,
+                        Time.deltaTime * myRotationSpeed);
+                }
+            }
+            else
+            {
+                myAnimator.SetBool("isWalking", false);
+            }
         }
-    }
 
-    public void SaveGame()
-    {
-        if (myMaze == null)
+        public void SaveGame()
         {
-            Debug.LogError("Maze object is not initialized.");
-            return;
-        }
-    
-        // Save Player specific data
-        PlayerPrefs.SetFloat("PlayerSpeed", mySpeed);
-        PlayerPrefs.SetInt("PlayerItemCount", myItemCount);
-        PlayerPrefs.SetString("PlayerPosition", JsonUtility.ToJson(transform.position));
+            if (myMaze == null)
+            {
+                Debug.LogError("Maze object is not initialized.");
+                return;
+            }
 
-        // Save door states in maze
-        foreach (var door in myMaze.myAllDoors)
-        {
-            door.SaveDoorState();
-        }
-        
-        
-        // TODO Save the questions state
-        PlayerPrefs.Save();
-    }
+            // Save Player specific data
+            PlayerPrefs.SetFloat("PlayerSpeed", mySpeed);
+            PlayerPrefs.SetInt("PlayerItemCount", myItemCount);
+            PlayerPrefs.SetString("PlayerPosition", JsonUtility.ToJson(transform.position));
 
-    public void LoadGame()
-    {
-        // Load Player specific data
-        transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
-        mySpeed = PlayerPrefs.GetFloat("PlayerSpeed", mySpeed); 
-        myItemCount =
-            PlayerPrefs.GetInt("PlayerItemCount", myItemCount); 
-        
-        // Load door states in maze
-        foreach (var door in myMaze.myAllDoors)
-        {
-            door.LoadDoorState();
-        }
-        
-        // TODO Load the questions state 
+            // Save door states in maze
+            foreach (var door in myMaze.doorsInMaze)
+            {
+                door.SaveDoorState();
+            }
 
-    }
 
-    
-    
-    /**
-     * Deletes saved data (previously saved game) and
-     * allows user to start a new game.
-     * TODO FINISH ME :)
-     */
-    public void NewGame()
-    {
-        // Clear saved data from PlayerPrefs
-        // Delete Player specific saved data
-        PlayerPrefs.DeleteKey("PlayerSpeed");
-        PlayerPrefs.DeleteKey("PlayerItemCount");
-        PlayerPrefs.DeleteKey("PlayerPosition");
-        
-        // Delete saved states for each door
-        foreach (var door in myMaze.myAllDoors)
-        {
-            string doorID = door.gameObject.name;  // Use the door's GameObject name as a unique identifier.
-            PlayerPrefs.DeleteKey(doorID + "_LockState");
-            PlayerPrefs.DeleteKey(doorID + "_HasAttempted");
-            PlayerPrefs.DeleteKey(doorID + "_PosX");
-            PlayerPrefs.DeleteKey(doorID + "_PosY");
-            PlayerPrefs.DeleteKey(doorID + "_PosZ");
-            PlayerPrefs.DeleteKey(doorID + "_RotX");
-            PlayerPrefs.DeleteKey(doorID + "_RotY");
-            PlayerPrefs.DeleteKey(doorID + "_RotZ");
-            PlayerPrefs.DeleteKey(doorID + "_ScaleX");
-            PlayerPrefs.DeleteKey(doorID + "_ScaleY");
-            PlayerPrefs.DeleteKey(doorID + "_ScaleZ");
+            // TODO Save the questions state
+            PlayerPrefs.Save();
         }
         
-        // PlayerController
-        // Set Position
-        Vector3 defaultPosition = new Vector3(505, 1, 619); // default character position
-        transform.position = defaultPosition; 
-        // Set Scale
-        Vector3 newScale = new Vector3(1, 1, 1);
-        myTransform.localScale = newScale;
+
+        public void LoadGame()
+        {
+            // Load Player specific data
+            transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
+            mySpeed = PlayerPrefs.GetFloat("PlayerSpeed", mySpeed);
+            myItemCount =
+                PlayerPrefs.GetInt("PlayerItemCount", myItemCount);
+
+            // Load door states in maze
+            foreach (var door in myMaze.doorsInMaze)
+            {
+                door.LoadDoorState();
+            }
+
+            // TODO Load the questions state 
+
+        }
+
+
+        public void RotateCameraTowardDoor(Transform theObject)
+        {
+            // if (Input.GetAxis("Horizontal") > 0)
+            // {
+            //     myCameraTransform.eulerAngles += new Vector3(myCameraTransform.rotation.x, myCameraTransform.rotation.y + 10 * Time.deltaTime, myCameraTransform.rotation.z);
+            //
+            // }
+            // else
+            // {
+            //     myCameraTransform.eulerAngles += new Vector3(myCameraTransform.rotation.x, myCameraTransform.rotation.y - 10 * Time.deltaTime, myCameraTransform.rotation.z);
+            // }
+        }
+
+
+
+       /**
+        * Deletes saved data (previously saved game) and
+        * allows user to start a new game.
+        * TODO FINISH ME :)
+        */
+        public void NewGame()
+        {
+            // Clear saved data from PlayerPrefs
+            // Delete Player specific saved data
+            PlayerPrefs.DeleteKey("PlayerSpeed");
+            PlayerPrefs.DeleteKey("PlayerItemCount");
+            PlayerPrefs.DeleteKey("PlayerPosition");
+
+            // Delete saved states for each door
+            foreach (var door in myMaze.doorsInMaze)
+            {
+                string doorID = door.gameObject.name; // Use the door's GameObject name as a unique identifier.
+                PlayerPrefs.DeleteKey(doorID + "_LockState");
+                PlayerPrefs.DeleteKey(doorID + "_HasAttempted");
+                PlayerPrefs.DeleteKey(doorID + "_PosX");
+                PlayerPrefs.DeleteKey(doorID + "_PosY");
+                PlayerPrefs.DeleteKey(doorID + "_PosZ");
+                PlayerPrefs.DeleteKey(doorID + "_RotX");
+                PlayerPrefs.DeleteKey(doorID + "_RotY");
+                PlayerPrefs.DeleteKey(doorID + "_RotZ");
+                PlayerPrefs.DeleteKey(doorID + "_ScaleX");
+                PlayerPrefs.DeleteKey(doorID + "_ScaleY");
+                PlayerPrefs.DeleteKey(doorID + "_ScaleZ");
+            }
+
+            // PlayerController
+            // Set Position
+            Vector3 defaultPosition = new Vector3(505, 1, 619); // default character position
+            transform.position = defaultPosition;
+            // Set Scale
+            Vector3 newScale = new Vector3(1, 1, 1);
+            playerCharacterTransform.localScale = newScale;
+
+
+            // mySpeed = 50f;
+            // myCanMove = true;
+            // myItemCount = 0;
+            //
+            // // Maze
+            // myMaze.MyLoseCondition = false;
+            // myMaze.MyCurrentRoom = myMaze.GetDefaultRoom;
+            //
+            // // Doors
+            // foreach (var door in myMaze.doorsInMaze)
+            // {
+            //     Door doorComponent = door.GetComponent<Door>();
+            //
+            //     if (doorComponent != null)
+            //     {
+            //         doorComponent.MyOpenState = false;
+            //         doorComponent.MyLockState = true;
+            //         doorComponent.MyHasAttempted = false;
+            //         doorComponent.MyProximityTrigger = false;
+            //
+            //         // Reset the door's rotation
+            //         doorComponent.transform.rotation = Quaternion.Euler(doorComponent.MyStartingRotation);
+            //     }
+            // }
+
+        }
+
+        public float MySpeed
+        {
+            set => mySpeed = value;
+        }
+
+        public bool MyCanMove
+        {
+            set => myCanMove = value;
+        }
+
+        public int MyItemCount
+        {
+            get => myItemCount;
+            set => myItemCount = value;
+        }
         
-        
-        // mySpeed = 50f;
-        // myCanMove = true;
-        // myItemCount = 0;
-        //
-        // // Maze
-        // myMaze.MyLoseCondition = false;
-        // myMaze.MyCurrentRoom = myMaze.GetDefaultRoom;
-        //
-        // // Doors
-        // foreach (var door in myMaze.doorsInMaze)
-        // {
-        //     Door doorComponent = door.GetComponent<Door>();
-        //
-        //     if (doorComponent != null)
-        //     {
-        //         doorComponent.MyOpenState = false;
-        //         doorComponent.MyLockState = true;
-        //         doorComponent.MyHasAttempted = false;
-        //         doorComponent.MyProximityTrigger = false;
-        //
-        //         // Reset the door's rotation
-        //         doorComponent.transform.rotation = Quaternion.Euler(doorComponent.MyStartingRotation);
-        //     }
-        // }
-
-    }
-
-    public float MySpeed
-    {
-        set => mySpeed = value;
-    }
-
-    public bool MyCanMove
-    {
-        set => myCanMove = value;
-    }
-
-    public int MyItemCount
-    {
-        get => myItemCount;
-        set => myItemCount = value;
+        public static PlayerController MyInstance
+        {
+            get => myInstance;
+            private set => myInstance = value;
+        }
     }
 }
