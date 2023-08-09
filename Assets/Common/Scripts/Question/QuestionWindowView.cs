@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using Singleton;
 using TMPro;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 
 public class QuestionWindowView : MonoBehaviour
@@ -12,13 +14,20 @@ public class QuestionWindowView : MonoBehaviour
     [SerializeField] private TMP_Text[] myButtonTexts = new TMP_Text[4];
     [SerializeField] private TMP_InputField myInputField;
     [SerializeField] private GameObject myResultWindow;
-    [SerializeField] private TMP_Text resultText;
+    [FormerlySerializedAs("resultText")] [SerializeField] private TMP_Text myResultText;
+    [SerializeField] private TMP_Text myKeyCountText;
+    
     
     public void InitializeView()
     {
         myResultWindow.SetActive(false);
         gameObject.SetActive(true);
         UIControllerInGame.MyInstance.PauseGame();
+        myKeyCountText.SetText(GameObject.FindObjectOfType<PlayerController>().MyItemCount.ToString());
+        if (myKeyCountText.text == "0")
+        {
+            GameObject.Find("HintButton").GetComponent<Button>().enabled = false;
+        }
     }
 
     public void SetQuestionText(string questionText)
@@ -55,7 +64,7 @@ public class QuestionWindowView : MonoBehaviour
     public void ShowResult(bool isCorrect)
     {
         myResultWindow.SetActive(true);
-        resultText.SetText(isCorrect ? "Correct!" : "Incorrect!");
+        myResultText.SetText(isCorrect ? "Correct!" : "Incorrect!");
         UIControllerInGame.MyInstance.ResumeGame();
     }
 }

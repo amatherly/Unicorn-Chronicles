@@ -139,6 +139,16 @@ namespace Singleton
             // }
         }
 
+        public bool SpendKey()
+        {
+            if (myItemCount > 0)
+            {
+                myItemCount--;
+                return true;
+            }
+            return false;
+        }
+
 
 
         /**
@@ -228,5 +238,7 @@ namespace Singleton
             get => myInstance;
             private set => myInstance = value;
         }
+        
+        
     }
 }

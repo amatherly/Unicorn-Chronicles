@@ -2,18 +2,19 @@ using System;
 using System.Linq;
 using Singleton;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 
 public class QuestionWindowController : MonoBehaviour
 {
     private static Random RANDOM = new Random();
-    private static UIControllerInGame myUIController;
     private  Maze myMaze;
     
     private static int CORRECT_SOUND = 2;
     private static int INCORRECT_SOUND = 3;
     
+    private UIControllerInGame myUIController;
     private QuestionWindowView myView;
     private Question myQuestion;
     
@@ -21,9 +22,9 @@ public class QuestionWindowController : MonoBehaviour
     private int myCorrectIndex;
     private bool myIsCorrect;
     
-    [SerializeField] private GameObject TFWindowPrefab;
-    [SerializeField] private GameObject multipleChoiceWindowPrefab;
-    [SerializeField] private GameObject inputFieldWindowPrefab;
+    [FormerlySerializedAs("TFWindowPrefab")] [SerializeField] private GameObject myTFWindowPrefab;
+    [FormerlySerializedAs("multipleChoiceWindowPrefab")] [SerializeField] private GameObject myMultipleChoiceWindowPrefab;
+    [FormerlySerializedAs("inputFieldWindowPrefab")] [SerializeField] private GameObject myInputFieldWindowPrefab;
 
     private void Start()
     {
@@ -35,9 +36,10 @@ public class QuestionWindowController : MonoBehaviour
         UIControllerInGame.MyInstance.PlayUISound(0);
         
         myQuestion = theQuestion;
-
         myIsCorrect = false;
         int ID = theQuestion.MyQuestionID;
+        
+        Debug.Log(string.Format("Instansiating window type {0} with {1}.", myQuestion.MyQuestionID, myQuestion));
         
         switch (ID)
         {    case 1:
@@ -54,7 +56,7 @@ public class QuestionWindowController : MonoBehaviour
     
     private void InstantiateTFWindow()
     {
-        GameObject multipleChoiceWindow = Instantiate(TFWindowPrefab, transform);
+        GameObject multipleChoiceWindow = Instantiate(myTFWindowPrefab, transform);
         myView = multipleChoiceWindow.GetComponent<QuestionWindowView>();
         myView.InitializeView();
         myView.SetQuestionText(myQuestion.MyQuestion);
@@ -62,7 +64,7 @@ public class QuestionWindowController : MonoBehaviour
 
     private void InstantiateMultipleChoiceWindow()
     {
-        GameObject multipleChoiceWindow = Instantiate(multipleChoiceWindowPrefab, transform);
+        GameObject multipleChoiceWindow = Instantiate(myMultipleChoiceWindowPrefab, transform);
         myView = multipleChoiceWindow.GetComponent<QuestionWindowView>();
         myView.InitializeView();
 
@@ -75,7 +77,7 @@ public class QuestionWindowController : MonoBehaviour
     
     private void InstantiateInputFieldWindow()
     {
-        GameObject inputFieldWindow = Instantiate(inputFieldWindowPrefab, transform);
+        GameObject inputFieldWindow = Instantiate(myInputFieldWindowPrefab, transform);
         myView = inputFieldWindow.GetComponent<QuestionWindowView>();
         myView.InitializeView();
         myView.SetQuestionText(myQuestion.MyQuestion);
@@ -98,15 +100,15 @@ public class QuestionWindowController : MonoBehaviour
         
         
         myMaze.MyCurrentDoor.MyLockState = !myIsCorrect;
-        
         QuestionFactory.MyInstance.RemoveCurrentQuestion();
         Destroy(myView.gameObject);
     }
 
     public void SetAnswerInput(string theAnswerInput)
     {
-        
-        if (myQuestion.MyQuestionID == 2)
+        Debug.Log("User Answered: " + theAnswerInput);
+
+        if (myQuestion.MyQuestionID == 2 && !myIsCorrect)
         {
             theAnswerInput = myView.GetButtonAnswer(theAnswerInput);
         }
@@ -114,6 +116,20 @@ public class QuestionWindowController : MonoBehaviour
         {
             myAnswerInput = theAnswerInput;
             CheckAnswer();
+        }
+    }
+
+    public void UseKey()
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player.SpendKey())
+        {
+            myIsCorrect = true;
+            SetAnswerInput(myQuestion.MyAnswer);
+        }
+        else
+        {
+            myUIController.PlayUISound(5);
         }
     }
 }
