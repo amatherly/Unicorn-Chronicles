@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common.Scripts.Maze;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
