@@ -1,3 +1,4 @@
+using System;
 using Common.Scripts.Controller;
 using Singleton;
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace Common.Scripts.Maze
             myDoor = GetComponent<Door>();
             myQuestionFactory = QuestionFactory.MyInstance;
             myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
+            myDoorID = Guid.NewGuid().ToString();
+
         }
 
         void Update()
