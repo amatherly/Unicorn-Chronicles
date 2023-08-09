@@ -1,23 +1,27 @@
 using System;
+using Common.Scripts.Controller;
 using Singleton;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class KeyCollectable : MonoBehaviour
+namespace Models
 {
-    private AudioSource myAudioSource;
-
-    private void Start()
+    public class KeyCollectable : MonoBehaviour
     {
-        myAudioSource = GetComponent<AudioSource>();
-    }
+        private AudioSource myAudioSource;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
+        private void Start()
         {
-            FindObjectOfType<PlayerController>().MyItemCount += 1;
-            myAudioSource.PlayOneShot(myAudioSource.clip);
+            myAudioSource = GetComponent<AudioSource>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                FindObjectOfType<PlayerController>().MyItemCount += 1;
+                myAudioSource.PlayOneShot(myAudioSource.clip);
+            }
         }
     }
 }

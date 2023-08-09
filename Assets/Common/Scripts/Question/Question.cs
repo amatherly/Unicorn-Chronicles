@@ -1,9 +1,36 @@
 ﻿
+using System;
+
 public class Question
 {
     private int myQuestionID;
     private string myQuestion;
     private string myAnswer;
+
+    public bool myIsAnswered { get; set; }
+
+
+    
+    public Question() // Default Constructor
+    {
+        
+    }
+    
+    public Question(in int theQuestionID, in string theQuestion, in string theAnswer)
+    {
+        if (theQuestion == null || theAnswer == null)
+        {
+            throw new ArgumentException("Parameter can't be null. You passed in ID:" + theQuestionID + " Question: " +
+                                        theQuestion + " Answer " + theAnswer);
+        }
+        else
+        {
+            myQuestionID = theQuestionID;
+            myQuestion = theQuestion;
+            myAnswer = theAnswer;
+        }
+    }
+
     
     // public Question() // Default Constructor for testing
     // {
@@ -17,7 +44,6 @@ public class Question
     //     myAnswer = theAnswer;
     // }
     
-
     public bool CheckUserAnswer(string theAnswerInput)
     {
         bool result = (theAnswerInput == myAnswer);
@@ -47,4 +73,6 @@ public class Question
     {
         return $"Question: {myQuestion} Answer: {myAnswer} ID: {myQuestionID}";
     }
+    
+    
 }

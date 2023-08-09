@@ -6,8 +6,6 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
 
-    private Maze myMaze;
-
     [SerializeField]
     private bool myHasVisited;
 
@@ -27,7 +25,6 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
         myHasVisited = false;
     }
     
@@ -40,11 +37,13 @@ public class Room : MonoBehaviour
     public int MyRow
     {
         get => myRow;
+        set => myRow = value;
     }
 
     public int MyCol
     {
         get => myCol;
+        set => myCol = value;
     }
 
     public bool MyHasVisited
@@ -61,5 +60,6 @@ public class Room : MonoBehaviour
     public List<GameObject> MyDoors
     {
         get => myDoors;
+        set => myDoors = value;
     }
 }

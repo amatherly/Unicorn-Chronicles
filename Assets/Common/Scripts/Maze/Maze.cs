@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common.Scripts.Maze;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,7 +17,7 @@ public class Maze : MonoBehaviour
     [SerializeField]
     private Room[,] myRooms;
 
-    public List<DoorController> doorsInMaze; // list of all doors in maze object
+    public List<DoorController> myAllDoors; // list of all doors in maze object
 
 
     // Start is called before the first frame update
@@ -62,6 +63,12 @@ public class Maze : MonoBehaviour
     {
         get => myLoseCondition;
         set => myLoseCondition = value;
+    }
+
+    public Room[,] MyRooms
+    {
+        get => myRooms;
+        set => myRooms = value;
     }
 
     private void PopulateMaze()
