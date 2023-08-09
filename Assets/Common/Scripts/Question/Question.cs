@@ -7,6 +7,8 @@ public class Question
     private int myQuestionID;
     private string myQuestion;
     private string myAnswer;
+    public bool myIsAnswered { get; set; }
+
 
     
     public Question() // Default Constructor
@@ -16,7 +18,7 @@ public class Question
     
     public Question(in int theQuestionID, in string theQuestion, in string theAnswer)
     {
-        if (theQuestionID == null || theQuestion == null || theAnswer == null)
+        if (theQuestion == null || theAnswer == null)
         {
             throw new ArgumentException("Parameter can't be null. You passed in ID:" + theQuestionID + " Question: " +
                                         theQuestion + " Answer " + theAnswer);
@@ -59,4 +61,6 @@ public class Question
     {
         return "Question: " + myQuestion + " Answer: " + myAnswer + " ID: " + myQuestionID;
     }
+    
+    
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Common.Scripts.Controller;
 using Singleton;
 using UnityEngine;
 

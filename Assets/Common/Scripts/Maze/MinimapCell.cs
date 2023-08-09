@@ -21,7 +21,7 @@ public class MinimapCell : MonoBehaviour
         ColorChange();
     }
 
-    private void ColorChange()
+    internal void ColorChange()
     {
         Color newColor = Color.white;
 
