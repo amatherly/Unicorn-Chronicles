@@ -1,29 +1,31 @@
-using System;
 using UnityEngine;
 
-
-namespace Singleton
+namespace Common.Scripts.Controller
 {
     public class PlayerController : MonoBehaviour
 
     {
         // MAKE STATIC
         private static PlayerController myInstance = null;
-        private Maze myMaze;
+        public SaveLoadManager SaveLoadManagerInstance { get; set; }
+        private global::Maze myMaze;
         private CharacterController myCharacterController;
         private Animator myAnimator;
         private float mySpeed;
         private float myRotationSpeed;
+        
      
         // STATE
         private bool myCanMove;
         private Transform myCameraTransform;
         private int myItemCount;
-        public Transform myTransform; 
+        public Transform myCharacterTransform; 
+        private static DataService myDataService;
 
+        
         private void Start()
         {
-            myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
+            myMaze = GameObject.Find("Maze").GetComponent<global::Maze>(); // NEW
             myCharacterController = GetComponent<CharacterController>();
             myAnimator = GetComponent<Animator>();
             myCameraTransform = GameObject.Find("CM vcam2").transform;
@@ -31,8 +33,6 @@ namespace Singleton
             myRotationSpeed = 5f;
             myCanMove = true;
             myItemCount = 0;
-
-            myMaze = GameObject.Find("Maze").GetComponent<Maze>(); // NEW
         }
         
                 
@@ -80,50 +80,6 @@ namespace Singleton
             }
         }
 
-        public void SaveGame()
-        {
-            if (myMaze == null)
-            {
-                Debug.LogError("Maze object is not initialized.");
-                return;
-            }
-
-            // Save Player specific data
-            PlayerPrefs.SetFloat("PlayerSpeed", mySpeed);
-            PlayerPrefs.SetInt("PlayerItemCount", myItemCount);
-            PlayerPrefs.SetString("PlayerPosition", JsonUtility.ToJson(transform.position));
-
-            // Save door states in maze
-            foreach (var door in myMaze.doorsInMaze)
-            {
-                door.SaveDoorState();
-            }
-
-
-            // TODO Save the questions state
-            PlayerPrefs.Save();
-        }
-        
-
-        public void LoadGame()
-        {
-            // Load Player specific data
-            transform.position = JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
-            mySpeed = PlayerPrefs.GetFloat("PlayerSpeed", mySpeed);
-            myItemCount =
-                PlayerPrefs.GetInt("PlayerItemCount", myItemCount);
-
-            // Load door states in maze
-            foreach (var door in myMaze.doorsInMaze)
-            {
-                door.LoadDoorState();
-            }
-
-            // TODO Load the questions state 
-
-        }
-
-
         public void RotateCameraTowardDoor(Transform theObject)
         {
             // if (Input.GetAxis("Horizontal") > 0)
@@ -137,81 +93,49 @@ namespace Singleton
             // }
         }
 
-
-
-       /**
-        * Deletes saved data (previously saved game) and
-        * allows user to start a new game.
-        * TODO FINISH ME :)
-        */
-        public void NewGame()
+        public bool SpendKey()
         {
-            // Clear saved data from PlayerPrefs
-            // Delete Player specific saved data
-            PlayerPrefs.DeleteKey("PlayerSpeed");
-            PlayerPrefs.DeleteKey("PlayerItemCount");
-            PlayerPrefs.DeleteKey("PlayerPosition");
-
-            // Delete saved states for each door
-            foreach (var door in myMaze.doorsInMaze)
+            if (myItemCount > 0)
             {
-                string doorID = door.gameObject.name; // Use the door's GameObject name as a unique identifier.
-                PlayerPrefs.DeleteKey(doorID + "_LockState");
-                PlayerPrefs.DeleteKey(doorID + "_HasAttempted");
-                PlayerPrefs.DeleteKey(doorID + "_PosX");
-                PlayerPrefs.DeleteKey(doorID + "_PosY");
-                PlayerPrefs.DeleteKey(doorID + "_PosZ");
-                PlayerPrefs.DeleteKey(doorID + "_RotX");
-                PlayerPrefs.DeleteKey(doorID + "_RotY");
-                PlayerPrefs.DeleteKey(doorID + "_RotZ");
-                PlayerPrefs.DeleteKey(doorID + "_ScaleX");
-                PlayerPrefs.DeleteKey(doorID + "_ScaleY");
-                PlayerPrefs.DeleteKey(doorID + "_ScaleZ");
+                myItemCount--;
+                return true;
             }
-
-            // PlayerController
-            // Set Position
-            Vector3 defaultPosition = new Vector3(505, 1, 619); // default character position
-            transform.position = defaultPosition;
-            // Set Scale
-            Vector3 newScale = new Vector3(1, 1, 1);
-            playerCharacterTransform.localScale = newScale;
-
-
-            // mySpeed = 50f;
-            // myCanMove = true;
-            // myItemCount = 0;
-            //
-            // // Maze
-            // myMaze.MyLoseCondition = false;
-            // myMaze.MyCurrentRoom = myMaze.GetDefaultRoom;
-            //
-            // // Doors
-            // foreach (var door in myMaze.doorsInMaze)
-            // {
-            //     Door doorComponent = door.GetComponent<Door>();
-            //
-            //     if (doorComponent != null)
-            //     {
-            //         doorComponent.MyOpenState = false;
-            //         doorComponent.MyLockState = true;
-            //         doorComponent.MyHasAttempted = false;
-            //         doorComponent.MyProximityTrigger = false;
-            //
-            //         // Reset the door's rotation
-            //         doorComponent.transform.rotation = Quaternion.Euler(doorComponent.MyStartingRotation);
-            //     }
-            // }
-
+            return false;
         }
-
+        
         public float MySpeed
         {
+            get => mySpeed;
             set => mySpeed = value;
+        }
+        
+        public Animator MyAnimator
+        {
+            get => myAnimator;
+            set => myAnimator = value;
+        }
+        
+        public float MyRotationSpeed
+        {
+            get => myRotationSpeed;
+            set => myRotationSpeed = value;
+        }
+        
+        public Transform MyCharacterTransform
+        {
+            get => myCharacterTransform;
+            set => myCharacterTransform = value;
+        }
+        
+        public CharacterController MyCharacterController
+        {
+            get => myCharacterController;
+            set => myCharacterController = value;
         }
 
         public bool MyCanMove
         {
+            get => myCanMove;
             set => myCanMove = value;
         }
 
@@ -224,7 +148,9 @@ namespace Singleton
         public static PlayerController MyInstance
         {
             get => myInstance;
-            private set => myInstance = value;
+            set => myInstance = value;
         }
+        
+        
     }
 }
