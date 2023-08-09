@@ -13,8 +13,9 @@ namespace Common.Scripts.Maze
         private QuestionFactory myQuestionFactory;
 
         private global::Maze myMaze;
-    
-        public string myDoorID; // Unique door id
+
+        private static int myDoorCounter = 0; // Static counter to ensure uniqueness
+        public string myDoorID; // Unique Door ID
 
 
         private void Start()
@@ -22,13 +23,22 @@ namespace Common.Scripts.Maze
             myDoor = GetComponent<Door>();
             myQuestionFactory = QuestionFactory.MyInstance;
             myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
-            myDoorID = Guid.NewGuid().ToString();
+        }
 
+        private void Awake()
+        {
+            AssignUniqueID();
         }
 
         void Update()
         {
             CheckForInput();
+        }
+        
+        private void AssignUniqueID()
+        {
+            myDoorID = "Door_" + myDoorCounter + "_" + transform.position;
+            myDoorCounter++;
         }
 
         private void CheckForInput()

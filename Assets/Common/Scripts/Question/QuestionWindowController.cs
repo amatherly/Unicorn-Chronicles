@@ -41,7 +41,7 @@ public class QuestionWindowController : MonoBehaviour
         myIsCorrect = false;
         int ID = theQuestion.MyQuestionID;
         
-        Debug.Log(string.Format("Instansiating window type {0} with {1}.", myQuestion.MyQuestionID, myQuestion));
+        Debug.Log(string.Format("Instantiating window type {0} with {1}.", myQuestion.MyQuestionID, myQuestion));
         
         switch (ID)
         {    case 1:

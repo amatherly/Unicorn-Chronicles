@@ -82,7 +82,7 @@ public class DataService
     }
     
     // Mark question as answered in the database
-    public void MarkQuestionAsAnswered(int theQuestionId)
+    public void MarkQuestionAsAnswered(Question theQuestionId)
     {
 	    myConnection.Execute("UPDATE Question SET IsAnswered = 1 WHERE myQuestionID = ?", theQuestionId);
     }
