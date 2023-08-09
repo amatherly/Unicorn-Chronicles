@@ -1,87 +1,381 @@
-// using NUnit.Framework;
-// using Singleton;
-// using UnityEngine;
-//
-//
-// public class MazeTests
-// {
-//     [Test]
-//     public void SetDoorLockState_LocksDoorAndChecksLoseCondition()
-//     {
-//         Maze maze = new GameObject().AddComponent<Maze>();
-//         Room room = new GameObject().AddComponent<Room>();
-//         DoorController door = new GameObject().AddComponent<DoorController>();
-//
-//         maze.MyCurrentRoom = room;
-//         maze.MyCurrentDoor = door;
-//
-//         maze.SetDoorLockState(true);
-//
-//         Assert.IsTrue(door.MyLockState);
-//         Assert.IsTrue(maze.MyLoseCondition);
-//     }
-//
-//     [Test]
-//     public void SetDoorLockState_UnlocksDoorAndDoesNotSetLoseCondition()
-//     {
-//         Maze maze = new GameObject().AddComponent<Maze>();
-//         Room room = new GameObject().AddComponent<Room>();
-//         DoorController door = new GameObject().AddComponent<DoorController>();
-//
-//         maze.MyCurrentRoom = room;
-//         maze.MyCurrentDoor = door;
-//
-//         maze.SetDoorLockState(false);
-//
-//         Assert.IsFalse(door.MyLockState);
-//         Assert.IsFalse(maze.MyLoseCondition);
-//     }
-//
-//     [Test]
-//     public void CheckLoseCondition_PlayerInCurrentRoom_ReturnsFalse()
-//     {
-//         Maze maze = new GameObject().AddComponent<Maze>();
-//         Room room = new GameObject().AddComponent<Room>();
-//         maze.MyCurrentRoom = room;
-//
-//         bool result = maze.CheckLoseCondition(room.MyRow, room.MyCol, new bool[4, 4]);
-//
-//         Assert.IsFalse(result);
-//     }
-//     
-//     [Test]
-//     public void PopulateMaze_PopulatesAllRooms()
-//     {
-//         GameObject mazeObject = new GameObject("Maze");
-//         Maze maze = mazeObject.AddComponent<Maze>();
-//
-//
-//         GameObject[] mockRoomObjects = new GameObject[16];
-//
-//         for (int i = 0; i < 16; i++)
-//         {
-//             mockRoomObjects[i] = new GameObject($"Mock Room {i + 1}");
-//             mockRoomObjects[i].AddComponent<Room>();
-//         }
-//         
-//         maze.MyRooms = new Room[4, 4];
-//         for (int i = 0; i < 4; i++)
-//         {
-//             for (int j = 0; j < 4; j++)
-//             {
-//                 maze.MyRooms[i, j] = mockRoomObjects[i * 4 + j].GetComponent<Room>();
-//             }
-//         }
-//
-//         maze.PopulateMaze();
-//
-//         for (int i = 0; i < 4; i++)
-//         {
-//             for (int j = 0; j < 4; j++)
-//             {
-//                 Assert.NotNull(maze.MyRooms[i, j], $"Room at {i}-{j} should not be null");
-//             }
-//         }
-//     }
-//     
-// }
+using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MazeTests
+{
+
+    private Maze myTestMaze;
+
+    [SetUp]
+    public void Setup()
+    {
+        myTestMaze = new GameObject().AddComponent<Maze>();
+    }
+
+    [Test]
+    public void TestSetCurrentRoom()
+    {
+        Room testRoom = new GameObject().AddComponent<Room>();
+        myTestMaze.MyCurrentRoom = testRoom;
+        Assert.AreEqual(testRoom, myTestMaze.MyCurrentRoom);
+    }
+
+    [Test]
+    public void TestSetCurrentDoor()
+    {
+        Door testDoor = new GameObject().AddComponent<Door>();
+        myTestMaze.MyCurrentDoor = testDoor;
+        Assert.AreEqual(testDoor, myTestMaze.MyCurrentDoor);
+    }
+
+    [Test]
+    public void TestSetLoseCondition()
+    {
+        myTestMaze.MyLoseCondition = true;
+        Assert.True(myTestMaze.MyLoseCondition);
+    }
+
+    [Test]
+    public void TestCheckLoseConditionFalse()
+    {
+        myTestMaze.MyRooms = new Room[3, 3];
+
+        GameObject testDoor1 = new GameObject();
+        Door doorScript1 = testDoor1.AddComponent<Door>();
+        doorScript1.MyLockState = false;
+
+        GameObject testDoor2 = new GameObject();
+        Door doorScript2 = testDoor2.AddComponent<Door>();
+        doorScript2.MyHasAttempted = false;
+
+        GameObject testDoor3 = new GameObject();
+        Door doorScript3 = testDoor3.AddComponent<Door>();
+        doorScript3.MyLockState = false;
+
+        GameObject testDoor4 = new GameObject();
+        Door doorScript4 = testDoor4.AddComponent<Door>();
+        doorScript4.MyHasAttempted = true;
+        doorScript4.MyLockState = true;
+
+        GameObject testDoor5 = new GameObject();
+        Door doorScript5 = testDoor5.AddComponent<Door>();
+        doorScript5.MyHasAttempted = false;
+
+        GameObject testDoor6 = new GameObject();
+        Door doorScript6 = testDoor6.AddComponent<Door>();
+        doorScript6.MyHasAttempted = true;
+        doorScript6.MyLockState = true;
+
+        GameObject testDoor7 = new GameObject();
+        Door doorScript7 = testDoor7.AddComponent<Door>();
+        doorScript7.MyLockState = false;
+
+        GameObject testDoor8 = new GameObject();
+        Door doorScript8 = testDoor8.AddComponent<Door>();
+        doorScript8.MyLockState = false;
+
+        GameObject testDoor9 = new GameObject();
+        Door doorScript9 = testDoor9.AddComponent<Door>();
+        doorScript9.MyHasAttempted = false;
+
+        GameObject testDoor10 = new GameObject();
+        Door doorScript10 = testDoor10.AddComponent<Door>();
+        doorScript10.MyHasAttempted = true;
+        doorScript10.MyLockState = true;
+
+        GameObject testDoor11 = new GameObject();
+        Door doorScript11 = testDoor11.AddComponent<Door>();
+        doorScript11.MyHasAttempted = true;
+        doorScript11.MyLockState = true;
+
+        GameObject testDoor12 = new GameObject();
+        Door doorScript12 = testDoor12.AddComponent<Door>();
+        doorScript12.MyLockState = false;
+
+        Room testRoom1 = new GameObject().AddComponent<Room>();
+        testRoom1.MyRow = 1;
+        testRoom1.MyCol = 1;
+        testRoom1.MyDoors = new List<GameObject>
+        {
+            new GameObject("no-door"),
+            testDoor1,
+            testDoor3,
+            new GameObject("no-door")
+        };
+
+        Room testRoom2 = new GameObject().AddComponent<Room>();
+        testRoom2.MyRow = 1;
+        testRoom2.MyCol = 2;
+        testRoom2.MyDoors = new List<GameObject>
+        {
+            new GameObject("no-door"),
+            testDoor2,
+            testDoor4,
+            testDoor1
+        };
+
+        Room testRoom3 = new GameObject().AddComponent<Room>();
+        testRoom3.MyRow = 1;
+        testRoom3.MyCol = 3;
+        testRoom3.MyDoors = new List<GameObject>
+        {
+            new GameObject("no-door"),
+            new GameObject("no-door"),
+            testDoor5,
+            testDoor2
+        };
+
+        Room testRoom4 = new GameObject().AddComponent<Room>();
+        testRoom4.MyRow = 2;
+        testRoom4.MyCol = 1;
+        testRoom4.MyDoors = new List<GameObject>
+        {
+            testDoor3,
+            testDoor6,
+            testDoor8,
+            new GameObject("no-door")
+        };
+
+        Room testRoom5 = new GameObject().AddComponent<Room>();
+        testRoom5.MyRow = 2;
+        testRoom5.MyCol = 2;
+        testRoom5.MyDoors = new List<GameObject>
+        {
+            testDoor4,
+            testDoor7,
+            testDoor9,
+            testDoor6
+        };
+
+        Room testRoom6 = new GameObject().AddComponent<Room>();
+        testRoom6.MyRow = 2;
+        testRoom6.MyCol = 3;
+        testRoom6.MyDoors = new List<GameObject>
+        {
+            testDoor5,
+            new GameObject("no-door"),
+            testDoor10,
+            testDoor7
+        };
+
+        Room testRoom7 = new GameObject().AddComponent<Room>();
+        testRoom7.MyRow = 3;
+        testRoom7.MyCol = 1;
+        testRoom7.MyDoors = new List<GameObject>
+        {
+            testDoor8,
+            testDoor11,
+            new GameObject("no-door"),
+            new GameObject("no-door")
+        };
+
+        Room testRoom8 = new GameObject().AddComponent<Room>();
+        testRoom8.MyRow = 3;
+        testRoom8.MyCol = 2;
+        testRoom8.MyDoors = new List<GameObject>
+        {
+            testDoor9,
+            testDoor12,
+            new GameObject("no-door"),
+            testDoor11
+        };
+
+        Room testRoom9 = new GameObject().AddComponent<Room>();
+        testRoom9.MyRow = 3;
+        testRoom9.MyCol = 3;
+        testRoom9.MyDoors = new List<GameObject>
+        {
+            testDoor10,
+            new GameObject("no-door"),
+            new GameObject("no-door"),
+            testDoor12
+        };
+
+        myTestMaze.MyRooms[0, 0] = testRoom1;
+        myTestMaze.MyRooms[0, 1] = testRoom2;
+        myTestMaze.MyRooms[0, 2] = testRoom3;
+        myTestMaze.MyRooms[1, 0] = testRoom4;
+        myTestMaze.MyRooms[1, 1] = testRoom5;
+        myTestMaze.MyRooms[1, 2] = testRoom6;
+        myTestMaze.MyRooms[2, 0] = testRoom7;
+        myTestMaze.MyRooms[2, 1] = testRoom8;
+        myTestMaze.MyRooms[2, 2] = testRoom9;
+
+        myTestMaze.MyCurrentRoom = myTestMaze.MyRooms[2, 0];
+
+        Assert.False(myTestMaze.CheckLoseCondition(3, 3, new bool[3, 3]));
+    }
+
+    [Test]
+    public void TestCheckLoseConditionTrue()
+    {
+        myTestMaze.MyRooms = new Room[3, 3];
+
+        GameObject testDoor1 = new GameObject();
+        Door doorScript1 = testDoor1.AddComponent<Door>();
+        doorScript1.MyLockState = false;
+
+        GameObject testDoor2 = new GameObject();
+        Door doorScript2 = testDoor2.AddComponent<Door>();
+        doorScript2.MyHasAttempted = false;
+
+        GameObject testDoor3 = new GameObject();
+        Door doorScript3 = testDoor3.AddComponent<Door>();
+        doorScript3.MyLockState = false;
+
+        GameObject testDoor4 = new GameObject();
+        Door doorScript4 = testDoor4.AddComponent<Door>();
+        doorScript4.MyHasAttempted = true;
+        doorScript4.MyLockState = true;
+
+        GameObject testDoor5 = new GameObject();
+        Door doorScript5 = testDoor5.AddComponent<Door>();
+        doorScript5.MyHasAttempted = false;
+
+        GameObject testDoor6 = new GameObject();
+        Door doorScript6 = testDoor6.AddComponent<Door>();
+        doorScript6.MyHasAttempted = true;
+        doorScript6.MyLockState = true;
+
+        GameObject testDoor7 = new GameObject();
+        Door doorScript7 = testDoor7.AddComponent<Door>();
+        doorScript7.MyLockState = false;
+
+        GameObject testDoor8 = new GameObject();
+        Door doorScript8 = testDoor8.AddComponent<Door>();
+        doorScript8.MyHasAttempted = true;
+        doorScript8.MyLockState = true;
+
+        GameObject testDoor9 = new GameObject();
+        Door doorScript9 = testDoor9.AddComponent<Door>();
+        doorScript9.MyHasAttempted = false;
+
+        GameObject testDoor10 = new GameObject();
+        Door doorScript10 = testDoor10.AddComponent<Door>();
+        doorScript10.MyHasAttempted = true;
+        doorScript10.MyLockState = true;
+
+        GameObject testDoor11 = new GameObject();
+        Door doorScript11 = testDoor11.AddComponent<Door>();
+        doorScript11.MyHasAttempted = true;
+        doorScript11.MyLockState = true;
+
+        GameObject testDoor12 = new GameObject();
+        Door doorScript12 = testDoor12.AddComponent<Door>();
+        doorScript12.MyLockState = false;
+
+        Room testRoom1 = new GameObject().AddComponent<Room>();
+        testRoom1.MyRow = 1;
+        testRoom1.MyCol = 1;
+        testRoom1.MyDoors = new List<GameObject>
+        {
+            new GameObject("no-door"),
+            testDoor1,
+            testDoor3,
+            new GameObject("no-door")
+        };
+
+        Room testRoom2 = new GameObject().AddComponent<Room>();
+        testRoom2.MyRow = 1;
+        testRoom2.MyCol = 2;
+        testRoom2.MyDoors = new List<GameObject>
+        {
+            new GameObject("no-door"),
+            testDoor2,
+            testDoor4,
+            testDoor1
+        };
+
+        Room testRoom3 = new GameObject().AddComponent<Room>();
+        testRoom3.MyRow = 1;
+        testRoom3.MyCol = 3;
+        testRoom3.MyDoors = new List<GameObject>
+        {
+            new GameObject("no-door"),
+            new GameObject("no-door"),
+            testDoor5,
+            testDoor2
+        };
+
+        Room testRoom4 = new GameObject().AddComponent<Room>();
+        testRoom4.MyRow = 2;
+        testRoom4.MyCol = 1;
+        testRoom4.MyDoors = new List<GameObject>
+        {
+            testDoor3,
+            testDoor6,
+            testDoor8,
+            new GameObject("no-door")
+        };
+
+        Room testRoom5 = new GameObject().AddComponent<Room>();
+        testRoom5.MyRow = 2;
+        testRoom5.MyCol = 2;
+        testRoom5.MyDoors = new List<GameObject>
+        {
+            testDoor4,
+            testDoor7,
+            testDoor9,
+            testDoor6
+        };
+
+        Room testRoom6 = new GameObject().AddComponent<Room>();
+        testRoom6.MyRow = 2;
+        testRoom6.MyCol = 3;
+        testRoom6.MyDoors = new List<GameObject>
+        {
+            testDoor5,
+            new GameObject("no-door"),
+            testDoor10,
+            testDoor7
+        };
+
+        Room testRoom7 = new GameObject().AddComponent<Room>();
+        testRoom7.MyRow = 3;
+        testRoom7.MyCol = 1;
+        testRoom7.MyDoors = new List<GameObject>
+        {
+            testDoor8,
+            testDoor11,
+            new GameObject("no-door"),
+            new GameObject("no-door")
+        };
+
+        Room testRoom8 = new GameObject().AddComponent<Room>();
+        testRoom8.MyRow = 3;
+        testRoom8.MyCol = 2;
+        testRoom8.MyDoors = new List<GameObject>
+        {
+            testDoor9,
+            testDoor12,
+            new GameObject("no-door"),
+            testDoor11
+        };
+
+        Room testRoom9 = new GameObject().AddComponent<Room>();
+        testRoom9.MyRow = 3;
+        testRoom9.MyCol = 3;
+        testRoom9.MyDoors = new List<GameObject>
+        {
+            testDoor10,
+            new GameObject("no-door"),
+            new GameObject("no-door"),
+            testDoor12
+        };
+
+        myTestMaze.MyRooms[0, 0] = testRoom1;
+        myTestMaze.MyRooms[0, 1] = testRoom2;
+        myTestMaze.MyRooms[0, 2] = testRoom3;
+        myTestMaze.MyRooms[1, 0] = testRoom4;
+        myTestMaze.MyRooms[1, 1] = testRoom5;
+        myTestMaze.MyRooms[1, 2] = testRoom6;
+        myTestMaze.MyRooms[2, 0] = testRoom7;
+        myTestMaze.MyRooms[2, 1] = testRoom8;
+        myTestMaze.MyRooms[2, 2] = testRoom9;
+
+        myTestMaze.MyCurrentRoom = myTestMaze.MyRooms[2, 0];
+
+        Assert.True(myTestMaze.CheckLoseCondition(3, 3, new bool[3, 3]));
+    }
+}

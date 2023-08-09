@@ -6,9 +6,9 @@ using UnityEngine.TestTools;
 
 public class QuestionTests 
 {
-    [NotNull]private static readonly int QUESTION_ID = 1;
+    [NotNull] private static readonly int QUESTION_ID = 1;
     [NotNull] private static readonly string QUESTION_STRING_1 = "This is a question?";
-    [NotNull]private static readonly string ANSWER = "test";
+    [NotNull] private static readonly string ANSWER = "test";
 
     private readonly Question myTestQuestion1  = new(QUESTION_ID, QUESTION_STRING_1, ANSWER);
 

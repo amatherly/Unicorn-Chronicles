@@ -64,6 +64,12 @@ public class Maze : MonoBehaviour
         set => myLoseCondition = value;
     }
 
+    public Room[,] MyRooms
+    {
+        get => myRooms;
+        set => myRooms = value;
+    }
+
     private void PopulateMaze()
     {
         myRooms[0, 0] = GameObject.Find("Room 1-1").GetComponent<Room>();

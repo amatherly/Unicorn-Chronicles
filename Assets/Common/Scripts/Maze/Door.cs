@@ -7,9 +7,9 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
 
-    private const float ROTATE_SPEED = 1f;
+    private static readonly float ROTATE_SPEED = 1f;
 
-    private const float ROTATION_AMOUNT = 90f;
+    private static readonly float ROTATION_AMOUNT = 90f;
 
     [SerializeField]
     private bool myOpenState;
@@ -82,7 +82,7 @@ public class Door : MonoBehaviour
         get => myStartingRotation; 
     }
 
-        public bool MyOpenState
+    public bool MyOpenState
     {
         get => myOpenState;
         set => myOpenState = value;
@@ -98,6 +98,12 @@ public class Door : MonoBehaviour
     {
         get => myHasAttempted;
         set => myHasAttempted = value;
+    }
+
+    public GameObject MyPlayer
+    {
+        get => myPlayer;
+        set => myPlayer = value;
     }
 
     public GameObject MyNavPopup
