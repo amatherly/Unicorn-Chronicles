@@ -93,6 +93,16 @@ namespace Common.Scripts.Controller
             // }
         }
 
+        public bool SpendKey()
+        {
+            if (myItemCount > 0)
+            {
+                myItemCount--;
+                return true;
+            }
+            return false;
+        }
+        
         public float MySpeed
         {
             get => mySpeed;
@@ -140,5 +150,7 @@ namespace Common.Scripts.Controller
             get => myInstance;
             set => myInstance = value;
         }
+        
+        
     }
 }

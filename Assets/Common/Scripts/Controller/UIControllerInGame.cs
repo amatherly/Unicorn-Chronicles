@@ -5,17 +5,16 @@ namespace Singleton
 {
     public class UIControllerInGame : MonoBehaviour
     {
-        public AudioClip[] MyAudioClips
-        {
-            get => myAudioClips;
-            set => myAudioClips = value;
-        }
 
         private static UIControllerInGame myInstance = null;
 
+
         [SerializeField] private AudioClip[] myAudioClips;
+        [SerializeField] private Texture2D cursorTexture;
+
 
         private AudioSource myAudioSource;
+
         // private PauseMenu myPauseMenu; // old
         private GameObject PauseMenu; // Changed PauseMenu to GameObject
         private QuestionWindowController _myQuestionWindowControllerController;
@@ -28,16 +27,25 @@ namespace Singleton
             // myAudioSource = GetComponent<AudioSource>();
             // myPauseMenu = GetComponentInChildren<PauseMenu>();
             // myIsPaused = false;
-            
+
             // new
             myAudioSource = GetComponent<AudioSource>();
+            Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+            Cursor.visible = true;
 
             // Find the PauseMenu in scene and store the reference
-            PauseMenu = GameObject.Find("PauseMenu");
+            PauseMenu = GameObject
+                .Find("PauseMenu"); // Change "PauseMenu" to the actual name of the GameObject representing your pause menu
             myIsPaused = false;
+
+            // Checking if PauseMenu is found in the scene
+            if (PauseMenu == null)
+            {
+                Debug.LogError("Options GameObject not found in the scene. Please check the GameObject name.");
+            }
         }
-        
-        
+
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private void Awake()
         {
@@ -52,10 +60,21 @@ namespace Singleton
             }
         }
         
-        // Update is called once per frame
         void Update()
         {
-            CheckForKeyboardInput();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                myIsPaused = !myIsPaused;
+                
+                if (PauseMenu != null)
+                {
+                    // Toggle the visibility of the PauseMenu GameObject based on the isPaused flag
+                    PauseMenu.SetActive(myIsPaused);
+                    
+                    // Pause or unpause the game based on the isPaused flag
+                    Time.timeScale = myIsPaused ? 0f : 1f;
+                }
+            }
         }
 
         public void PauseGame()
@@ -68,22 +87,6 @@ namespace Singleton
             Time.timeScale = 1;
         }
 
-
-        void CheckForKeyboardInput()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                myIsPaused = !myIsPaused;
-                if (PauseMenu != null)
-                {
-                    // Toggle the visibility of the PauseMenu GameObject based on the isPaused flag
-                    PauseMenu.SetActive(myIsPaused);
-                    // Pause or unpause the game based on the isPaused flag
-                    Time.timeScale = myIsPaused ? 0f : 1f;
-                }
-            }
-        }
-
         public void PlayUISound(int audioClipIndex)
         {
             myAudioSource.PlayOneShot(myAudioClips[audioClipIndex]);
@@ -93,6 +96,11 @@ namespace Singleton
         {
             get => myInstance;
             set => myInstance = value;
+        }
+        
+        public AudioClip[] MyAudioClips
+        {
+            get => myAudioClips;
         }
     }
 }
