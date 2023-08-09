@@ -1,11 +1,7 @@
-<<<<<<< Updated upstream
 using System;
 using Common.Scripts.Controller;
 using Singleton;
 using Unity.VisualScripting;
-=======
-using Common.Scripts.Controller;
->>>>>>> Stashed changes
 using UnityEngine;
 
 namespace Models
