@@ -10,8 +10,7 @@ public class QuestionWindowController : MonoBehaviour
     private static Random RANDOM = new Random();
     private static UIControllerInGame myUIController;
     private  Maze myMaze;
-
-
+    
     private static int CORRECT_SOUND = 2;
     private static int INCORRECT_SOUND = 3;
     
@@ -29,7 +28,6 @@ public class QuestionWindowController : MonoBehaviour
     private void Start()
     {
         myMaze = GameObject.Find("Maze").GetComponent<Maze>();
-
     }
 
     public void InitializeWindow(Question theQuestion)
@@ -37,7 +35,6 @@ public class QuestionWindowController : MonoBehaviour
         UIControllerInGame.MyInstance.PlayUISound(0);
         
         myQuestion = theQuestion;
-        Debug.Log("Initializing window with question: " + myQuestion);
 
         myIsCorrect = false;
         int ID = theQuestion.MyQuestionID;
@@ -87,7 +84,6 @@ public class QuestionWindowController : MonoBehaviour
 
     public void CheckAnswer()
     {
-        Debug.Log("Checking the answer for question: " + myQuestion);
         myIsCorrect = myQuestion.CheckUserAnswer(myAnswerInput);
         myView.ShowResult(myIsCorrect);
 
@@ -113,7 +109,6 @@ public class QuestionWindowController : MonoBehaviour
 
     public void SetAnswerInput(string theAnswerInput)
     {
-        Debug.Log("Setting Answer for question: " + myQuestion);
         
         if (myQuestion.MyQuestionID == 2)
         {
