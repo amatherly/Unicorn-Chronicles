@@ -1,12 +1,16 @@
-using Common.Scripts.Controller;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using Singleton;
 using UnityEngine;
+
 
 public class ItemController : MonoBehaviour
 {
     private PlayerController myPlayer;
 
     private float mySpeed;
+
     private float myHeight;
 
     // Start is called before the first frame update
@@ -29,8 +33,8 @@ public class ItemController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             myPlayer.MyItemCount += 1;
-            FindObjectOfType<UIControllerInGame>().PlayUISound(4);
             Destroy(gameObject);
         }
     }
+
 }
