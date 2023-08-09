@@ -33,14 +33,8 @@ namespace Singleton
             myAudioSource = GetComponent<AudioSource>();
 
             // Find the PauseMenu in scene and store the reference
-            PauseMenu = GameObject.Find("PauseMenu"); // Change "PauseMenu" to the actual name of the GameObject representing your pause menu
+            PauseMenu = GameObject.Find("PauseMenu");
             myIsPaused = false;
-            
-            // Checking if PauseMenu is found in the scene
-            if (PauseMenu == null)
-            {
-                Debug.LogError("Options GameObject not found in the scene. Please check the GameObject name.");
-            }
         }
         
         

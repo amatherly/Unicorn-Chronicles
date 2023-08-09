@@ -93,7 +93,13 @@ public class Door : MonoBehaviour
         get => myLockState;
         set => myLockState = value;
     }
-
+    public Coroutine MyAnimation
+    {
+        get => myAnimation;
+        set => myAnimation = value;
+    }
+    
+    
     public bool MyHasAttempted
     {
         get => myHasAttempted;

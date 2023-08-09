@@ -72,7 +72,29 @@ public class DataService
 
     public IEnumerable<Question> GetQuestion()
     {
-        return myConnection.Table<Question>();
+	    return myConnection.Table<Question>();
     }
+
+    // Get all questions
+    public IEnumerable<Question> GetQuestions()
+    {
+	    return myConnection.Query<Question>("SELECT * FROM Question");
+    }
+    
+    // Mark question as answered in the database
+    public void MarkQuestionAsAnswered(int theQuestionId)
+    {
+	    myConnection.Execute("UPDATE Question SET IsAnswered = 1 WHERE myQuestionID = ?", theQuestionId);
+    }
+    
+    public static void ResetQuestionStateInDatabase()
+    {
+	    // Assuming you've already created an instance of the DataService class
+	    DataService dataService = new DataService("data.sqlite");  
+	    dataService.myConnection.Execute("UPDATE Question SET IsAnswered = 0");
+    }
+    
+    
+    
     
 }
