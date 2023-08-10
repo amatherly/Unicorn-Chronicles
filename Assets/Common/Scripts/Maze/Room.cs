@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,7 +55,9 @@ public class Room : MonoBehaviour
     /// are the same <c>Room</c>.
     /// </summary>
     /// <param name="theOther">The <c>Room</c> being compared against.</param>
-    /// <returns>Boolean indicating whether or not the <c>Room</c> scripts are the same.</returns>
+    /// <returns>
+    /// Boolean indicating whether or not the <c>Room</c> scripts are the same.
+    /// </returns>
     public bool Equals(Room theOther)
     {
         return theOther.MyRow == myRow && theOther.MyCol == myCol;

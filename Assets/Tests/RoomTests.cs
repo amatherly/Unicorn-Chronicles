@@ -1,13 +1,22 @@
 using NUnit.Framework;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// NUnit tests for the <c>Room</c> script.
+/// </summary>
 public class RoomTests
 {
 
+    /// <summary>
+    /// <c>Room</c> script for use in the tests.
+    /// </summary>
     private Room myTestRoom;
 
+    /// <summary>
+    /// Called before every test to re-initialize the <c>myTestRoom</c> field and
+    /// ensure valid state.
+    /// </summary>
     [SetUp]
     public void SetUp()
     {
@@ -16,6 +25,9 @@ public class RoomTests
         myTestRoom.MyCol = 1;
     }
 
+    /// <summary>
+    /// Test for the <c>myRow</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetRow()
     {
@@ -23,6 +35,9 @@ public class RoomTests
         Assert.AreEqual(myTestRoom.MyRow, 2);
     }
 
+    /// <summary>
+    /// Test for the <c>myCol</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetCol()
     {
@@ -30,6 +45,9 @@ public class RoomTests
         Assert.AreEqual(myTestRoom.MyCol, 2);
     }
 
+    /// <summary>
+    /// Test for the <c>myHasVisited</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetHasVisited()
     {
@@ -37,6 +55,9 @@ public class RoomTests
         Assert.True(myTestRoom.MyHasVisited);
     }
 
+    /// <summary>
+    /// Test for the <c>myDoors</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetDoors()
     {
@@ -45,6 +66,10 @@ public class RoomTests
         Assert.AreEqual(testDoors, myTestRoom.MyDoors);
     }
 
+    /// <summary>
+    /// Test for the <c>Equals()</c> method when the <c>Room</c> scripts
+    /// are not equal.
+    /// </summary>
     [Test]
     public void TestNotEqual()
     {
@@ -54,6 +79,10 @@ public class RoomTests
         Assert.False(myTestRoom.Equals(other));
     }
 
+    /// <summary>
+    /// Test for the <c>Equals()</c> method when the <c>Room</c> scripts
+    /// are equal.
+    /// </summary>
     [Test]
     public void TestEquals()
     {

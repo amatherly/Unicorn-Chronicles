@@ -146,7 +146,7 @@ namespace Common.Scripts.Controller
         { 
             myDoor = doorController.GetComponent<Door>();
 
-            string doorID = doorController.myDoorID;
+            string doorID = myDoor.myDoorID;
 
             PlayerPrefs.SetInt(doorID + "_LockState", myDoor.MyLockState ? 1 : 0);
             PlayerPrefs.SetInt(doorID + "_HasAttempted", myDoor.MyHasAttempted ? 1 : 0);
@@ -173,7 +173,7 @@ namespace Common.Scripts.Controller
         {
             myDoor = doorController.GetComponent<Door>();
 
-            string doorID = doorController.myDoorID;
+            string doorID = myDoor.myDoorID;
 
             // Check if the PlayerPrefs has the necessary key to determine if the door's state was saved previously
             if (PlayerPrefs.HasKey(doorID + "_LockState"))
@@ -187,7 +187,7 @@ namespace Common.Scripts.Controller
                 position.x = PlayerPrefs.GetFloat(doorID + "_PosX");
                 position.y = PlayerPrefs.GetFloat(doorID + "_PosY");
                 position.z = PlayerPrefs.GetFloat(doorID + "_PosZ");
-                doorController.transform.position = position;
+                myDoor.transform.position = position;
 
                 // Load rotation
                 Vector3 eulerAngles;

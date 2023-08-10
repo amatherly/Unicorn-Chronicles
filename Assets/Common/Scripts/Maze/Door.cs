@@ -8,67 +8,90 @@ public class Door : MonoBehaviour
 {
 
     /// <summary>
-    /// 
+    /// Constant for rotate animation speed.
     /// </summary>
     private static readonly float ROTATE_SPEED = 1f;
 
     /// <summary>
-    /// 
+    /// Constant for rotation angle.
     /// </summary>
     private static readonly float ROTATION_AMOUNT = 90f;
 
     /// <summary>
-    /// 
+    /// Boolean indicating whether or not the <c>Door</c> is open.
     /// </summary>
     [SerializeField]
     private bool myOpenState;
 
     /// <summary>
-    /// 
+    /// Boolean indicating whether or not the <c>Door</c> is locked.
     /// </summary>
     [SerializeField]
     private bool myLockState;
 
     /// <summary>
-    /// 
+    /// Boolean indicating whether or not a question has been attempted.
     /// </summary>
     [SerializeField]
     private bool myHasAttempted;
 
     /// <summary>
-    /// 
+    /// Boolean indicating whether the <c>Door</c> is horizontal or vertical so that
+    /// the animation will run as expected.
     /// </summary>
     [SerializeField]
     private bool myHorizontalState;
 
     /// <summary>
-    /// 
+    /// Boolean indicating whether or not the player is within proximity of the
+    /// <c>Door</c>.
     /// </summary>
     private bool myProximityTrigger;
 
     /// <summary>
-    /// 
+    /// Vector indicating the starting rotation of the door's asset.
     /// </summary>
     private Vector3 myStartingRotation;
 
     /// <summary>
-    /// 
+    /// Reference to the <c>GameObject</c> for the player so that its transform
+    /// can be accessed.
     /// </summary>
     private GameObject myPlayer;
 
     /// <summary>
-    /// 
+    /// Instance field for the animation currently underway.
     /// </summary>
     private Coroutine myAnimation;
 
     /// <summary>
-    /// 
+    /// Tool-tip <c>GameObject</c> so that the user knows which key to press in
+    /// order to activate the door.
     /// </summary>
     [SerializeField]
     private GameObject myNavPopup;
 
     /// <summary>
-    /// 
+    /// Static counter to ensure a unique String for <c>myDoorID</c>.
+    /// </summary>
+    private static int myDoorCounter = 0;
+
+    /// <summary>
+    /// Unique name so that <c>Door</c> state can be individually captured for save/load.
+    /// </summary>
+    public string myDoorID; // Unique Door ID
+
+
+    /// <summary>
+    /// Called when the Script instance is being loaded.
+    /// </summary>
+    private void Awake()
+    {
+        AssignUniqueID();
+    }
+
+    /// <summary>
+    /// Called before the first frame update.
     /// </summary>
     void Start()
     {
@@ -81,7 +104,8 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Method contains logic to determine whether or not the <c>DoRotationOpen()</c>
+    /// animation should be initiated.
     /// </summary>
     public void Open()
     {
@@ -97,7 +121,8 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Method contains logic to determine whether or not the <c>DoRotationClose()</c>
+    /// animation should be initiated.
     /// </summary>
     public void Close()
     {
@@ -113,7 +138,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Accessor and mutator for the <c>myProximityTrigger</c> field.
     /// </summary>
     public bool MyProximityTrigger
     {
@@ -122,7 +147,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Accessor for the <c>myStartingRotation</c> field.
     /// </summary>
     public Vector3 MyStartingRotation
     {
@@ -130,7 +155,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Accessor and mutator for the <c>myOpenState</c> field.
     /// </summary>
     public bool MyOpenState
     {
@@ -139,7 +164,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Accessor and mutator for the <c>myLockState</c> field.
     /// </summary>
     public bool MyLockState
     {
@@ -148,7 +173,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Accessor and mutator for the <c>myAnimation</c> field.
     /// </summary>
     public Coroutine MyAnimation
     {
@@ -157,7 +182,7 @@ public class Door : MonoBehaviour
     }
     
     /// <summary>
-    /// 
+    /// Accessor and mutator for the <c>myHasAttempted</c> field.
     /// </summary>
     public bool MyHasAttempted
     {
@@ -166,7 +191,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Accessor and mutator for the <c>myPlayer</c> field.
     /// </summary>
     public GameObject MyPlayer
     {
@@ -175,7 +200,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Accessor for the <c>myNavPopup</c> field.
     /// </summary>
     public GameObject MyNavPopup
     {
@@ -185,7 +210,19 @@ public class Door : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
+    private void AssignUniqueID()
+    {
+        myDoorID = "Door_" + myDoorCounter + "_" + transform.position;
+        myDoorCounter++;
+    }
+
+    /// <summary>
+    /// Coroutine for the open animation of the <c>Door</c>.
+    /// </summary>
+    /// <returns>
+    /// Yield return null so that the animation can be resumed on the
+    /// next frame update.
+    /// </returns>
     private IEnumerator DoRotationOpen()
     {
         Quaternion startRotation = transform.rotation;
@@ -213,9 +250,12 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Coroutine for the close animation of the <c>Door</c>.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// Yield return null so that the animation can be resumed on the
+    /// next frame update.
+    /// </returns>
     private IEnumerator DoRotationClose()
     {
         Quaternion startRotation = transform.rotation;

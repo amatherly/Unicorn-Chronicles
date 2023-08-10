@@ -1,13 +1,21 @@
 using NUnit.Framework;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// NUnit tests for the <c>Door</c> script.
+/// </summary>
 public class DoorTests
 {
 
+    /// <summary>
+    /// <c>Door</c> script for use in the tests.
+    /// </summary>
     private Door myTestDoor;
 
+    /// <summary>
+    /// Called before every test to re-initialize the <c>myTestDoor</c> field
+    /// and ensure valid state.
+    /// </summary>
     [SetUp]
     public void SetUp()
     {
@@ -17,6 +25,9 @@ public class DoorTests
         myTestDoor.MyPlayer = new GameObject();
     }
 
+    /// <summary>
+    /// Test for the <c>Open()</c> method.
+    /// </summary>
     [Test]
     public void TestOpen()
     {
@@ -24,6 +35,9 @@ public class DoorTests
         Assert.True(myTestDoor.MyOpenState);
     }
 
+    /// <summary>
+    /// Test for the <c>myProximityTrigger</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetProximityTrigger()
     {
@@ -31,6 +45,9 @@ public class DoorTests
         Assert.True(myTestDoor.MyProximityTrigger);
     }
 
+    /// <summary>
+    /// Test for the <c>myOpenState</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetOpenState()
     {
@@ -38,6 +55,9 @@ public class DoorTests
         Assert.True(myTestDoor.MyOpenState);
     }
 
+    /// <summary>
+    /// Test for the <c>myLockState</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetLockState()
     {
@@ -45,6 +65,9 @@ public class DoorTests
         Assert.True(myTestDoor.MyLockState);
     }
 
+    /// <summary>
+    /// Test for the <c>myHasAttempted</c> mutator method.
+    /// </summary>
     [Test]
     public void SetHasAttempted()
     {

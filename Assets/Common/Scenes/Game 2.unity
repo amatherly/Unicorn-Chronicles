@@ -4903,8 +4903,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115522a8a4234af1b74ac402029c1aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatSpeed: 1
-  floatAmount: 0.5
+  pulseSpeed: 1
+  minEmission: 0.2
+  maxEmission: 1
 --- !u!4 &369014361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5876317230815310939, guid: 931110c847eea4007b670ae0ac1e55ff, type: 3}
@@ -72595,7 +72596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
