@@ -1,40 +1,75 @@
 using System.Collections;
-using System.Collections.Generic;
-using Singleton;
-using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Class <c>Door</c> contains state and handles open/close animations.
+/// </summary>
 public class Door : MonoBehaviour
 {
 
+    /// <summary>
+    /// 
+    /// </summary>
     private static readonly float ROTATE_SPEED = 1f;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private static readonly float ROTATION_AMOUNT = 90f;
 
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField]
     private bool myOpenState;
 
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField]
     private bool myLockState;
 
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField]
     private bool myHasAttempted;
 
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField]
     private bool myHorizontalState;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private bool myProximityTrigger;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private Vector3 myStartingRotation;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private GameObject myPlayer;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private Coroutine myAnimation;
 
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField]
     private GameObject myNavPopup;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// 
+    /// </summary>
     void Start()
     {
         myOpenState = false;
@@ -45,6 +80,9 @@ public class Door : MonoBehaviour
         myPlayer = GameObject.FindGameObjectWithTag("Player");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void Open()
     {
         if (!myOpenState)
@@ -58,6 +96,9 @@ public class Door : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void Close()
     {
         if (myOpenState)
@@ -71,52 +112,80 @@ public class Door : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public bool MyProximityTrigger
     {
         get => myProximityTrigger;
         set => myProximityTrigger = value;
     }
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
     public Vector3 MyStartingRotation
     {
         get => myStartingRotation; 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public bool MyOpenState
     {
         get => myOpenState;
         set => myOpenState = value;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public bool MyLockState
     {
         get => myLockState;
         set => myLockState = value;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public Coroutine MyAnimation
     {
         get => myAnimation;
         set => myAnimation = value;
     }
     
-    
+    /// <summary>
+    /// 
+    /// </summary>
     public bool MyHasAttempted
     {
         get => myHasAttempted;
         set => myHasAttempted = value;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public GameObject MyPlayer
     {
         get => myPlayer;
         set => myPlayer = value;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public GameObject MyNavPopup
     {
         get => myNavPopup;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator DoRotationOpen()
     {
         Quaternion startRotation = transform.rotation;
@@ -143,6 +212,10 @@ public class Door : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator DoRotationClose()
     {
         Quaternion startRotation = transform.rotation;
