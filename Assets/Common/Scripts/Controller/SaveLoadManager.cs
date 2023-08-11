@@ -121,25 +121,29 @@ namespace Common.Scripts.Controller
         //     myNoSaveGameNotification.SetActive(true);
         // }
 
-        private void ResetGameState() 
+        private void ResetGameState()
         {
             // Reset player attributes to default values
-            myPlayerController.MySpeed = 50f; 
-            myPlayerController.MyRotationSpeed = 5f; 
             myPlayerController.MyCanMove = true; 
             myPlayerController.MyItemCount = 0; 
+            
             // Reset player's position, rotation, and scale
-            Vector3 defaultPosition = new Vector3(505, 1, 619); // Default character position
-            myPlayerController.myCharacterTransform.position = defaultPosition; 
+            GameObject defaultPosition = GameObject.Find("StartPos");
+            myPlayerController.myCharacterTransform.position = defaultPosition.transform.position; 
             myPlayerController.MyCharacterTransform.rotation = Quaternion.identity; // Resets to no rotation
-            Vector3 defaultScale = new Vector3(1, 1, 1); 
-            myPlayerController.MyCharacterTransform.localScale = defaultScale;
 
             // Reset animator state
             myPlayerController.MyAnimator.SetBool("isWalking", false);
 
             // Reset the isAnswered column in the SQLite database
-            DataService.ResetQuestionStateInDatabase(); 
+            DataService.ResetQuestionStateInDatabase();
+            
+            ResetDoorState();
+            ResetMinimap();
+            ResetMinimapDoors();
+            
+            UIControllerInGame.MyInstance.PauseGame();
+            PlayerPrefs.DeleteAll();
         }
 
         private void SaveDoorState(DoorController doorController) 

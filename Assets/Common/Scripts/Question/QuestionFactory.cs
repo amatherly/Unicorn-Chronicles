@@ -47,9 +47,8 @@ namespace Singleton
         
         private void InitializeQuestionArray()
         {
-            // myQuestions = myDataService.GetQuestion();
             myQuestions = DATA_SERVICE.GetQuestions().Where(q => !q.MyIsAnswered);
-            // myQuestions = DATA_SERVICE.GetQuestion();
+            myQuestions = DATA_SERVICE.GetQuestions().Where(q => q.MyQuestionID == 3);
             myRandomizedQuestions = myQuestions.OrderBy(a => RANDOM.Next()).ToList();
         }
 
