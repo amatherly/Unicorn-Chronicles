@@ -1,26 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script to handle color change of the doors on the
+/// minimap.
+/// </summary>
 public class MinimapDoor : MonoBehaviour
 {
 
+    /// <summary>
+    /// The <c>Door</c> the minimap cell corresponds to.
+    /// </summary>
     [SerializeField]
     GameObject myDoor;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     void Update()
     {
         ColorChange();
     }
 
+    /// <summary>
+    /// Changes the color of the cell depending on the state
+    /// of its corresponding <c>Door</c>. Yellow if the door has
+    /// not been attempted, green if the question was answered correctly,
+    /// and red if the question was answered incorrectly.
+    /// </summary>
     private void ColorChange()
     {
         Color newColor = Color.yellow;

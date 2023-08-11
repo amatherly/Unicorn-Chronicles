@@ -79139,6 +79139,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 335874108}
     m_Modifications:
+    - target: {fileID: 1827260219, guid: e3bbe430c890a94408dff523cc2b2fc5, type: 3}
+      propertyPath: m_Size.x
+      value: 265.91858
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827260219, guid: e3bbe430c890a94408dff523cc2b2fc5, type: 3}
+      propertyPath: m_Center.x
+      value: 239.12384
+      objectReference: {fileID: 0}
     - target: {fileID: 1827260220, guid: e3bbe430c890a94408dff523cc2b2fc5, type: 3}
       propertyPath: myDoors.Array.data[0]
       value: 
