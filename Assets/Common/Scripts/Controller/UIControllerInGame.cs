@@ -10,12 +10,11 @@ namespace Singleton
 
         [SerializeField] private AudioClip[] myAudioClips;
         [SerializeField] private Texture2D cursorTexture;
-
-        [SerializeField]
-        private AudioSource myAudioSource;
+        [SerializeField]private AudioSource myAudioSource;
         
-        private GameObject myPauseMenu;
+        [SerializeField]
         private GameObject myResultWindow;
+        private GameObject myPauseMenu;
 
         private static Maze myMaze;
         private QuestionWindowController myQuestionWindowControllerController;
@@ -27,10 +26,8 @@ namespace Singleton
             myMaze = FindObjectOfType<Maze>();
             myPauseMenu = GameObject.Find("PauseMenu");
             myPauseMenu.SetActive(false);
-            myResultWindow = GameObject.Find("Win/LoseWindow");
-            myResultWindow.SetActive(false);
             myIsPaused = false;
-            //myAudioSource = GetComponent<AudioSource>();
+            // myAudioSource = GetComponent<AudioSource>();
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
         }
