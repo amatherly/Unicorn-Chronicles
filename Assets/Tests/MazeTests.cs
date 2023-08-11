@@ -1,19 +1,31 @@
-
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// NUnit tests for the <c>Maze</c> script.
+/// </summary>
 public class MazeTests
 {
 
+    /// <summary>
+    /// <c>Maze</c> script for use in the tests.
+    /// </summary>
     private Maze myTestMaze;
 
+    /// <summary>
+    /// Called before every test to re-initialize the <c>myTestMaze</c> field
+    /// and ensure valid state.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
         myTestMaze = new GameObject().AddComponent<Maze>();
     }
 
+    /// <summary>
+    /// Test for the <c>myCurrentRoom</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetCurrentRoom()
     {
@@ -22,6 +34,9 @@ public class MazeTests
         Assert.AreEqual(testRoom, myTestMaze.MyCurrentRoom);
     }
 
+    /// <summary>
+    /// Test for the <c>myCurrentDoor</c> mutator method.
+    /// </summary>
     [Test]
     public void TestSetCurrentDoor()
     {
@@ -30,6 +45,9 @@ public class MazeTests
         Assert.AreEqual(testDoor, myTestMaze.MyCurrentDoor);
     }
 
+    /// <summary>
+    /// Test for the <c>myLoseCondition</c> field.
+    /// </summary>
     [Test]
     public void TestSetLoseCondition()
     {
@@ -37,6 +55,13 @@ public class MazeTests
         Assert.True(myTestMaze.MyLoseCondition);
     }
 
+    /// <summary>
+    /// Test for the <c>CheckLoseCondition()</c> method when there exists a path
+    /// from the maze's win room to the player's current room. Initializes a mock
+    /// 2x2 maze in which there is only one path to the player's current room. The
+    /// path traverses each direction at least once to ensure that every case in
+    /// the method's switch statement is tested.
+    /// </summary>
     [Test]
     public void TestCheckLoseConditionFalse()
     {
@@ -208,6 +233,12 @@ public class MazeTests
         Assert.False(myTestMaze.CheckLoseCondition(3, 3, new bool[3, 3]));
     }
 
+    /// <summary>
+    /// Test for the <c>CheckLoseCondition()</c> method when no path exists
+    /// from the maze's win room to the player's current room. The mock maze
+    /// has the same state as the previous method, with the exception being
+    /// that the player's current room has only locked doors.
+    /// </summary>
     [Test]
     public void TestCheckLoseConditionTrue()
     {

@@ -6,8 +6,7 @@ public class Question
     private int myQuestionID;
     private string myQuestion;
     private string myAnswer;
-
-    public bool myIsAnswered { get; set; }
+    private bool myIsAnswered;
 
 
     
@@ -55,6 +54,13 @@ public class Question
     {
         get => myQuestionID;
         set => myQuestionID = value;
+    }
+
+    public bool MyIsAnswered
+    {
+        get => myIsAnswered; 
+        set => myIsAnswered = value; 
+        
     }
 
     public string MyQuestion

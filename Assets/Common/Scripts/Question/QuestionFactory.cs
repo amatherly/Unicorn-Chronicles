@@ -48,7 +48,7 @@ namespace Singleton
         private void InitializeQuestionArray()
         {
             // myQuestions = myDataService.GetQuestion();
-            myQuestions = DATA_SERVICE.GetQuestions().Where(q => !q.myIsAnswered);
+            myQuestions = DATA_SERVICE.GetQuestions().Where(q => !q.MyIsAnswered);
             // myQuestions = DATA_SERVICE.GetQuestion();
             myRandomizedQuestions = myQuestions.OrderBy(a => RANDOM.Next()).ToList();
         }
@@ -88,17 +88,6 @@ namespace Singleton
             private set => INSTANCE = value;
         }
 
-        public IEnumerable<Question> GetQuestions()
-        {
-            return myRandomizedQuestions;
-        }
-        
-        public void MarkQuestionAsAnswered()
-        {
-            myCurrentQuestion.myIsAnswered = true;
-            DATA_SERVICE.MarkQuestionAsAnswered(myCurrentQuestion.MyQuestionID);
-        }
-        
         public void InitializeQuestionsFromSave()
         {
             var allQuestions = DATA_SERVICE.GetQuestion();
