@@ -84,7 +84,7 @@ namespace Common.Scripts.Maze
                 myDoor.MyProximityTrigger = true;
                 myMaze.MyCurrentDoor = myDoor;
                 myDoor.MyNavPopup.SetActive(true);
-                PlayerController.MyInstance.RotateCameraTowardDoor(myDoor.transform);
+                // PlayerController.MyInstance.RotateCameraTowardDoor(myDoor.transform);
             }
         }
 
@@ -100,7 +100,6 @@ namespace Common.Scripts.Maze
                 myDoor.MyProximityTrigger = false;
                 myMaze.MyCurrentDoor = null;
                 myDoor.MyNavPopup.SetActive(false);
-                PlayerController.MyInstance.RotateCameraTowardDoor(PlayerController.MyInstance.transform);
             }
         }
 
