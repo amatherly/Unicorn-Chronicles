@@ -7,27 +7,31 @@ namespace Common.Scripts.Controller
     {
         // MAKE STATIC
         private static PlayerController myInstance = null;
+        private static float mySpeed;
+        private static float myRotationSpeed;
+        
+        
         public SaveLoadManager SaveLoadManagerInstance { get; set; }
         private global::Maze myMaze;
         private CharacterController myCharacterController;
         private Animator myAnimator;
-        private float mySpeed;
-        private float myRotationSpeed;
+        private AudioSource myAudioSource;
+
         
-     
         // STATE
         private bool myCanMove;
         private Transform myCameraTransform;
-        private int myItemCount;
-        public Transform myCharacterTransform; 
+        [SerializeField] private int myItemCount;
+        public Transform myCharacterTransform;
         private static DataService myDataService;
 
-        
+
         private void Start()
         {
             myMaze = GameObject.Find("Maze").GetComponent<global::Maze>(); // NEW
             myCharacterController = GetComponent<CharacterController>();
             myAnimator = GetComponent<Animator>();
+            myAudioSource = GetComponent<AudioSource>();
             myCameraTransform = GameObject.Find("CM vcam2").transform;
             mySpeed = 50f;
             myRotationSpeed = 5f;
@@ -35,37 +39,24 @@ namespace Common.Scripts.Controller
             myItemCount = 0;
         }
         
-                
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private void Awake()
-        {
-            if (myInstance != null && myInstance != this)
-            {
-                Debug.Log("There is already an instance of the UIController in the scene!");
-            }
-            else
-            {
-                MyInstance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-        }
-
         private void Update()
         {
-
-            // Get input axes
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
-
             Vector3 moveDirection = new Vector3(moveHorizontal, 0, moveVertical);
-
             float inputMagnitude = moveDirection.magnitude;
 
             if (inputMagnitude > 0)
             {
                 myAnimator.SetBool("isWalking", true);
+
+                
                 if (myCanMove)
                 {
+                    if (!myAudioSource.isPlaying)
+                    {
+                        myAudioSource.Play();
+                    }
                     _ = myCharacterController.Move(new Vector3(moveHorizontal, 0, moveVertical) * mySpeed *
                                                    Time.deltaTime);
                     float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
@@ -77,6 +68,10 @@ namespace Common.Scripts.Controller
             else
             {
                 myAnimator.SetBool("isWalking", false);
+                if (myAudioSource.isPlaying)
+                {
+                    myAudioSource.Stop();
+                }
             }
         }
 
@@ -100,37 +95,32 @@ namespace Common.Scripts.Controller
                 myItemCount--;
                 return true;
             }
+
             return false;
         }
-        
+
         public float MySpeed
         {
             get => mySpeed;
             set => mySpeed = value;
         }
-        
+
         public Animator MyAnimator
         {
             get => myAnimator;
             set => myAnimator = value;
         }
-        
+
         public float MyRotationSpeed
         {
             get => myRotationSpeed;
             set => myRotationSpeed = value;
         }
-        
+
         public Transform MyCharacterTransform
         {
             get => myCharacterTransform;
             set => myCharacterTransform = value;
-        }
-        
-        public CharacterController MyCharacterController
-        {
-            get => myCharacterController;
-            set => myCharacterController = value;
         }
 
         public bool MyCanMove
@@ -144,13 +134,11 @@ namespace Common.Scripts.Controller
             get => myItemCount;
             set => myItemCount = value;
         }
-        
+
         public static PlayerController MyInstance
         {
             get => myInstance;
             set => myInstance = value;
         }
-        
-        
     }
 }

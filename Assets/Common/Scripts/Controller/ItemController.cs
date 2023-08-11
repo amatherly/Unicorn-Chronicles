@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    public static readonly float SPEED = 1.5f;
+    public static readonly float SPEED = 5f;
 
-    public static readonly float HEIGHT = 0.0025f;
+    public static readonly float HEIGHT = 0.025f;
 
     private PlayerController myPlayer;
 
