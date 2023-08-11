@@ -1,26 +1,43 @@
-using System.Collections;
 using System.Collections.Generic;
 using Common.Scripts.Maze;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Class <c>Maze</c> handles win/lose conditions and game state.
+/// </summary>
 public class Maze : MonoBehaviour
 {
 
+    /// <summary>
+    /// Boolean value indicating whether or not the game has been lost.
+    /// </summary>
     private bool myLoseCondition;
 
+    /// <summary>
+    /// The player's current <c>Room</c> in the maze.
+    /// </summary>
     private Room myCurrentRoom;
 
+    /// <summary>
+    /// The <c>Door</c> the player is currently in the proximity of.
+    /// </summary>
     private Door myCurrentDoor;
 
+    /// <summary>
+    /// A 2D array representation of the <c>Room</c> scripts in the maze.
+    /// </summary>
     [SerializeField]
     private Room[,] myRooms;
 
-    public List<DoorController> myAllDoors; // list of all doors in maze object
+    /// <summary>
+    /// A list of all doors present in the maze.
+    /// </summary>
+    public List<DoorController> myAllDoors;
 
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Called before the first frame update.
+    /// </summary>
     void Start()
     {
         myRooms = new Room[4, 4];
@@ -28,7 +45,9 @@ public class Maze : MonoBehaviour
         myCurrentRoom = myRooms[3, 0];
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Called once per frame.
+    /// </summary>
     void Update()
     {
         if (myLoseCondition)
@@ -42,35 +61,55 @@ public class Maze : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Accessor and mutator for the <c>myCurrentRoom</c> field.
+    /// </summary>
     public Room MyCurrentRoom
     {
         get => myCurrentRoom;
         set => myCurrentRoom = value;
     }
 
+    /// <summary>
+    /// Accessor for the starting room of the maze.
+    /// </summary>
+    /// <returns> The starting room of the maze. </returns>
     public Room GetDefaultRoom
     {
         get => myRooms[3,0];
     }
 
+    /// <summary>
+    /// Accessor and mutator for the <c>myCurrentDoor</c> field.
+    /// </summary>
     public Door MyCurrentDoor
     {
         get => myCurrentDoor;
         set => myCurrentDoor = value;
     }
 
+    /// <summary>
+    /// Accessor and mutator for the <c>myLoseCondition</c> field.
+    /// </summary>
     public bool MyLoseCondition
     {
         get => myLoseCondition;
         set => myLoseCondition = value;
     }
 
+    /// <summary>
+    /// Accessor and mutator for the <c>myRooms</c> field.
+    /// </summary>
     public Room[,] MyRooms
     {
         get => myRooms;
         set => myRooms = value;
     }
 
+    /// <summary>
+    /// Private helper method to populate the <c>myRooms</c> field with the
+    /// correct <c>Room</c> scripts.
+    /// </summary>
     private void PopulateMaze()
     {
         myRooms[0, 0] = GameObject.Find("Room 1-1").GetComponent<Room>();
@@ -91,8 +130,19 @@ public class Maze : MonoBehaviour
         myRooms[3, 3] = GameObject.Find("Room 4-4").GetComponent<Room>();
     }
 
+
+    /// <summary>
+    /// This method checks whether there is any possible path from the maze's win
+    /// room to the player's current <c>Room</c>.
+    /// </summary>
+    /// <param name="theRow">The row number of the room currently being traversed.</param>
+    /// <param name="theCol">The column number of the room currently being traversed.</param>
+    /// <param name="theCheck">A 2D array of booleans indicating whether a room has
+    /// already been traversed.</param>
+    /// <returns>Boolean indicating whether or not the lose condition is satisfied.</returns>
     public bool CheckLoseCondition(int theRow, int theCol, bool[,] theCheck)
     {
+
         const int NORTH = 0;
         const int EAST = 1;
         const int SOUTH = 2;
