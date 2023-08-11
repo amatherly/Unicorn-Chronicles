@@ -10,23 +10,29 @@ using Random = System.Random;
 
 public class QuestionWindowController : MonoBehaviour
 {
+
     private static Random RANDOM = new Random();
-    private  Maze myMaze;
-    
+    private Maze myMaze;
+
     private static int CORRECT_SOUND = 2;
     private static int INCORRECT_SOUND = 3;
-    
+
     private UIControllerInGame myUIController;
     private QuestionWindowView myView;
     private Question myQuestion;
-    
+
     private string myAnswerInput;
     private int myCorrectIndex;
     private bool myIsCorrect;
-    
-    [FormerlySerializedAs("TFWindowPrefab")] [SerializeField] private GameObject myTFWindowPrefab;
-    [FormerlySerializedAs("multipleChoiceWindowPrefab")] [SerializeField] private GameObject myMultipleChoiceWindowPrefab;
-    [FormerlySerializedAs("inputFieldWindowPrefab")] [SerializeField] private GameObject myInputFieldWindowPrefab;
+
+    [FormerlySerializedAs("TFWindowPrefab")] [SerializeField]
+    private GameObject myTFWindowPrefab;
+
+    [FormerlySerializedAs("multipleChoiceWindowPrefab")] [SerializeField]
+    private GameObject myMultipleChoiceWindowPrefab;
+
+    [FormerlySerializedAs("inputFieldWindowPrefab")] [SerializeField]
+    private GameObject myInputFieldWindowPrefab;
 
     private void Start()
     {
@@ -36,15 +42,16 @@ public class QuestionWindowController : MonoBehaviour
     public void InitializeWindow(Question theQuestion)
     {
         UIControllerInGame.MyInstance.PlayUISound(0);
-        
+
         myQuestion = theQuestion;
         myIsCorrect = false;
         int ID = theQuestion.MyQuestionID;
-        
+
         Debug.Log(string.Format("Instantiating window type {0} with {1}.", myQuestion.MyQuestionID, myQuestion));
-        
+
         switch (ID)
-        {    case 1:
+        {
+            case 1:
                 InstantiateTFWindow();
                 break;
             case 2:
@@ -55,7 +62,7 @@ public class QuestionWindowController : MonoBehaviour
                 break;
         }
     }
-    
+
     private void InstantiateTFWindow()
     {
         GameObject multipleChoiceWindow = Instantiate(myTFWindowPrefab, transform);
@@ -76,7 +83,7 @@ public class QuestionWindowController : MonoBehaviour
         myView.SetQuestionText(myQuestion.MyQuestion);
         myView.SetMultipleChoiceButtons(randomizedAnswers);
     }
-    
+
     private void InstantiateInputFieldWindow()
     {
         GameObject inputFieldWindow = Instantiate(myInputFieldWindowPrefab, transform);
@@ -102,11 +109,12 @@ public class QuestionWindowController : MonoBehaviour
             UIControllerInGame.MyInstance.PlayUISound(INCORRECT_SOUND);
         }
 
+
         if (myIsCorrect)
         {
             myMaze.MyCurrentDoor.Open();
         }
-        
+
         QuestionFactory.MyInstance.RemoveCurrentQuestion();
         Destroy(myView.gameObject);
     }
@@ -119,23 +127,23 @@ public class QuestionWindowController : MonoBehaviour
         {
             theAnswerInput = myView.GetButtonAnswer(theAnswerInput);
         }
-        if (theAnswerInput != null)
-        {
-            myAnswerInput = theAnswerInput;
-            CheckAnswer();
-        }
+        myAnswerInput = theAnswerInput;
+        CheckAnswer();
     }
+
     public void UseKey()
     {
         PlayerController player = FindObjectOfType<PlayerController>();
+        myAnswerInput = myQuestion.MyAnswer;
         if (player.SpendKey())
         {
             myIsCorrect = true;
-            SetAnswerInput(myQuestion.MyAnswer);
+            SetAnswerInput(myAnswerInput);
         }
         else
         {
             myUIController.PlayUISound(5);
         }
     }
+    
 }

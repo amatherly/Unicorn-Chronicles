@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.Scripts.Maze;
+using Singleton;
 using UnityEngine;
 
 /// <summary>
@@ -7,10 +8,10 @@ using UnityEngine;
 /// </summary>
 public class Maze : MonoBehaviour
 {
-
     /// <summary>
     /// Boolean value indicating whether or not the game has been lost.
     /// </summary>
+    [SerializeField] 
     private bool myLoseCondition;
 
     /// <summary>
@@ -26,8 +27,7 @@ public class Maze : MonoBehaviour
     /// <summary>
     /// A 2D array representation of the <c>Room</c> scripts in the maze.
     /// </summary>
-    [SerializeField]
-    private Room[,] myRooms;
+    [SerializeField] private Room[,] myRooms;
 
     /// <summary>
     /// A list of all doors present in the maze.
@@ -53,11 +53,13 @@ public class Maze : MonoBehaviour
         if (myLoseCondition)
         {
             Debug.Log("wow you're bad at this");
+            UIControllerInGame.MyInstance.SetWinOrLoseWindow(myLoseCondition);
         }
 
         if (myCurrentRoom.MyWinRoom)
         {
             Debug.Log("You win!");
+            UIControllerInGame.MyInstance.SetWinOrLoseWindow(myLoseCondition);
         }
     }
 
@@ -76,7 +78,7 @@ public class Maze : MonoBehaviour
     /// <returns> The starting room of the maze. </returns>
     public Room GetDefaultRoom
     {
-        get => myRooms[3,0];
+        get => myRooms[3, 0];
     }
 
     /// <summary>
@@ -142,7 +144,6 @@ public class Maze : MonoBehaviour
     /// <returns>Boolean indicating whether or not the lose condition is satisfied.</returns>
     public bool CheckLoseCondition(int theRow, int theCol, bool[,] theCheck)
     {
-
         const int NORTH = 0;
         const int EAST = 1;
         const int SOUTH = 2;
@@ -171,31 +172,35 @@ public class Maze : MonoBehaviour
                                 {
                                     result = CheckLoseCondition(theRow - 1, theCol, theCheck);
                                 }
+
                                 break;
                             case EAST:
                                 if (!theCheck[theRow - 1, theCol] && result)
                                 {
                                     result = CheckLoseCondition(theRow, theCol + 1, theCheck);
                                 }
+
                                 break;
                             case SOUTH:
                                 if (!theCheck[theRow, theCol - 1] && result)
                                 {
                                     result = CheckLoseCondition(theRow + 1, theCol, theCheck);
                                 }
+
                                 break;
                             case WEST:
                                 if (!theCheck[theRow - 1, theCol - 2] && result)
                                 {
                                     result = CheckLoseCondition(theRow, theCol - 1, theCheck);
                                 }
+
                                 break;
                         }
                     }
                 }
             }
         }
+
         return result;
     }
-
 }
