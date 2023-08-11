@@ -1,51 +1,89 @@
 using System.Collections;
-
 using UnityEngine;
 
+/// <summary>
+/// Fades out the <c>GameObject</c> the script is attached to
+/// so that it will not obscure the player's view.
+/// </summary>
 public class ObjectFade : MonoBehaviour
 {
 
+    /// <summary>
+    /// Speed of the fade in/out animation.
+    /// </summary>
+    private static readonly float SPEED = 2.5f;
+
+    /// <summary>
+    /// Minimum opacity for the <c>GameObject</c> being faded.
+    /// </summary>
+    private static readonly float MIN_OPACITY = 0.3f;
+
+    /// <summary>
+    /// Maximum opacity for the <c>GameObject</c> being faded.
+    /// </summary>
+    private static readonly float MAX_OPACITY = 1f;
+
+    /// <summary>
+    /// The animation currently underway.
+    /// </summary>
     private Coroutine myAnimation;
 
+    /// <summary>
+    /// The color of the attached <c>GameObject</c>.
+    /// </summary>
     private Color myColor;
 
-    private float mySpeed;
-
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start is called before the first frame update
+    /// </summary>
     void Start()
     {
-        mySpeed = 2.5f;
         myColor = GetComponent<Renderer>().material.color;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Reduces the opacity of the <c>GameObject</c> so the player
+    /// remains visible.
+    /// </summary>
+    /// <returns>
+    /// Yield return null so that the animation can be resumed on the
+    /// next frame update.
+    /// </returns>
     private IEnumerator FadeOut()
     {
-        while (myColor.a > 0.3)
+        while (myColor.a > MIN_OPACITY)
         {
-            float fadeAmount = myColor.a - (mySpeed * Time.deltaTime);
+            float fadeAmount = myColor.a - (SPEED * Time.deltaTime);
             myColor = new Color(myColor.r, myColor.g, myColor.b, fadeAmount);
             GetComponent<Renderer>().material.color = myColor;
             yield return null;
         }
     }
 
+    /// <summary>
+    /// Reduces the opacity of the <c>GameObject</c> so the player
+    /// remains visible.
+    /// </summary>
+    /// <returns>
+    /// Yield return null so that the animation can be resumed on the
+    /// next frame update.
+    /// </returns>
     private IEnumerator FadeIn()
     {
-        while (myColor.a < 1)
+        while (myColor.a < MAX_OPACITY)
         {
-            float fadeAmount = myColor.a + (mySpeed * Time.deltaTime);
+            float fadeAmount = myColor.a + (SPEED * Time.deltaTime);
             myColor = new Color(myColor.r, myColor.g, myColor.b, fadeAmount);
             GetComponent<Renderer>().material.color = myColor;
             yield return null;
         }
     }
 
+    /// <summary>
+    /// Called when the player enters the collider of the attached
+    /// <c>GameObject</c>.
+    /// </summary>
+    /// <param name="other">The entity entering the collider.</param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -58,6 +96,11 @@ public class ObjectFade : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when the player enters the collider of the attached
+    /// <c>GameObject</c>.
+    /// </summary>
+    /// <param name="other">The entity exiting the collider.</param>
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))

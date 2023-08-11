@@ -11,7 +11,6 @@ namespace Common.Scripts.Controller
         // [SerializeField] 
         // private GameObject myNoSaveGameNotification;
 
-        private DoorController myDoorController;
         private global::Maze myMaze;
         private PlayerController myPlayerController;
         private Door myDoor;

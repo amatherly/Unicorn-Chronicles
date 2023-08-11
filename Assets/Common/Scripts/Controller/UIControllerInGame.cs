@@ -10,6 +10,7 @@ namespace Singleton
 
         [SerializeField] private AudioClip[] myAudioClips;
         [SerializeField] private Texture2D cursorTexture;
+
         [SerializeField]
         private AudioSource myAudioSource;
         
@@ -29,7 +30,7 @@ namespace Singleton
             myResultWindow = GameObject.Find("Win/LoseWindow");
             myResultWindow.SetActive(false);
             myIsPaused = false;
-            myAudioSource = GetComponent<AudioSource>();
+            //myAudioSource = GetComponent<AudioSource>();
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
         }
