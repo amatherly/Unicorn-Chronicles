@@ -97,6 +97,7 @@ public class QuestionWindowController : MonoBehaviour
     {
         myIsCorrect = myQuestion.CheckUserAnswer(myAnswerInput);
         myView.ShowResult(myIsCorrect);
+        myMaze.MyCurrentDoor.MyLockState = !myIsCorrect;
 
         if (myIsCorrect)
         {
@@ -104,11 +105,10 @@ public class QuestionWindowController : MonoBehaviour
         }
         else
         {
-            myMaze.CheckLoseCondition(1, 4, new bool[4, 4]);
+            myMaze.MyLoseCondition = myMaze.CheckLoseCondition(1, 4, new bool[4, 4]);
             UIControllerInGame.MyInstance.PlayUISound(INCORRECT_SOUND);
         }
 
-        myMaze.MyCurrentDoor.MyLockState = !myIsCorrect;
 
         if (myIsCorrect)
         {
