@@ -78,7 +78,6 @@ namespace Singleton
 
         public void PauseGame()
         {
-            myPauseMenu.SetActive(true);
             Time.timeScale = 0;
         }
 

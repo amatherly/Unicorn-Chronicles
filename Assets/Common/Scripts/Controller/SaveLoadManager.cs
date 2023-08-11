@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common.Scripts.Maze;
 using Singleton;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Common.Scripts.Controller
 {
@@ -144,6 +145,7 @@ namespace Common.Scripts.Controller
             
             UIControllerInGame.MyInstance.PauseGame();
             PlayerPrefs.DeleteAll();
+
         }
 
         private void SaveDoorState(DoorController doorController) 
