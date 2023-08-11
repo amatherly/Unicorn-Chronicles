@@ -18,7 +18,7 @@ namespace Common.Scripts.Controller
         // STATE
         private bool myCanMove;
         private Transform myCameraTransform;
-        private int myItemCount;
+        [SerializeField] private int myItemCount;
         public Transform myCharacterTransform; 
         private static DataService myDataService;
 
