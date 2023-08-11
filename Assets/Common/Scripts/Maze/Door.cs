@@ -208,7 +208,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Assigns each <c>Door</c> a unique ID for use in the save/load.
     /// </summary>
     private void AssignUniqueID()
     {
