@@ -110,7 +110,7 @@ namespace Common.Scripts.Controller
                         Time.deltaTime * myRotationSpeed);
                 }
             }
-            else
+            if(myCharacterController.velocity == Vector3.zero || inputMagnitude == 0)
             {
                 myAnimator.SetBool("isWalking", false);
                 if (myAudioSource.isPlaying)
