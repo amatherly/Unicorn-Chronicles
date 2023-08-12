@@ -271,4 +271,11 @@ public class Door : MonoBehaviour
             time += Time.deltaTime * ROTATE_SPEED;
         }
     }
+    
+    public IEnumerator GetDoRotationClose()
+    {
+        return DoRotationClose();
+    }
+    
+    
 }
