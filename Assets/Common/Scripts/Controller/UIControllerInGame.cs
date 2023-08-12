@@ -10,7 +10,7 @@ namespace Singleton
 
         [SerializeField] private AudioClip[] myAudioClips;
         [SerializeField] private Texture2D cursorTexture;
-        private AudioSource myAudioSource;
+        [SerializeField]private AudioSource myAudioSource;
         
         [SerializeField]
         private GameObject myResultWindow;
@@ -20,14 +20,14 @@ namespace Singleton
         private QuestionWindowController myQuestionWindowControllerController;
 
         private bool myIsPaused;
+        
 
         void Start()
         {
             myMaze = FindObjectOfType<Maze>();
             myPauseMenu = GameObject.Find("PauseMenu");
             myPauseMenu.SetActive(false);
-            myIsPaused = false;
-            myAudioSource = GetComponent<AudioSource>();
+            // myAudioSource = GetComponent<AudioSource>();
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
         }
@@ -93,6 +93,13 @@ namespace Singleton
         {
             get => myInstance;
             set => myInstance = value;
+        }
+        
+        public void TogglePause()
+        {
+            myIsPaused = !myIsPaused;
+            myPauseMenu.SetActive(myIsPaused);
+            Time.timeScale = myIsPaused ? 0f : 1f;
         }
 
         public AudioClip[] MyAudioClips

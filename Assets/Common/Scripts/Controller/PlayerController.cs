@@ -28,7 +28,7 @@ namespace Common.Scripts.Controller
 
         private void Start()
         {
-            myMaze = GameObject.Find("Maze").GetComponent<global::Maze>(); // NEW
+            myMaze = GameObject.Find("Maze").GetComponent<global::Maze>(); 
             myCharacterController = GetComponent<CharacterController>();
             myAnimator = GetComponent<Animator>();
             myAudioSource = GetComponent<AudioSource>();
@@ -41,6 +41,12 @@ namespace Common.Scripts.Controller
         
         private void Update()
         {
+            // Game is paused
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
             Vector3 moveDirection = new Vector3(moveHorizontal, 0, moveVertical);
@@ -98,6 +104,7 @@ namespace Common.Scripts.Controller
 
             return false;
         }
+        
 
         public float MySpeed
         {

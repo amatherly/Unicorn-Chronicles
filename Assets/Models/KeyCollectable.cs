@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Common.Scripts.Controller;
 using Singleton;
 using Unity.VisualScripting;
@@ -9,7 +10,7 @@ namespace Models
     public class KeyCollectable : MonoBehaviour
     {
         private AudioSource myAudioSource;
-
+        
         private void Start()
         {
             myAudioSource = GetComponent<AudioSource>();
@@ -23,5 +24,7 @@ namespace Models
                 myAudioSource.PlayOneShot(myAudioSource.clip);
             }
         }
+        
+
     }
 }

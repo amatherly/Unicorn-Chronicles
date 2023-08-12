@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Common.Scripts.Controller;
 using Singleton;
 using UnityEngine;
@@ -6,6 +8,7 @@ using UnityEngine;
 /// Simple class to increment the <c>myItemCount</c> field of the
 /// <c>Player</c> script and handle animation.
 /// </summary>
+[System.Serializable]
 public class ItemController : MonoBehaviour
 {
 
@@ -23,14 +26,17 @@ public class ItemController : MonoBehaviour
     /// Reference to the <c>Player</c> script.
     /// </summary>
     private PlayerController myPlayer;
+    
+    public int myItemID; // Unique ID for each key collectible
 
     /// <summary>
     /// Start is called before the first frame update.
     /// </summary>
     void Start()
     {
-        myPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        myPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); 
     }
+
 
     /// <summary>
     /// Update is called once per frame.
@@ -55,4 +61,5 @@ public class ItemController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
 }
