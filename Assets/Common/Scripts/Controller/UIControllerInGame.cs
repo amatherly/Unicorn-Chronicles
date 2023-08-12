@@ -95,6 +95,7 @@ namespace Singleton
             }
         }
 
+
         /// <summary>
         /// Displays the win or lose window based on the result.
         /// </summary>
@@ -146,7 +147,7 @@ namespace Singleton
         /// </summary>
         public void PlayUISound(int audioClipIndex)
         {
-            myAudioSource.PlayOneShot(myAudioClips[audioClipIndex]);
+            myAudioSource.PlayOneShot(myAudioClips[theAudioClipIndex]);
         }
 
         /// <summary>
@@ -157,15 +158,4 @@ namespace Singleton
             get => myInstance;
             set => myInstance = value;
         }
-        
-        /// <summary>
-        /// Toggles the pause state of the game.
-        /// </summary>
-        public void TogglePause()
-        {
-            myIsPaused = !myIsPaused;
-            myPauseMenu.SetActive(myIsPaused);
-            Time.timeScale = myIsPaused ? 0f : 1f;
-        }
-    }
 }

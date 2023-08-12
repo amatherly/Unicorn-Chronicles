@@ -9,12 +9,8 @@ namespace Buttons
         
         public void NextScene()
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Game 2");
         }
         
-        public void OnNewGameButtonClicked()
-        {
-            // UIControllerInGame.MyInstance.TogglePause();
-        }
     }
 }

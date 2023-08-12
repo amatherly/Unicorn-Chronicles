@@ -28,6 +28,7 @@ public class Maze : MonoBehaviour
     /// A 2D array representation of the <c>Room</c> scripts in the maze.
     /// </summary>
     [SerializeField] private Room[,] myRooms;
+    
 
     /// <summary>
     /// A list of all doors present in the maze.

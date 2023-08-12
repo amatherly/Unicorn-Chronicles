@@ -6,9 +6,8 @@ namespace Buttons
 {
     public class InfoButton : MonoBehaviour
     {
-        public GameObject InfoPanel; // Assign in Inspector
+        public GameObject InfoPanel; 
 
-        // Start is called before the first frame update
         void Start()
         {
             Button btn = this.GetComponent<Button>();
