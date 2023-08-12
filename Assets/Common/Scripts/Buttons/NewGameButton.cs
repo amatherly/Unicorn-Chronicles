@@ -14,7 +14,7 @@ namespace Buttons
         
         public void OnNewGameButtonClicked()
         {
-            UIControllerInGame.MyInstance.TogglePause();
+            // UIControllerInGame.MyInstance.TogglePause();
         }
     }
 }

@@ -20,8 +20,6 @@ namespace Singleton
         private QuestionWindowController myQuestionWindowControllerController;
 
         private bool myIsPaused;
-        private bool myCanPause;
-
         
 
         void Start()
@@ -29,8 +27,6 @@ namespace Singleton
             myMaze = FindObjectOfType<Maze>();
             myPauseMenu = GameObject.Find("PauseMenu");
             myPauseMenu.SetActive(false);
-            myIsPaused = false;
-            myCanPause = true;
             // myAudioSource = GetComponent<AudioSource>();
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
@@ -53,7 +49,7 @@ namespace Singleton
 
         void Update()
         {
-            if (myCanPause && Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 myIsPaused = !myIsPaused;
                 myPauseMenu.SetActive(myIsPaused);
@@ -86,11 +82,6 @@ namespace Singleton
         public void ResumeGame()
         {
             Time.timeScale = 1;
-        }
-        
-        public void AllowPausing(bool allow)
-        {
-            myCanPause = allow;
         }
 
         public void PlayUISound(int audioClipIndex)
