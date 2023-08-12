@@ -7,7 +7,7 @@ namespace Buttons
     {
         public void OnLoadGameButtonClicked()
         {
-            UIControllerInGame.MyInstance.TogglePause();
+            UIControllerInGame.MyInstance.ResumeGame();
         }
     }
 }

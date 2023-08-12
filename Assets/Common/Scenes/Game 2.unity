@@ -6783,6 +6783,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1388738049783752600, guid: 4d027cd71b53a234aa91cb080bbc60c2, type: 3}
   m_PrefabInstance: {fileID: 420206137}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &422771956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 170560, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+  m_PrefabInstance: {fileID: 1030724716}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &427099482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5869782213023575846, guid: c8d6ff8da70fce64cb04d008fce7982e, type: 3}
@@ -11108,6 +11113,11 @@ RectTransform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 444bdd942bb77af4e8ab0ae6d0cc7bd4, type: 3}
   m_PrefabInstance: {fileID: 2191938888493534874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &719461583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 170560, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+  m_PrefabInstance: {fileID: 8998401245923262931}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &722335838
 GameObject:
@@ -15471,6 +15481,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myKeyObject
+      value: 
+      objectReference: {fileID: 2138416565}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
       propertyPath: masterItemIDs.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -16400,6 +16414,10 @@ PrefabInstance:
       propertyPath: myItemID
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myKeyObject
+      value: 
+      objectReference: {fileID: 422771956}
     - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
       propertyPath: masterItemIDs.Array.size
       value: 0
@@ -22513,6 +22531,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5205601529776751003, guid: ca917ce45d88a7c4ca22f74979d9d215, type: 3}
   m_PrefabInstance: {fileID: 2191938889001421994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1445455861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 170560, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+  m_PrefabInstance: {fileID: 1920924742}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1450570667
 PrefabInstance:
@@ -30966,6 +30989,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myKeyObject
+      value: 
+      objectReference: {fileID: 1445455861}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
       propertyPath: masterItemIDs.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -33064,6 +33091,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 0
+      - m_Target: {fileID: 1195344556}
+        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
+        m_MethodName: set_MyCanMove
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1950059729}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -33088,18 +33127,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1195344556}
-        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
-        m_MethodName: set_MyCanMove
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &2062176877
 MonoBehaviour:
@@ -34048,6 +34075,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 444bdd942bb77af4e8ab0ae6d0cc7bd4, type: 3}
   m_PrefabInstance: {fileID: 2191938887808407250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2138416565 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 170560, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+  m_PrefabInstance: {fileID: 979466372}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2138573793
 PrefabInstance:
@@ -81533,6 +81565,10 @@ PrefabInstance:
       propertyPath: isCollected
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myKeyObject
+      value: 
+      objectReference: {fileID: 719461583}
     - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
       propertyPath: masterItemIDs.Array.size
       value: 0
