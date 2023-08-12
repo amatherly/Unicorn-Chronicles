@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.0058198874, g: 0.016885929, b: 0.028350769, a: 1}
+  m_IndirectSpecularColor: {r: 0.005747122, g: 0.016869484, b: 0.028247502, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5808,9 +5808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115522a8a4234af1b74ac402029c1aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pulseSpeed: 1
-  minEmission: 0.2
-  maxEmission: 1
 --- !u!4 &369014361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5876317230815310939, guid: 931110c847eea4007b670ae0ac1e55ff, type: 3}
@@ -7100,6 +7097,7 @@ GameObject:
   - component: {fileID: 444378162}
   - component: {fileID: 444378161}
   - component: {fileID: 444378164}
+  - component: {fileID: 444378166}
   - component: {fileID: 444378165}
   m_Layer: 5
   m_Name: LoadGameButton
@@ -7185,6 +7183,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 444378166}
+        m_TargetAssemblyTypeName: Buttons.LoadGameButton, CommonAssembly
+        m_MethodName: OnLoadGameButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1950059729}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -7208,6 +7218,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1195344556}
+        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
+        m_MethodName: set_MyCanMove
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &444378162
 MonoBehaviour:
@@ -7274,6 +7296,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 6.46, y: -6.95}
   m_UseGraphicAlpha: 1
+--- !u!114 &444378166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444378159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9aa05767f7045b4b918a92e79166eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &446070378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5876317230815310939, guid: 931110c847eea4007b670ae0ac1e55ff, type: 3}
@@ -10381,6 +10415,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1195344556}
+        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
+        m_MethodName: set_MyCanMove
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &683731470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10642,6 +10688,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1195344556}
+        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
+        m_MethodName: set_MyCanMove
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &697017445
 MonoBehaviour:
@@ -11275,6 +11333,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c77b805bb9741544c87fbbbbd5a0cee9, type: 3}
   - {fileID: 8300000, guid: 6c863c75a99477045a91516f297708ea, type: 3}
   cursorTexture: {fileID: 2800000, guid: aa1470d3b8198c34a94a711c7f014e97, type: 3}
+  myAudioSource: {fileID: 722335844}
   myResultWindow: {fileID: 3465004020013802137}
 --- !u!4 &723467595 stripped
 Transform:
@@ -15403,6 +15462,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: itemId
+      value: key_gold_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myItemID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.data[0]
+      value: key_gold_2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
 --- !u!4 &981904065 stripped
@@ -16063,6 +16138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1011459242}
+  - component: {fileID: 1011459243}
   m_Layer: 0
   m_Name: Collectibles
   m_TagString: Untagged
@@ -16089,6 +16165,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 64
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1011459243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011459241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c30efa6eca6c47b5bd62c8a518f8bdea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myAllItems: []
 --- !u!4 &1013791040 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3634909312789715921, guid: 522b1c3a08ac24460b08433a4d844d01, type: 3}
@@ -16302,6 +16391,22 @@ PrefabInstance:
     - target: {fileID: 1947504230126943509, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: itemId
+      value: key_gold_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myItemID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.data[0]
+      value: key_gold_4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
@@ -22121,6 +22226,18 @@ MonoBehaviour:
       - m_Target: {fileID: 150750344}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1195344556}
+        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
+        m_MethodName: set_MyCanMove
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30840,6 +30957,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: itemId
+      value: key_gold_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myItemID
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.data[0]
+      value: key_gold_3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
 --- !u!1 &1921180362 stripped
@@ -32833,8 +32966,8 @@ GameObject:
   - component: {fileID: 2062176878}
   - component: {fileID: 2062176877}
   - component: {fileID: 2062176876}
-  - component: {fileID: 2062176879}
   - component: {fileID: 2062176880}
+  - component: {fileID: 2062176882}
   - component: {fileID: 2062176881}
   m_Layer: 5
   m_Name: NewGameButton
@@ -32920,6 +33053,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2062176882}
+        m_TargetAssemblyTypeName: Buttons.NewGameButton, CommonAssembly
+        m_MethodName: OnNewGameButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1950059729}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -32943,6 +33088,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1195344556}
+        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
+        m_MethodName: set_MyCanMove
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &2062176877
 MonoBehaviour:
@@ -32982,18 +33139,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062176873}
   m_CullTransparentMesh: 1
---- !u!114 &2062176879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2062176873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4942c92792bf764ab79112b37a6622c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2062176880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33021,6 +33166,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 6.46, y: -6.95}
   m_UseGraphicAlpha: 1
+--- !u!114 &2062176882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062176873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9542b7b2e2d94da89927da451597bcad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2064546576 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 62ef2651489b52541b4c69d5088bcec4, type: 3}
@@ -33380,6 +33537,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1950059729}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1195344556}
+        m_TargetAssemblyTypeName: Common.Scripts.Controller.PlayerController, CommonAssembly
+        m_MethodName: set_MyCanMove
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -81351,6 +81520,26 @@ PrefabInstance:
     - target: {fileID: 1947504230126943509, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: itemId
+      value: key_gold_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: myItemID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: isCollected
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439259661007125046, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
+      propertyPath: masterItemIDs.Array.data[0]
+      value: key_gold_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc5de5e674870ca479a40105f80555ad, type: 3}

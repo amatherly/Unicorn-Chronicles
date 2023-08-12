@@ -20,6 +20,9 @@ namespace Singleton
         private QuestionWindowController myQuestionWindowControllerController;
 
         private bool myIsPaused;
+        private bool myCanPause;
+
+        
 
         void Start()
         {
@@ -27,6 +30,7 @@ namespace Singleton
             myPauseMenu = GameObject.Find("PauseMenu");
             myPauseMenu.SetActive(false);
             myIsPaused = false;
+            myCanPause = true;
             // myAudioSource = GetComponent<AudioSource>();
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
@@ -49,7 +53,7 @@ namespace Singleton
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (myCanPause && Input.GetKeyDown(KeyCode.Escape))
             {
                 myIsPaused = !myIsPaused;
                 myPauseMenu.SetActive(myIsPaused);
@@ -83,6 +87,11 @@ namespace Singleton
         {
             Time.timeScale = 1;
         }
+        
+        public void AllowPausing(bool allow)
+        {
+            myCanPause = allow;
+        }
 
         public void PlayUISound(int audioClipIndex)
         {
@@ -93,6 +102,13 @@ namespace Singleton
         {
             get => myInstance;
             set => myInstance = value;
+        }
+        
+        public void TogglePause()
+        {
+            myIsPaused = !myIsPaused;
+            myPauseMenu.SetActive(myIsPaused);
+            Time.timeScale = myIsPaused ? 0f : 1f;
         }
 
         public AudioClip[] MyAudioClips
