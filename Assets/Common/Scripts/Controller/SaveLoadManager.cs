@@ -523,14 +523,14 @@ namespace Common.Scripts.Controller
             // Reset player data
             if (myPlayerController != null)
             {
-                myPlayerController.MyItemCount = 0; // Reset to default inventory count (assuming 0 is default)
+                myPlayerController.MyItemCount = 0; // Reset to default inventory count
                 GameObject defaultPosition = GameObject.Find("StartPos");
                 myPlayerController.myCharacterTransform.position = defaultPosition.transform.position;
-                myPlayerController.MyCharacterTransform.rotation = Quaternion.identity; // Resets to no rotation
+                myPlayerController.MyCharacterTransform.rotation = Quaternion.identity;
             } 
             else
             {
-                Debug.LogError("PlayerController is not initialized!");
+                Debug.LogError("PlayerController is not initialized");
             }
 
             // Reset door states in maze
@@ -538,12 +538,12 @@ namespace Common.Scripts.Controller
             { 
                 ResetDoorState(doorController);
             }
-
+            
             // Reset item states
             ResetItemState();
-
             // Reset minimap
             ResetMinimap();
+            UIControllerInGame.MyInstance.ResumeGame();
         }
 
         private void ResetDoorState(DoorController doorController)

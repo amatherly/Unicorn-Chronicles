@@ -33,6 +33,7 @@ public class QuestionWindowController : MonoBehaviour
 
     [FormerlySerializedAs("inputFieldWindowPrefab")] [SerializeField]
     private GameObject myInputFieldWindowPrefab;
+    
 
     private void Start()
     {
