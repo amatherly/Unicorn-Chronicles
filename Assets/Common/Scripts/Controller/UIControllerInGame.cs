@@ -57,12 +57,12 @@ namespace Singleton
             }
         }
 
-        public void SetWinOrLoseWindow(bool result)
+        public void SetWinOrLoseWindow(bool theResult)
         {
             myResultWindow.SetActive(true);
             string resultText;
             
-            if (!result)
+            if (!theResult)
             {
                 resultText = "You Won! \nPlay Again?";
             }
@@ -84,22 +84,15 @@ namespace Singleton
             Time.timeScale = 1;
         }
 
-        public void PlayUISound(int audioClipIndex)
+        public void PlayUISound(int theAudioClipIndex)
         {
-            myAudioSource.PlayOneShot(myAudioClips[audioClipIndex]);
+            myAudioSource.PlayOneShot(myAudioClips[theAudioClipIndex]);
         }
 
         public static UIControllerInGame MyInstance
         {
             get => myInstance;
             set => myInstance = value;
-        }
-        
-        public void TogglePause()
-        {
-            myIsPaused = !myIsPaused;
-            myPauseMenu.SetActive(myIsPaused);
-            Time.timeScale = myIsPaused ? 0f : 1f;
         }
 
         public AudioClip[] MyAudioClips
