@@ -6,17 +6,12 @@ using UnityEngine.TestTools;
 
 public class QuestionTests 
 {
-    [NotNull] private static readonly int QUESTION_ID = 1;
-    [NotNull] private static readonly string QUESTION_STRING_1 = "This is a question?";
-    [NotNull] private static readonly string ANSWER = "test";
-
-    private readonly Question myTestQuestion1  = new(QUESTION_ID, QUESTION_STRING_1, ANSWER);
-
-    [SetUp]
-    public void BaseSetUp()
-    {
-
-    }
+    private static readonly int QUESTION_ID = 1;
+    private static readonly string QUESTION_STRING_1 = "This is a question?";
+    private static readonly string ANSWER = "test";
+    private static readonly bool IS_ANSWERED = false;
+    
+    private readonly Question myTestQuestion1  = new(QUESTION_ID, QUESTION_STRING_1, ANSWER, IS_ANSWERED);
     
     [Test]
     public void CheckAnswerTest()
@@ -37,7 +32,6 @@ public class QuestionTests
     [UnityTest]
     public IEnumerator QuestionTestsWithEnumeratorPasses()
     {
-
         yield return null;
     }
 }

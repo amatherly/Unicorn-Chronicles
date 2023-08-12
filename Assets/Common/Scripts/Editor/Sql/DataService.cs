@@ -93,8 +93,4 @@ public class DataService
 	    DataService dataService = new DataService("data.sqlite");  
 	    dataService.myConnection.Execute("UPDATE Question SET IsAnswered = 0");
     }
-    
-    
-    
-    
 }
