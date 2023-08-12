@@ -1,54 +1,117 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Common.Scripts.Controller;
 using Singleton;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = System.Random;
 
 
+/// <summary>
+/// Manages the question windows and user interactions.
+/// </summary>
 public class QuestionWindowController : MonoBehaviour
 {
+    /// <summary>
+    /// The random number generator instance.
+    /// </summary>
+    private static readonly Random RANDOM = new();
 
-    private static Random RANDOM = new Random();
-    private Maze myMaze;
+    /// <summary>
+    /// Sound index for a correct answer.
+    /// </summary>
+    private static readonly int CORRECT_SOUND = 2;
 
-    private static int CORRECT_SOUND = 2;
-    private static int INCORRECT_SOUND = 3;
+    /// <summary>
+    /// Sound index for an incorrect answer.
+    /// </summary>
+    private static readonly int INCORRECT_SOUND = 3;
+    
+    /// <summary>
+    /// The ID for the True/False question type.
+    /// </summary>
+    private static readonly int TRUE_FALSE_ID = 1;
 
+    /// <summary>
+    /// The ID for the Multiple Choice question type.
+    /// </summary>
+    private static readonly int MULT_CHOICE_ID = 2;
+
+    /// <summary>
+    /// The ID for the Short Answer question type.
+    /// </summary>
+    private static readonly int SHORT_ANSWER_ID = 3;
+
+
+    /// <summary>
+    /// The Maze instance used in the game.
+    /// </summary>
+    private static Maze MAZE;
+
+    /// <summary>
+    /// The UI controller instance for the in-game UI.
+    /// </summary>
     private UIControllerInGame myUIController;
-    private QuestionWindowView myView;
-    private Question myQuestion;
 
+    /// <summary>
+    /// The view associated with the question window.
+    /// </summary>
+    private QuestionWindowView myView;
+
+    /// <summary>
+    /// The currently displayed question.
+    /// </summary>
+    private Question myCurrentQuestion;
+
+    /// <summary>
+    /// The user's input for the answer.
+    /// </summary>
     private string myAnswerInput;
+
+    /// <summary>
+    /// The index of the correct answer in multiple choice questions.
+    /// </summary>
     private int myCorrectIndex;
+
+    /// <summary>
+    /// Indicates if the user's answer is correct.
+    /// </summary>
     private bool myIsCorrect;
 
-    [FormerlySerializedAs("TFWindowPrefab")] [SerializeField]
-    private GameObject myTFWindowPrefab;
+    /// <summary>
+    /// The prefab for the True/False question window.
+    /// </summary>
+    [SerializeField] private GameObject myTFWindowPrefab;
 
-    [FormerlySerializedAs("multipleChoiceWindowPrefab")] [SerializeField]
-    private GameObject myMultipleChoiceWindowPrefab;
+    /// <summary>
+    /// The prefab for the Multiple Choice question window.
+    /// </summary>
+    [SerializeField] private GameObject myMultipleChoiceWindowPrefab;
 
-    [FormerlySerializedAs("inputFieldWindowPrefab")] [SerializeField]
-    private GameObject myInputFieldWindowPrefab;
-    
+    /// <summary>
+    /// The prefab for the Input Field question window.
+    /// </summary>
+    [SerializeField] private GameObject myInputFieldWindowPrefab;
+
 
     private void Start()
     {
-        myMaze = GameObject.Find("Maze").GetComponent<Maze>();
+        MAZE = GameObject.Find("Maze").GetComponent<Maze>();
     }
 
+
+    /// <summary>
+    /// Initializes the question window with the provided question.
+    /// </summary>
+    /// <param name="theQuestion">The question to display.</param>
     public void InitializeWindow(Question theQuestion)
     {
         UIControllerInGame.MyInstance.PlayUISound(0);
+        UIControllerInGame.MyInstance.ShowNav(false);
 
-        myQuestion = theQuestion;
+        myCurrentQuestion = theQuestion;
         myIsCorrect = false;
         int ID = theQuestion.MyQuestionID;
 
-        Debug.Log(string.Format("Instantiating window type {0} with {1}.", myQuestion.MyQuestionID, myQuestion));
+        Debug.Log(string.Format("Instantiating window type {0} with {1}.", myCurrentQuestion.MyQuestionID, myCurrentQuestion));
 
         switch (ID)
         {
@@ -64,41 +127,52 @@ public class QuestionWindowController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Instantiates a True/False question window.
+    /// </summary>
     private void InstantiateTFWindow()
     {
         GameObject multipleChoiceWindow = Instantiate(myTFWindowPrefab, transform);
         myView = multipleChoiceWindow.GetComponent<QuestionWindowView>();
         myView.InitializeView();
-        myView.SetQuestionText(myQuestion.MyQuestion);
+        myView.SetQuestionText(myCurrentQuestion.MyQuestion);
     }
 
+    /// <summary>
+    /// Instantiates a Multiple Choice question window.
+    /// </summary>
     private void InstantiateMultipleChoiceWindow()
     {
         GameObject multipleChoiceWindow = Instantiate(myMultipleChoiceWindowPrefab, transform);
         myView = multipleChoiceWindow.GetComponent<QuestionWindowView>();
         myView.InitializeView();
 
-        string[] words = myQuestion.MyAnswer.Split(',');
+        string[] words = myCurrentQuestion.MyAnswer.Split(',');
         string[] randomizedAnswers = words.OrderBy(x => RANDOM.Next()).ToArray();
-        myQuestion.MyAnswer = words[0];
-        myView.SetQuestionText(myQuestion.MyQuestion);
+        myCurrentQuestion.MyAnswer = words[0];
+        myView.SetQuestionText(myCurrentQuestion.MyQuestion);
         myView.SetMultipleChoiceButtons(randomizedAnswers);
     }
 
+    /// <summary>
+    /// Instantiates an Input Field question window.
+    /// </summary>
     private void InstantiateInputFieldWindow()
     {
         GameObject inputFieldWindow = Instantiate(myInputFieldWindowPrefab, transform);
         myView = inputFieldWindow.GetComponent<QuestionWindowView>();
         myView.InitializeView();
-        myView.SetQuestionText(myQuestion.MyQuestion);
-        myView.EnableInputField();
+        myView.SetQuestionText(myCurrentQuestion.MyQuestion);
     }
 
+    /// <summary>
+    /// Checks the user's answer and handles the result.
+    /// </summary>
     public void CheckAnswer()
     {
-        myIsCorrect = myQuestion.CheckUserAnswer(myAnswerInput);
+        myIsCorrect = myCurrentQuestion.CheckUserAnswer(myAnswerInput);
         myView.ShowResult(myIsCorrect);
-        myMaze.MyCurrentDoor.MyLockState = !myIsCorrect;
+        MAZE.MyCurrentDoor.MyLockState = !myIsCorrect;
 
         if (myIsCorrect)
         {
@@ -106,45 +180,48 @@ public class QuestionWindowController : MonoBehaviour
         }
         else
         {
-            myMaze.MyLoseCondition = myMaze.CheckLoseCondition(1, 4, new bool[4, 4]);
+            MAZE.MyLoseCondition = MAZE.CheckLoseCondition(1, 4, new bool[4, 4]);
             UIControllerInGame.MyInstance.PlayUISound(INCORRECT_SOUND);
         }
 
 
         if (myIsCorrect)
         {
-            myMaze.MyCurrentDoor.Open();
+            MAZE.MyCurrentDoor.Open();
         }
 
         QuestionFactory.MyInstance.RemoveCurrentQuestion();
         Destroy(myView.gameObject);
     }
 
+    /// <summary>
+    /// Sets the user's answer input for the question.
+    /// </summary>
+    /// <param name="theAnswerInput">The user's answer input.</param>
     public void SetAnswerInput(string theAnswerInput)
     {
         Debug.Log("User Answered: " + theAnswerInput);
 
-        if (myQuestion.MyQuestionID == 2 && !myIsCorrect)
+        if (myCurrentQuestion.MyQuestionID == MULT_CHOICE_ID && !myIsCorrect)
         {
             theAnswerInput = myView.GetButtonAnswer(theAnswerInput);
         }
+
         myAnswerInput = theAnswerInput;
         CheckAnswer();
     }
 
+    /// <summary>
+    /// Uses a key to answer the question automatically.
+    /// </summary>
     public void UseKey()
     {
         PlayerController player = FindObjectOfType<PlayerController>();
-        myAnswerInput = myQuestion.MyAnswer;
+        myAnswerInput = myCurrentQuestion.MyAnswer;
         if (player.SpendKey())
         {
             myIsCorrect = true;
             SetAnswerInput(myAnswerInput);
         }
-        else
-        {
-            myUIController.PlayUISound(5);
-        }
     }
-    
 }

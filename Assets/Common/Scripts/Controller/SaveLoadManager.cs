@@ -482,7 +482,7 @@ namespace Common.Scripts.Controller
             // Save plate state in maze
             PlayerPrefs.SetInt("PlayerItemCount", myPlayerController.MyItemCount);
             PlayerPrefs.SetString("PlayerPosition",
-                JsonUtility.ToJson(myPlayerController.MyCharacterTransform.position));
+                JsonUtility.ToJson(myPlayerController.transform.position));
 
             // Save door states in maze
             foreach (var doorController in myMaze.GetComponentsInChildren<DoorController>())
@@ -498,7 +498,7 @@ namespace Common.Scripts.Controller
         public void LoadGame()
         {
             // Load Player state in maze
-            myPlayerController.myCharacterTransform.position =
+            myPlayerController.transform.position =
                 JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
             myPlayerController.MyItemCount =
                 PlayerPrefs.GetInt("PlayerItemCount", myPlayerController.MyItemCount);
@@ -525,8 +525,8 @@ namespace Common.Scripts.Controller
             {
                 myPlayerController.MyItemCount = 0; // Reset to default inventory count
                 GameObject defaultPosition = GameObject.Find("StartPos");
-                myPlayerController.myCharacterTransform.position = defaultPosition.transform.position;
-                myPlayerController.MyCharacterTransform.rotation = Quaternion.identity;
+                myPlayerController.transform.position = defaultPosition.transform.position;
+                myPlayerController.transform.rotation = Quaternion.identity;
             } 
             else
             {

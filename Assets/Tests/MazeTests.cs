@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MazeTests
 {
-
     /// <summary>
     /// <c>Maze</c> script for use in the tests.
     /// </summary>
