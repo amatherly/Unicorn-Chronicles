@@ -33,7 +33,7 @@ namespace Common.Scripts.Controller
                 return;
             }
 
-            // Save plate state in maze
+            // Save player state in maze
             PlayerPrefs.SetInt("PlayerItemCount", myPlayerController.MyItemCount);
             PlayerPrefs.SetString("PlayerPosition",
                 JsonUtility.ToJson(myPlayerController.transform.position));
