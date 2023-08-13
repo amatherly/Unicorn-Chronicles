@@ -168,6 +168,7 @@ namespace Common.Scripts.Controller
         /// </summary>
         public bool MyCanMove
         {
+            get => myCanMove;
             set => myCanMove = value;
         }
 
@@ -179,5 +180,12 @@ namespace Common.Scripts.Controller
             get => myItemCount;
             set => myItemCount = value;
         }
+        
+        public static PlayerController MyPlayerController
+        {
+            get => MyPlayerController;
+            set => MyPlayerController = value;
+        }
+        
     }
 }

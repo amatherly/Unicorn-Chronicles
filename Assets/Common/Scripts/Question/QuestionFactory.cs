@@ -147,7 +147,7 @@ namespace Singleton
         public static QuestionFactory MyInstance
         {
             get => INSTANCE;
-            private set => INSTANCE = value;
+            set => INSTANCE = value; // Changed to public for SaveLoadManagerTests.cs
         }
 
         public object MyRandomizedQuestions

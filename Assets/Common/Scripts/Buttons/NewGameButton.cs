@@ -1,11 +1,12 @@
-using Singleton;
+using Common.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Buttons
+namespace Common.Scripts.Buttons
 {
     public class NewGameButton: MonoBehaviour
     {
+        private SaveLoadManager mySaveLoadManager;
         
         public void NextScene()
         {

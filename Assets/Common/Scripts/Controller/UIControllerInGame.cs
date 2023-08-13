@@ -53,7 +53,7 @@ namespace Singleton
         /// Flag indicating if the game is paused.
         /// </summary>
         private bool myIsPaused;
-        
+
         /// <summary>
         /// Initializes the UIControllerInGame instance and sets up initial UI elements.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Singleton
         {
             myResultWindow.SetActive(true);
             string resultText;
-            
+
             if (!theResult)
             {
                 resultText = "You Won! \nPlay Again?";
@@ -116,13 +116,14 @@ namespace Singleton
 
             myResultWindow.GetComponentInChildren<TMP_Text>().SetText(resultText);
         }
-        
-        
+
+
         /// <summary>
         /// Shows or hides the navigation popup.
         /// </summary>
         /// <param name="theIsShowing">True to show the popup, false to hide it.</param>
-        public void ShowNav(bool theIsShowing){
+        public void ShowNav(bool theIsShowing)
+        {
             myNavPopup.SetActive(theIsShowing);
         }
 
@@ -145,7 +146,7 @@ namespace Singleton
         /// <summary>
         /// Plays a UI sound using the specified audio clip index.
         /// </summary>
-        public void PlayUISound(int audioClipIndex)
+        public void PlayUISound(int theAudioClipIndex)
         {
             myAudioSource.PlayOneShot(myAudioClips[theAudioClipIndex]);
         }
@@ -158,4 +159,5 @@ namespace Singleton
             get => myInstance;
             set => myInstance = value;
         }
+    }
 }

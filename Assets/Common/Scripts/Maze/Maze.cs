@@ -108,6 +108,12 @@ public class Maze : MonoBehaviour
         get => myRooms;
         set => myRooms = value;
     }
+    
+    public static Maze MyMaze
+    {
+        get => MyMaze;
+        set => MyMaze = value; // Changed to public for SaveLoadManagerTests.cs
+    }
 
     /// <summary>
     /// Private helper method to populate the <c>myRooms</c> field with the
