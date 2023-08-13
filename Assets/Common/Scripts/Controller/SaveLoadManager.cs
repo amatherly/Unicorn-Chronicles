@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Scripts.Maze;
 using Singleton;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Common.Scripts.Controller
 {
@@ -16,8 +14,8 @@ namespace Common.Scripts.Controller
         private Door myDoor;
         private ItemController myItemController;
         private CollectibleController myCollectibleController;
-        
-        
+
+
         private void Start()
         {
             myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
@@ -53,49 +51,56 @@ namespace Common.Scripts.Controller
 
         public void LoadGame()
         {
-            // Load Player state in maze
-            myPlayerController.transform.position =
-                JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
-            myPlayerController.MyItemCount =
-                PlayerPrefs.GetInt("PlayerItemCount", myPlayerController.MyItemCount);
-
-            // Load door states in maze
-            foreach (var curDoor in myMaze.GetComponentsInChildren<DoorController>())
+            if (PlayerPrefs.HasKey("PlayerPosition"))
             {
-                LoadDoorState(curDoor);
-            }
-            LoadItemState();
-            LoadMinimap();
+                // Load Player state in maze
+                myPlayerController.transform.position =
+                    JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
+                myPlayerController.MyItemCount =
+                    PlayerPrefs.GetInt("PlayerItemCount", myPlayerController.MyItemCount);
 
-            // Load question states in maze
-            QuestionFactory.MyInstance.InitializeQuestionsFromSave();
+                // Load door states in maze
+                foreach (var currDoor in myMaze.GetComponentsInChildren<DoorController>())
+                {
+                    LoadDoorState(currDoor);
+                }
+
+                LoadItemState();
+                LoadMinimap();
+
+                // Load question states in maze
+                QuestionFactory.MyInstance.InitializeQuestionsFromSave();
+            }
         }
+
+
 
         public void NewGame()
         {
             PlayerPrefs.DeleteAll();
-            
-            if (myPlayerController != null)
-            {
-                myPlayerController.MyItemCount = 0; 
-                GameObject currPlayerPos = GameObject.Find("StartPos");
-                myPlayerController.myCharacterTransform.position = currPlayerPos.transform.position;
-                myPlayerController.MyCharacterTransform.rotation = Quaternion.identity;
-            } 
-            else
-            {
-                Debug.LogError("PlayerController is not initialized");
-            }
-            
-            foreach (var currDoor in myMaze.GetComponentsInChildren<DoorController>())
-            { 
-                ResetDoorState(currDoor);
-            }
-            
-            ResetMinimap();
-            UIControllerInGame.MyInstance.ResumeGame();
-        }
 
+            // if (myPlayerController != null)
+            // {
+            //     myPlayerController.MyItemCount = 0; 
+            //     GameObject currPlayerPos = GameObject.Find("StartPos");
+            //     // myPlayerController.myCharacterTransform.position = currPlayerPos.transform.position;
+            //     // myPlayerController.MyCharacterTransform.rotation = Quaternion.identity;
+            //     var currCharacter = myPlayerController.transform;
+            //     currCharacter.position = currPlayerPos.transform.position;
+            //     currCharacter.rotation = Quaternion.identity;
+            // }
+            // else
+            // {
+            //     Debug.LogError("PlayerController is not initialized");
+            // }
+            
+            // foreach (var currDoor in myMaze.GetComponentsInChildren<DoorController>())
+            // { 
+            //     ResetDoorState(currDoor);
+            // }
+            // ResetMinimap();
+        }
+        
         
         private void ResetDoorState(DoorController theDoor)
         {
@@ -140,19 +145,22 @@ namespace Common.Scripts.Controller
             Transform myDoorTransform = theDoor.transform;
 
             // Save position
-            PlayerPrefs.SetFloat(currDoorID + "_PosX", myDoorTransform.position.x);
-            PlayerPrefs.SetFloat(currDoorID + "_PosY", myDoorTransform.position.y);
-            PlayerPrefs.SetFloat(currDoorID + "_PosZ", myDoorTransform.position.z);
+            var currDoorPos = myDoorTransform.position;
+            PlayerPrefs.SetFloat(currDoorID + "_PosX", currDoorPos.x);
+            PlayerPrefs.SetFloat(currDoorID + "_PosY", currDoorPos.y);
+            PlayerPrefs.SetFloat(currDoorID + "_PosZ", currDoorPos.z);
 
             // Save rotation
-            PlayerPrefs.SetFloat(currDoorID + "_RotX", myDoorTransform.eulerAngles.x);
-            PlayerPrefs.SetFloat(currDoorID + "_RotY", myDoorTransform.eulerAngles.y);
-            PlayerPrefs.SetFloat(currDoorID + "_RotZ", myDoorTransform.eulerAngles.z);
+            var currDoorRot = myDoorTransform.eulerAngles;
+            PlayerPrefs.SetFloat(currDoorID + "_RotX", currDoorRot.x);
+            PlayerPrefs.SetFloat(currDoorID + "_RotY", currDoorRot.y);
+            PlayerPrefs.SetFloat(currDoorID + "_RotZ", currDoorRot.z);
 
             // Save scale
-            PlayerPrefs.SetFloat(currDoorID + "_ScaleX", myDoorTransform.localScale.x);
-            PlayerPrefs.SetFloat(currDoorID + "_ScaleY", myDoorTransform.localScale.y);
-            PlayerPrefs.SetFloat(currDoorID + "_ScaleZ", myDoorTransform.localScale.z);
+            var currDoorScale = myDoorTransform.localScale;
+            PlayerPrefs.SetFloat(currDoorID + "_ScaleX", currDoorScale.x);
+            PlayerPrefs.SetFloat(currDoorID + "_ScaleY", currDoorScale.y);
+            PlayerPrefs.SetFloat(currDoorID + "_ScaleZ", currDoorScale.z);
         }
 
         
@@ -309,6 +317,11 @@ namespace Common.Scripts.Controller
             {
                 key.gameObject.SetActive(savedItemIDs.Contains(key.myItemID));
             }
+        }
+        
+        public PlayerController MyPlayerController
+        {
+            get { return myPlayerController; }
         }
         
     }
