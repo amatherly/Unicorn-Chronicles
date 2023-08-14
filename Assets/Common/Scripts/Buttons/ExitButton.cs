@@ -1,10 +1,15 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Buttons
+namespace Common.Scripts.Buttons
 {
+    /// <summary>
+    /// Represents an exit button in the game user interface.
+    /// </summary>
     public class ExitButton : MonoBehaviour
     {
+        /// <summary>
+        /// Exits the game application.
+        /// </summary>
         public void Exit()
         {
             #if UNITY_EDITOR

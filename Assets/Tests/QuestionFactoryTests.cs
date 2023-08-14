@@ -1,63 +1,100 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common.Scripts.Editor.Sql;
+using Common.Scripts.Question;
 using JetBrains.Annotations;
 using NUnit.Framework;
-using Singleton;
 using UnityEngine;
-using UnityEngine.TestTools;
 
-public class QuestionFactoryTests
+namespace Tests
 {
-    [NotNull] private static readonly Question QUESTION_1 = new(1, "Test1?", "1", false);
-    [NotNull] private static readonly Question QUESTION_2 = new(2, "Test2?", "2", false);
-    [NotNull] private static readonly Question QUESTION_3 = new(3, "Test3?", "3", false);
-
-    private QuestionFactory myMockQF;
-    private DataService mockDataService;
-    private IEnumerable<Question> myMockQuestions;
-
-    [SetUp]
-    public void Setup()
+    /// <summary>
+    /// Unit tests for the QuestionFactory class.
+    /// </summary>
+    public class QuestionFactoryTests
     {
-        GameObject gameObject = new GameObject();
-        myMockQF = gameObject.AddComponent<QuestionFactory>();
-        mockDataService = new("testsDB.db");
+        /// <summary>
+        /// Represents a set of test questions for unit testing purposes.
+        /// </summary>
+        [NotNull] private static readonly Question QUESTION_1 = new(1, "Test1?", "1", false);
+        [NotNull] private static readonly Question QUESTION_2 = new(2, "Test2?", "2", false);
+        [NotNull] private static readonly Question QUESTION_3 = new(3, "Test3?", "3", false);
+
+        /// <summary>
+        /// Mock instance of the QuestionFactory class for unit testing.
+        /// </summary>
+        private QuestionFactory myMockQF;
         
-        myMockQF.MyDataService = mockDataService;
-        myMockQF.InitializeQuestionArray();
+        /// <summary>
+        /// Mock instance of the DataService class for unit testing.
+        /// </summary>
+        private DataService mockDataService;
         
-        myMockQuestions = new List<Question>
+        /// <summary>
+        /// Collection of mock questions for unit testing.
+        /// </summary>
+        private IEnumerable<Question> myMockQuestions;
+
+        /// <summary>
+        /// Called to connect a mock database with mock questions.
+        /// </summary>
+        [SetUp]
+        public void Setup()
         {
-            QUESTION_1,
-            QUESTION_2,
-            QUESTION_3
-        };
-    }
+            GameObject gameObject = new GameObject();
+            myMockQF = gameObject.AddComponent<QuestionFactory>();
+            // Connect to mock questions database
+            mockDataService = new("testsDB.db");
+        
+            // Set the DataService instance for the mock QuestionFactory
+            myMockQF.MyDataService = mockDataService;
+            
+            // Initialize the question array for testing
+            myMockQF.InitializeQuestionArray();
+        
+            // Define the mock questions
+            myMockQuestions = new List<Question>
+            {
+                QUESTION_1,
+                QUESTION_2,
+                QUESTION_3
+            };
+        }
 
-    [Test]
-    public void InitializeQuestionArray_Test()
-    {
-        CollectionAssert.AreEqual(myMockQF.MyQuestions as IEnumerable, myMockQuestions);
-    }
-
-    [Test]
-    public void RemoveCurrentQuestion_Test()
-    {
-        myMockQuestions = new List<Question>
+        /// <summary>
+        /// Test for initializing the question array.
+        /// </summary>
+        [Test]
+        public void InitializeQuestionArray_Test()
         {
-            QUESTION_2,
-            QUESTION_3
-        };
-        
-        myMockQF.MyCurrentQuestion = QUESTION_1;
-        myMockQF.RemoveCurrentQuestion();
-        
-        CollectionAssert.AreEquivalent(myMockQF.MyRandomizedQuestions as IEnumerable, myMockQuestions);
-    }
+            CollectionAssert.AreEqual(myMockQF.MyQuestions as IEnumerable, myMockQuestions);
+        }
 
-    [Test]
-    public void GetRandomQuestion_Test()
-    {
-        Assert.NotNull(myMockQF.GetRandomQuestion());
+        /// <summary>
+        /// Test for removing the current question.
+        /// </summary>
+        [Test]
+        public void RemoveCurrentQuestion_Test()
+        {
+            myMockQuestions = new List<Question>
+            {
+                QUESTION_2,
+                QUESTION_3
+            };
+        
+            myMockQF.MyCurrentQuestion = QUESTION_1;
+            myMockQF.RemoveCurrentQuestion();
+        
+            CollectionAssert.AreEquivalent(myMockQF.MyRandomizedQuestions as IEnumerable, myMockQuestions);
+        }
+
+        /// <summary>
+        /// Test for getting a random question.
+        /// </summary>
+        [Test]
+        public void GetRandomQuestion_Test()
+        {
+            Assert.NotNull(myMockQF.GetRandomQuestion());
+        }
     }
 }
