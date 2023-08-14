@@ -9,17 +9,25 @@ public class MinimapCell : MonoBehaviour
 {
 
     /// <summary>
+    /// Transparent white color.
+    /// </summary>
+    private static readonly Color DEFAULT = new(1, 1, 1, .6f);
+
+    /// <summary>
+    /// Transparent light green color for visited rooms.
+    /// </summary>
+    private static readonly Color LIGHT_GREEN = new(.398f, .887f, .414f, .6f);
+
+    /// <summary>
+    /// Transparent light blue color for current room.
+    /// </summary>
+    private static readonly Color LIGHT_BLUE = new(.398f, .769f, .808f, .6f);
+
+    /// <summary>
     /// The <c>Room</c> the minimap cell corresponds to.
     /// </summary>
     [SerializeField]
     private GameObject myRoom;
-
-    /// <summary>
-    /// Start is called before the first frame update
-    /// </summary>
-    void Start()
-    {
-    }
 
     /// <summary>
     /// Update is called once per frame
@@ -37,16 +45,16 @@ public class MinimapCell : MonoBehaviour
     /// </summary>
     internal void ColorChange()
     {
-        Color newColor = Color.white;
+        Color newColor = DEFAULT;
 
         if (myRoom.GetComponent<Room>().MyHasVisited)
         {
-            newColor = Color.green;
+            newColor = LIGHT_GREEN;
         }
 
         if (myRoom.GetComponent<Room>().Equals(GameObject.Find("Maze").GetComponent<Maze>().MyCurrentRoom))
         {
-            newColor = Color.blue;
+            newColor = LIGHT_BLUE;
         }
 
         GetComponent<Image>().color = newColor;
