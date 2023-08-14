@@ -14,6 +14,8 @@ namespace Common.Scripts.Controller
         private Door myDoor;
         private ItemController myItemController;
         private CollectibleController myCollectibleController;
+        public GameObject myNoSaveMenu;
+        public GameObject myOptionsMenu;
 
 
         private void Start()
@@ -21,7 +23,6 @@ namespace Common.Scripts.Controller
             myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
             myPlayerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
             myCollectibleController = FindObjectOfType<CollectibleController>(); 
-            // CheckForSavedGame();
         }
         
 
@@ -53,6 +54,7 @@ namespace Common.Scripts.Controller
         {
             if (PlayerPrefs.HasKey("PlayerPosition"))
             {
+                myNoSaveMenu.SetActive(false);
                 // Load Player state in maze
                 myPlayerController.transform.position =
                     JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
@@ -71,6 +73,11 @@ namespace Common.Scripts.Controller
                 // Load question states in maze
                 QuestionFactory.MyInstance.InitializeQuestionsFromSave();
             }
+            else
+            {
+                myOptionsMenu.SetActive(true);
+                myNoSaveMenu.SetActive(true);
+            }
         }
 
 
@@ -78,58 +85,6 @@ namespace Common.Scripts.Controller
         public void NewGame()
         {
             PlayerPrefs.DeleteAll();
-
-            // if (myPlayerController != null)
-            // {
-            //     myPlayerController.MyItemCount = 0; 
-            //     GameObject currPlayerPos = GameObject.Find("StartPos");
-            //     // myPlayerController.myCharacterTransform.position = currPlayerPos.transform.position;
-            //     // myPlayerController.MyCharacterTransform.rotation = Quaternion.identity;
-            //     var currCharacter = myPlayerController.transform;
-            //     currCharacter.position = currPlayerPos.transform.position;
-            //     currCharacter.rotation = Quaternion.identity;
-            // }
-            // else
-            // {
-            //     Debug.LogError("PlayerController is not initialized");
-            // }
-            
-            // foreach (var currDoor in myMaze.GetComponentsInChildren<DoorController>())
-            // { 
-            //     ResetDoorState(currDoor);
-            // }
-            // ResetMinimap();
-        }
-        
-        
-        private void ResetDoorState(DoorController theDoor)
-        {
-            if (theDoor != null)
-            {
-                myDoor = theDoor.GetComponent<Door>();
-                if (myDoor != null)
-                {
-                    myDoor.MyLockState = false; 
-                    myDoor.MyHasAttempted = false; 
-                }
-            }
-        }
-        
-        
-        private void ResetMinimap()
-        {
-            Room[] allRooms = FindObjectsOfType<Room>();
-            foreach (Room currRoom in allRooms)
-            {
-                currRoom.MyHasVisited = false; 
-            }
-
-            Door[] allDoors = FindObjectsOfType<Door>();
-            foreach (Door currDoor in allDoors)
-            {
-                currDoor.MyHasAttempted = false;
-                currDoor.MyLockState = false; 
-            }
         }
         
         
@@ -317,11 +272,6 @@ namespace Common.Scripts.Controller
             {
                 key.gameObject.SetActive(savedItemIDs.Contains(key.myItemID));
             }
-        }
-        
-        public PlayerController MyPlayerController
-        {
-            get { return myPlayerController; }
         }
         
     }
