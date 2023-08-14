@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Cinemachine;
 using Common.Scripts.Maze;
 using Common.Scripts.Question;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Common.Scripts.Controller
 {
@@ -40,7 +44,12 @@ namespace Common.Scripts.Controller
         /// CollectibleController responsible for handling collectibles.
         /// </summary>
         private CollectibleController myCollectibleController;
-        
+
+        /// <summary>
+        /// GameObject representing the sun object.
+        /// </summary>
+        [SerializeField] private GameObject mySun;
+
         /// <summary>
         /// GameObject representing the "No Save" menu.
         /// </summary>
@@ -51,7 +60,11 @@ namespace Common.Scripts.Controller
         /// </summary>
         public GameObject myOptionsMenu;
         
+    
+        [SerializeField] private CinemachineVirtualCamera myVirtualCamera;
+
         
+    
         /// <summary>
         /// Initializes references and components during the start of the game.
         /// </summary>
@@ -59,7 +72,7 @@ namespace Common.Scripts.Controller
         {
             MAZE = GameObject.Find("Maze").GetComponent<global::Common.Scripts.Maze.Maze>();
             myPlayerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
-            myCollectibleController = FindObjectOfType<CollectibleController>(); 
+            myCollectibleController = FindObjectOfType<CollectibleController>();
         }
         
         /// <summary>
@@ -83,6 +96,16 @@ namespace Common.Scripts.Controller
             {
                 SaveDoorState(currDoor);
             }
+            
+            // Save the virtual camera's FOV
+            PlayerPrefs.SetFloat("VirtualCameraFOV", myVirtualCamera.m_Lens.FieldOfView);
+
+            // Save the sun toggle state
+            PlayerPrefs.SetInt("SunToggle", mySun.activeSelf ? 1 : 0);
+            
+            // Save the player's speed
+            PlayerPrefs.SetFloat("PlayerSpeed", myPlayerController.MySpeed);
+
             SaveItemState();
             SaveMinimap();
 
@@ -109,8 +132,27 @@ namespace Common.Scripts.Controller
                     LoadDoorState(currDoor);
                 }
 
+                // Load the virtual camera's FOV
+                if (PlayerPrefs.HasKey("VirtualCameraFOV"))
+                {
+                    myVirtualCamera.m_Lens.FieldOfView = PlayerPrefs.GetFloat("VirtualCameraFOV");
+                }
+
+                // Load the sun toggle state
+                if (PlayerPrefs.HasKey("SunToggle"))
+                {
+                    mySun.SetActive(PlayerPrefs.GetInt("SunToggle") == 1);
+                }
+                
+                // Load the player's speed
+                if (PlayerPrefs.HasKey("PlayerSpeed"))
+                {
+                    myPlayerController.MySpeed = PlayerPrefs.GetFloat("PlayerSpeed");
+                }
+                
                 LoadItemState();
                 LoadMinimap();
+                
 
                 // Load question states in maze
                 QuestionFactory.MyInstance.InitializeQuestionsFromSave();
@@ -128,6 +170,10 @@ namespace Common.Scripts.Controller
         public void NewGame()
         {
             PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene("Game 2");
+            UIControllerInGame.MyInstance.GetComponent<AudioSource>().Stop();
+            UIControllerInGame.MyInstance.ResumeGame();
+            myPlayerController.MyCanMove = true;
         }
 
         /// <summary>

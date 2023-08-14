@@ -45,7 +45,7 @@ namespace Common.Scripts.Controller
         /// <summary>
         /// A flag indicating whether the player can move.
         /// </summary>
-        private bool myCanMove;
+        [SerializeField] private bool myCanMove;
 
         /// <summary>
         /// The camera transform.
