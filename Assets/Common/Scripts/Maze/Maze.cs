@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.Scripts.Controller;
+using Common.Scripts.Question;
 using UnityEngine;
 
 namespace Common.Scripts.Maze
@@ -45,6 +46,7 @@ namespace Common.Scripts.Maze
             myRooms = new Room[4, 4];
             PopulateMaze();
             myCurrentRoom = myRooms[3, 0];
+            GameObject.Find("Thinking Unicorn").GetComponent<Animator>().SetBool("isWon", false);
         }
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace Common.Scripts.Maze
             {
                 Debug.Log("You win!");
                 UIControllerInGame.MyInstance.SetWinOrLoseWindow(myLoseCondition);
+                GameObject.Find("Thinking Unicorn").GetComponent<Animator>().SetBool("isWon", true);
             }
         }
 

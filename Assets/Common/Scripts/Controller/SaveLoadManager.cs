@@ -170,9 +170,9 @@ namespace Common.Scripts.Controller
         public void NewGame()
         {
             PlayerPrefs.DeleteAll();
-            SceneManager.LoadScene("Game 2");
             UIControllerInGame.MyInstance.GetComponent<AudioSource>().Stop();
             UIControllerInGame.MyInstance.PauseGame();
+            SceneManager.LoadScene("Game 2");
             myPlayerController.MyCanMove = true;
         }
 

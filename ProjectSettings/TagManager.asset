@@ -11,11 +11,12 @@ TagManager:
   - QuestionFactory
   - Maze
   - TreasureChest
+  - Green
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PlayerCam
   - Water
   - UI
   - 

@@ -43,12 +43,12 @@ namespace Common.Scripts.Controller
         /// Pause menu GameObject.
         /// </summary>
         private GameObject myPauseMenu;
-        
+
         /// <summary>
         /// Mini Map GameObject.
         /// </summary>
-        private GameObject myMiniMap;
-        
+        [SerializeField] private GameObject myMiniMap;
+
         /// <summary>
         /// Question window controller reference.
         /// </summary>
@@ -58,7 +58,7 @@ namespace Common.Scripts.Controller
         /// Flag indicating if the game is paused.
         /// </summary>
         private bool myIsPaused;
-        
+
 
         /// <summary>
         /// Initializes the UIControllerInGame instance and sets up initial UI elements.
@@ -67,7 +67,6 @@ namespace Common.Scripts.Controller
         {
             myPauseMenu = GameObject.Find("PauseMenu");
             myPauseMenu.SetActive(false);
-            myMiniMap = GameObject.Find("MiniMap");
             myMiniMap.SetActive(!myIsPaused);
             Cursor.SetCursor(myCursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
@@ -86,7 +85,6 @@ namespace Common.Scripts.Controller
             else
             {
                 MyInstance = this;
-                DontDestroyOnLoad(gameObject);
             }
         }
 
@@ -98,8 +96,6 @@ namespace Common.Scripts.Controller
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 myIsPaused = !myIsPaused;
-                Debug.Log("ESC Pressed, Game is paused:" + myIsPaused);
-
                 if (myIsPaused)
                 {
                     PauseGame();
@@ -110,7 +106,7 @@ namespace Common.Scripts.Controller
                 }
             }
         }
-        
+
         /// <summary>
         /// Displays the win or lose window based on the result.
         /// </summary>
@@ -162,7 +158,7 @@ namespace Common.Scripts.Controller
             myPauseMenu.SetActive(false);
             myMiniMap.SetActive(true);
         }
-        
+
 
         /// <summary>
         /// Plays a UI sound using the specified audio clip index.

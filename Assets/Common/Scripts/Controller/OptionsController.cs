@@ -37,7 +37,7 @@ public class OptionsController : MonoBehaviour
 
         mySunToggle.isOn = mySun.activeSelf;
     }
-
+    
 
     private void UpdateFOV(float theValue)
     {

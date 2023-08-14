@@ -51,6 +51,11 @@ namespace Common.Scripts.Question
         /// The currently displayed question.
         /// </summary>
         private Question myCurrentQuestion;
+        
+        /// <summary>
+        /// The currently displayed question.
+        /// </summary>
+        [SerializeField] private Animator myAnimator;
 
         /// <summary>
         /// The user's input for the answer.
@@ -100,8 +105,7 @@ namespace Common.Scripts.Question
         {
             UIControllerInGame.MyInstance.PlayUISound(0);
             UIControllerInGame.MyInstance.ShowNav(false);
-            Time.timeScale = 0;
-
+            FindObjectOfType<PlayerController>().MyCanMove = false;
             myCurrentQuestion = theQuestion;
             myIsCorrect = false;
             int ID = theQuestion.MyQuestionID;
