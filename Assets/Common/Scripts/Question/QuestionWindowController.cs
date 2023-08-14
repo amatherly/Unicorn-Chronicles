@@ -25,23 +25,13 @@ namespace Common.Scripts.Question
         /// Sound index for an incorrect answer.
         /// </summary>
         private static readonly int INCORRECT_SOUND = 3;
-    
-        /// <summary>
-        /// The ID for the True/False question type.
-        /// </summary>
-        private static readonly int TRUE_FALSE_ID = 1;
+        
 
         /// <summary>
         /// The ID for the Multiple Choice question type.
         /// </summary>
         private static readonly int MULT_CHOICE_ID = 2;
-
-        /// <summary>
-        /// The ID for the Short Answer question type.
-        /// </summary>
-        private static readonly int SHORT_ANSWER_ID = 3;
-
-
+        
         /// <summary>
         /// The Maze instance used in the game.
         /// </summary>

@@ -1,4 +1,3 @@
-using Singleton;
 using TMPro;
 using UnityEngine;
 
@@ -9,10 +8,6 @@ namespace Common.Scripts.Controller
     /// </summary>
     public class PlayerController : MonoBehaviour
     {
-        /// <summary>
-        /// The singleton instance of the PlayerController class.
-        /// </summary>
-        private static PlayerController myInstance = null;
 
         /// <summary>
         /// The movement speed of the player.
@@ -23,11 +18,6 @@ namespace Common.Scripts.Controller
         /// The rotation speed of the player.
         /// </summary>
         private static float myRotationSpeed;
-
-        /// <summary>
-        /// The Maze instance.
-        /// </summary>
-        private global::Common.Scripts.Maze.Maze MAZE;
 
         /// <summary>
         /// The CharacterController component of the player character.
@@ -48,11 +38,7 @@ namespace Common.Scripts.Controller
         /// A flag indicating whether the player can move.
         /// </summary>
         [SerializeField] private bool myCanMove;
-
-        /// <summary>
-        /// The camera transform.
-        /// </summary>
-        private Transform myCameraTransform;
+        
 
         /// <summary>
         /// The number of items the player currently holds.
@@ -70,11 +56,9 @@ namespace Common.Scripts.Controller
         /// </summary>
         private void Start()
         {
-            MAZE = GameObject.Find("Maze").GetComponent<global::Common.Scripts.Maze.Maze>();
             myCharacterController = GetComponent<CharacterController>();
             myAnimator = GetComponent<Animator>();
             myAudioSource = GetComponent<AudioSource>();
-            myCameraTransform = GameObject.Find("CM vcam2").transform;
             
             // Set initial movement and rotation speed values
             mySpeed = 50f;
@@ -160,6 +144,7 @@ namespace Common.Scripts.Controller
         /// </summary>
         public float MySpeed
         {
+            get => mySpeed;
             set => mySpeed = value;
         }
 

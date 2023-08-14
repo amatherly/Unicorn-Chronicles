@@ -70,6 +70,7 @@ namespace Common.Scripts.Question
         public int MyQuestionID
         {
             get => myQuestionID;
+            set => myQuestionID = value;
         }
 
         /// <summary>
@@ -78,6 +79,7 @@ namespace Common.Scripts.Question
         public bool MyIsAnswered
         {
             get => myIsAnswered;
+            set => myIsAnswered = value;
         }
 
         /// <summary>
@@ -86,6 +88,7 @@ namespace Common.Scripts.Question
         public string MyQuestion
         {
             get => myQuestion;
+            set => myQuestion = value;
         }
 
         /// <summary>
