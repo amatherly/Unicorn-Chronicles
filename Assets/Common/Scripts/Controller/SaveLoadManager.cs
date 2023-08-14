@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Cinemachine;
 using Common.Scripts.Maze;
 using Singleton;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Common.Scripts.Controller
 {
@@ -14,15 +18,19 @@ namespace Common.Scripts.Controller
         private Door myDoor;
         private ItemController myItemController;
         private CollectibleController myCollectibleController;
+        [SerializeField] private GameObject mySun;
         public GameObject myNoSaveMenu;
         public GameObject myOptionsMenu;
+        
+        
+        [SerializeField] private CinemachineVirtualCamera myVirtualCamera;
 
 
         private void Start()
         {
             myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
             myPlayerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
-            myCollectibleController = FindObjectOfType<CollectibleController>(); 
+            myCollectibleController = FindObjectOfType<CollectibleController>();
         }
         
 
@@ -44,6 +52,16 @@ namespace Common.Scripts.Controller
             {
                 SaveDoorState(currDoor);
             }
+            
+            // Save the virtual camera's FOV
+            PlayerPrefs.SetFloat("VirtualCameraFOV", myVirtualCamera.m_Lens.FieldOfView);
+
+            // Save the sun toggle state
+            PlayerPrefs.SetInt("SunToggle", mySun.activeSelf ? 1 : 0);
+            
+            // Save the player's speed
+            PlayerPrefs.SetFloat("PlayerSpeed", myPlayerController.MySpeed);
+
             SaveItemState();
             SaveMinimap();
 
@@ -67,8 +85,27 @@ namespace Common.Scripts.Controller
                     LoadDoorState(currDoor);
                 }
 
+                // Load the virtual camera's FOV
+                if (PlayerPrefs.HasKey("VirtualCameraFOV"))
+                {
+                    myVirtualCamera.m_Lens.FieldOfView = PlayerPrefs.GetFloat("VirtualCameraFOV");
+                }
+
+                // Load the sun toggle state
+                if (PlayerPrefs.HasKey("SunToggle"))
+                {
+                    mySun.SetActive(PlayerPrefs.GetInt("SunToggle") == 1);
+                }
+                
+                // Load the player's speed
+                if (PlayerPrefs.HasKey("PlayerSpeed"))
+                {
+                    myPlayerController.MySpeed = PlayerPrefs.GetFloat("PlayerSpeed");
+                }
+                
                 LoadItemState();
                 LoadMinimap();
+                
 
                 // Load question states in maze
                 QuestionFactory.MyInstance.InitializeQuestionsFromSave();
@@ -85,6 +122,10 @@ namespace Common.Scripts.Controller
         public void NewGame()
         {
             PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene("Game 2");
+            UIControllerInGame.MyInstance.GetComponent<AudioSource>().Stop();
+            UIControllerInGame.MyInstance.ResumeGame();
+            myPlayerController.MyCanMove = true;
         }
         
         
