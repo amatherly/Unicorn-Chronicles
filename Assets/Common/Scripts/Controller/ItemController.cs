@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Common.Scripts.Controller;
 using Singleton;
 using UnityEngine;
@@ -6,6 +8,7 @@ using UnityEngine;
 /// Simple class to increment the <c>myItemCount</c> field of the
 /// <c>Player</c> script and handle animation.
 /// </summary>
+[System.Serializable]
 public class ItemController : MonoBehaviour
 {
 
@@ -23,7 +26,12 @@ public class ItemController : MonoBehaviour
     /// Reference to the <c>Player</c> script.
     /// </summary>
     private PlayerController myPlayer;
-
+    
+    /// <summary>
+    /// Unique ID for each key collectible.
+    /// </summary>
+    public int myItemID; 
+    
     /// <summary>
     /// Start is called before the first frame update.
     /// </summary>
@@ -31,14 +39,16 @@ public class ItemController : MonoBehaviour
     {
         myPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
-
+    
     /// <summary>
     /// Update is called once per frame.
     /// </summary>
     void Update()
     {
-        float newY = Mathf.Sin(Time.time * SPEED) * HEIGHT + transform.position.y;
-        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        var thePosition = transform.position;
+        float newY = Mathf.Sin(Time.time * SPEED) * HEIGHT + thePosition.y;
+        thePosition = new Vector3(thePosition.x, newY, thePosition.z);
+        transform.position = thePosition;
     }
 
     /// <summary>
@@ -46,13 +56,15 @@ public class ItemController : MonoBehaviour
     /// the player's <c>myItemCount</c> and destroy the <c>GameObject</c>.
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider theOther)
     {
-        if (other.CompareTag("Player"))
+        if (theOther.CompareTag("Player"))
         {
             myPlayer.MyItemCount += 1;
             FindObjectOfType<UIControllerInGame>().PlayUISound(4);
             Destroy(gameObject);
         }
     }
+    
+
 }

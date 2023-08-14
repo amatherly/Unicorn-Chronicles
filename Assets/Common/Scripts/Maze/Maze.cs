@@ -28,6 +28,7 @@ public class Maze : MonoBehaviour
     /// A 2D array representation of the <c>Room</c> scripts in the maze.
     /// </summary>
     [SerializeField] private Room[,] myRooms;
+    
 
     /// <summary>
     /// A list of all doors present in the maze.
@@ -106,6 +107,12 @@ public class Maze : MonoBehaviour
     {
         get => myRooms;
         set => myRooms = value;
+    }
+    
+    public static Maze MyMaze
+    {
+        get => MyMaze;
+        set => MyMaze = value; // Changed to public for SaveLoadManagerTests.cs
     }
 
     /// <summary>

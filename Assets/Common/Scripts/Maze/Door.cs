@@ -65,13 +65,6 @@ public class Door : MonoBehaviour
     private Coroutine myAnimation;
 
     /// <summary>
-    /// Tool-tip <c>GameObject</c> so that the user knows which key to press in
-    /// order to activate the door.
-    /// </summary>
-    [SerializeField]
-    private GameObject myNavPopup;
-
-    /// <summary>
     /// Static counter to ensure a unique String for <c>myDoorID</c>.
     /// </summary>
     private static int myDoorCounter = 0;
@@ -200,15 +193,7 @@ public class Door : MonoBehaviour
     }
 
     /// <summary>
-    /// Accessor for the <c>myNavPopup</c> field.
-    /// </summary>
-    public GameObject MyNavPopup
-    {
-        get => myNavPopup;
-    }
-
-    /// <summary>
-    /// Assigns each <c>Door</c> a unique ID for use in the save/load.
+    /// 
     /// </summary>
     private void AssignUniqueID()
     {
@@ -271,4 +256,11 @@ public class Door : MonoBehaviour
             time += Time.deltaTime * ROTATE_SPEED;
         }
     }
+    
+    public IEnumerator GetDoRotationClose()
+    {
+        return DoRotationClose();
+    }
+    
+    
 }
