@@ -1,34 +1,73 @@
 using System;
 using System.Collections.Generic;
 using Common.Scripts.Maze;
-using Singleton;
+using Common.Scripts.Question;
 using UnityEngine;
 
 namespace Common.Scripts.Controller
 {
+    /// <summary>
+    /// Manages saving and loading game state for the Trivia Maze game.
+    /// </summary>
     public class SaveLoadManager : MonoBehaviour
     {
+        /// <summary>
+        /// DoorController associated with this SaveLoadManager.
+        /// </summary>
         private DoorController myDoorController;
-        private global::Maze myMaze;
+        
+        /// <summary>
+        /// Global Maze object used in the game.
+        /// </summary>
+        private global::Common.Scripts.Maze.Maze MAZE;
+        
+        /// <summary>
+        /// PlayerController managing the player's actions and state.
+        /// </summary>
         private PlayerController myPlayerController;
+        
+        /// <summary>
+        /// Door object used for door-related operations.
+        /// </summary>
         private Door myDoor;
+        
+        /// <summary>
+        /// ItemController managing individual collectable items in the game.
+        /// </summary>
         private ItemController myItemController;
+       
+        /// <summary>
+        /// CollectibleController responsible for handling collectibles.
+        /// </summary>
         private CollectibleController myCollectibleController;
+        
+        /// <summary>
+        /// GameObject representing the "No Save" menu.
+        /// </summary>
         public GameObject myNoSaveMenu;
+        
+        /// <summary>
+        /// The GameObject representing the options menu.
+        /// </summary>
         public GameObject myOptionsMenu;
-
-
+        
+        
+        /// <summary>
+        /// Initializes references and components during the start of the game.
+        /// </summary>
         private void Start()
         {
-            myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
+            MAZE = GameObject.Find("Maze").GetComponent<global::Common.Scripts.Maze.Maze>();
             myPlayerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
             myCollectibleController = FindObjectOfType<CollectibleController>(); 
         }
         
-
+        /// <summary>
+        /// Saves the current game state.
+        /// </summary>
         public void SaveGame()
         {
-            if (myMaze == null)
+            if (MAZE == null)
             {
                 Debug.LogError("Maze object is not initialized.");
                 return;
@@ -40,7 +79,7 @@ namespace Common.Scripts.Controller
                 JsonUtility.ToJson(myPlayerController.transform.position));
 
             // Save door states in maze
-            foreach (var currDoor  in myMaze.GetComponentsInChildren<DoorController>())
+            foreach (var currDoor  in MAZE.GetComponentsInChildren<DoorController>())
             {
                 SaveDoorState(currDoor);
             }
@@ -49,7 +88,10 @@ namespace Common.Scripts.Controller
 
             PlayerPrefs.Save();
         }
-
+        
+        /// <summary>
+        /// Loads a previously saved game state.
+        /// </summary>
         public void LoadGame()
         {
             if (PlayerPrefs.HasKey("PlayerPosition"))
@@ -62,7 +104,7 @@ namespace Common.Scripts.Controller
                     PlayerPrefs.GetInt("PlayerItemCount", myPlayerController.MyItemCount);
 
                 // Load door states in maze
-                foreach (var currDoor in myMaze.GetComponentsInChildren<DoorController>())
+                foreach (var currDoor in MAZE.GetComponentsInChildren<DoorController>())
                 {
                     LoadDoorState(currDoor);
                 }
@@ -79,15 +121,19 @@ namespace Common.Scripts.Controller
                 myNoSaveMenu.SetActive(true);
             }
         }
-
-
-
+        
+        /// <summary>
+        /// Starts a new game by deleting all saved data.
+        /// </summary>
         public void NewGame()
         {
             PlayerPrefs.DeleteAll();
         }
-        
-        
+
+        /// <summary>
+        /// Saves the state of a door within the maze.
+        /// </summary>
+        /// <param name="theDoor">The DoorController of the door to save.</param>
         private void SaveDoorState(DoorController theDoor)
         {
             myDoor = theDoor.GetComponent<Door>();
@@ -117,8 +163,11 @@ namespace Common.Scripts.Controller
             PlayerPrefs.SetFloat(currDoorID + "_ScaleY", currDoorScale.y);
             PlayerPrefs.SetFloat(currDoorID + "_ScaleZ", currDoorScale.z);
         }
-
         
+        /// <summary>
+        /// Loads the state of a door within the maze.
+        /// </summary>
+        /// <param name="theDoor">The DoorController of the door to load state for.</param>
         private void LoadDoorState(DoorController theDoor)
         {
             myDoor = theDoor.GetComponent<Door>();
@@ -157,7 +206,9 @@ namespace Common.Scripts.Controller
             }
         }
         
-        
+        /// <summary>
+        /// Saves the state of the minimap, including visited rooms and their doors.
+        /// </summary>
         private void SaveMinimap()
         {
             Room[] allRooms = FindObjectsOfType<Room>();
@@ -173,8 +224,10 @@ namespace Common.Scripts.Controller
             SaveMinimapDoors();
             PlayerPrefs.Save();
         }
-
         
+        /// <summary>
+        /// Loads the state of the minimap, restoring visited rooms and their doors.
+        /// </summary>
         private void LoadMinimap()
         {
             if (PlayerPrefs.HasKey("VisitedRooms"))
@@ -196,7 +249,9 @@ namespace Common.Scripts.Controller
             LoadMinimapDoors();
         }
         
-        
+        /// <summary>
+        /// Saves the state of doors within the minimap.
+        /// </summary>
         private void SaveMinimapDoors()
         {
             Door[] allDoors = FindObjectsOfType<Door>();
@@ -210,6 +265,9 @@ namespace Common.Scripts.Controller
             PlayerPrefs.Save();
         }
         
+        /// <summary>
+        /// Loads the state of doors within the minimap.
+        /// </summary>
         private void LoadMinimapDoors()
         {
             Door[] allDoors = FindObjectsOfType<Door>();
@@ -224,7 +282,9 @@ namespace Common.Scripts.Controller
             }
         }
 
-        
+        /// <summary>
+        /// Saves the state of collectible items in the scene.
+        /// </summary>
         private void SaveItemState()
         {
             if(myCollectibleController == null)
@@ -242,13 +302,6 @@ namespace Common.Scripts.Controller
                     // Debug.LogError("A key in myAllItems list is null");
                     continue;
                 }
-                //
-                // if (key.myItemID == null)
-                // {
-                //     Debug.LogError("key.myItemID is null for a key!");
-                //     continue;
-                // }
-
                 if (currItem.gameObject.activeSelf)
                 {
                     allActiveItems.Add(Convert.ToInt32(currItem.myItemID.ToString()));
@@ -259,12 +312,14 @@ namespace Common.Scripts.Controller
             PlayerPrefs.Save();
         }
         
-        
+        /// <summary>
+        /// Loads the state of collectible items in the scene.
+        /// </summary>
         private void LoadItemState()
         {
             string savedItem = PlayerPrefs.GetString("keysInScene", "");
             List<int> savedItemIDs = new List<int>(
-                System.Array.ConvertAll(savedItem.Split(','), s => int.TryParse(s, out int result) ? result : -1)
+                Array.ConvertAll(savedItem.Split(','), s => int.TryParse(s, out int result) ? result : -1)
             );
 
             // Set the keys to active or inactive based on the saved data

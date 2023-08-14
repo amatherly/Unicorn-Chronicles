@@ -1,19 +1,27 @@
-﻿using SQLite4Unity3d;
+﻿using System.Collections.Generic;
+using SQLite4Unity3d;
 using UnityEngine;
-using System.IO;
-
 #if !UNITY_EDITOR
 #endif
-using System.Collections.Generic;
 
-public class DataService
+namespace Common.Scripts.Editor.Sql
 {
-    private SQLiteConnection myConnection;
+	/// <summary>
+	/// Represents a service for managing database operations related to questions.
+	/// </summary>
+	public class DataService
+	{
+		private SQLiteConnection myConnection;
 
-    public DataService(string DatabaseName)
-    {
+		
+		/// <summary>
+		/// Initializes a new instance of the DataService class with the specified database name.
+		/// </summary>
+		/// <param name="theDatabaseName">The name of the database.</param>
+		public DataService(string theDatabaseName)
+		{
 #if UNITY_EDITOR
-        var dbPath = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
+			var dbPath = string.Format(@"Assets/StreamingAssets/{0}", theDatabaseName);
 #else
         // check if file exists in Application.persistentDataPath
         var filepath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
@@ -65,32 +73,46 @@ public class DataService
 
         var dbPath = filepath;
 #endif
-        myConnection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-        Debug.Log("Final PATH: " + dbPath);
-    }
+			myConnection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+			Debug.Log("Final PATH: " + dbPath);
+		}
 
 
-    public IEnumerable<Question> GetQuestion()
-    {
-	    return myConnection.Table<Question>();
-    }
+		/// <summary>
+		/// Retrieves a sequence of all questions from the database.
+		/// </summary>
+		/// <returns>A sequence of all questions in the database.</returns>
+		public IEnumerable<Question.Question> GetQuestion()
+		{
+			return myConnection.Table<Question.Question>();
+		}
 
-    // Get all questions
-    public IEnumerable<Question> GetQuestions()
-    {
-	    return myConnection.Query<Question>("SELECT * FROM Question");
-    }
+		/// <summary>
+		/// Retrieves a sequence of all questions from the "Question" table in the database.
+		/// </summary>
+		/// <returns>A sequence of all questions from the "Question" table.</returns>
+		public IEnumerable<Question.Question> GetQuestions()
+		{
+			return myConnection.Query<Question.Question>("SELECT * FROM Question");
+		}
     
-    // Mark question as answered in the database
-    public void MarkQuestionAsAnswered(Question theQuestionId)
-    {
-	    myConnection.Execute("UPDATE Question SET IsAnswered = 1 WHERE myQuestionID = ?", theQuestionId);
-    }
+		/// <summary>
+		/// Marks a specific question as answered in the database.
+		/// </summary>
+		/// <param name="theQuestionId">The ID of the question to mark as answered.</param>
+		public void MarkQuestionAsAnswered(Question.Question theQuestionId)
+		{
+			myConnection.Execute("UPDATE Question SET IsAnswered = 1 WHERE myQuestionID = ?", theQuestionId);
+		}
     
-    public static void ResetQuestionStateInDatabase()
-    {
-	    // Assuming you've already created an instance of the DataService class
-	    DataService dataService = new DataService("data.sqlite");  
-	    dataService.myConnection.Execute("UPDATE Question SET IsAnswered = 0");
-    }
+		/// <summary>
+		/// Resets the answered state of all questions in the database to unanswered.
+		/// </summary>
+		public static void ResetQuestionStateInDatabase()
+		{
+			// Assuming you've already created an instance of the DataService class
+			DataService dataService = new DataService("data.sqlite");  
+			dataService.myConnection.Execute("UPDATE Question SET IsAnswered = 0");
+		}
+	}
 }

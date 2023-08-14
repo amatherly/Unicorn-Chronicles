@@ -1,114 +1,116 @@
-using UnityEngine;
 using System;
 using Common.Scripts.Controller;
-using Singleton;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-/// <summary>
-/// Manages the question window's visual elements and interactions.
-/// </summary>
-public class QuestionWindowView : MonoBehaviour
+namespace Common.Scripts.Question
 {
     /// <summary>
-    /// The associated controller for the question window.
+    /// Manages the question window's visual elements and interactions.
     /// </summary>
-    [SerializeField] private QuestionWindowController myController;
-
-    /// <summary>
-    /// The text component displaying the question.
-    /// </summary>
-    [SerializeField] private TMP_Text myQuestionText;
-
-    /// <summary>
-    /// Array of text components for displaying multiple choice button texts.
-    /// </summary>
-    [SerializeField] private TMP_Text[] myButtonTexts = new TMP_Text[4];
-
-    /// <summary>
-    /// The input field for short answer questions.
-    /// </summary>
-    [SerializeField] private TMP_InputField myInputField;
-
-    /// <summary>
-    /// The window displaying the result of the question.
-    /// </summary>
-    [SerializeField] private GameObject myResultWindow;
-
-    /// <summary>
-    /// The text component displaying the result of the question.
-    /// </summary>
-    [FormerlySerializedAs("resultText")] [SerializeField] private TMP_Text myResultText;
-
-    /// <summary>
-    /// The text component displaying the key count.
-    /// </summary>
-    [SerializeField] private TMP_Text myKeyCountText;
-    
-    /// <summary>
-    /// Initializes the question window view.
-    /// </summary>
-    public void InitializeView()
+    public class QuestionWindowView : MonoBehaviour
     {
-        myResultWindow.SetActive(false);
-        gameObject.SetActive(true);
-        UIControllerInGame.MyInstance.PauseGame();
-        myKeyCountText.SetText(GameObject.FindObjectOfType<PlayerController>().MyItemCount.ToString());
-        if (myKeyCountText.text == "0")
+        /// <summary>
+        /// The associated controller for the question window.
+        /// </summary>
+        [SerializeField] private QuestionWindowController myController;
+
+        /// <summary>
+        /// The text component displaying the question.
+        /// </summary>
+        [SerializeField] private TMP_Text myQuestionText;
+
+        /// <summary>
+        /// Array of text components for displaying multiple choice button texts.
+        /// </summary>
+        [SerializeField] private TMP_Text[] myButtonTexts = new TMP_Text[4];
+
+        /// <summary>
+        /// The input field for short answer questions.
+        /// </summary>
+        [SerializeField] private TMP_InputField myInputField;
+
+        /// <summary>
+        /// The window displaying the result of the question.
+        /// </summary>
+        [SerializeField] private GameObject myResultWindow;
+
+        /// <summary>
+        /// The text component displaying the result of the question.
+        /// </summary>
+        [FormerlySerializedAs("resultText")] [SerializeField] private TMP_Text myResultText;
+
+        /// <summary>
+        /// The text component displaying the key count.
+        /// </summary>
+        [SerializeField] private TMP_Text myKeyCountText;
+    
+        /// <summary>
+        /// Initializes the question window view.
+        /// </summary>
+        public void InitializeView()
         {
-            GameObject.Find("HintButton").GetComponent<Button>().enabled = false;
+            myResultWindow.SetActive(false);
+            gameObject.SetActive(true);
+            UIControllerInGame.MyInstance.PauseGame();
+            myKeyCountText.SetText(GameObject.FindObjectOfType<PlayerController>().MyItemCount.ToString());
+            if (myKeyCountText.text == "0")
+            {
+                GameObject.Find("HintButton").GetComponent<Button>().enabled = false;
+            }
         }
-    }
 
-    /// <summary>
-    /// Sets the text of the question being displayed.
-    /// </summary>
-    /// <param name="questionText">The text of the question.</param>
-    public void SetQuestionText(string questionText)
-    {
-        myQuestionText.SetText(questionText);
-    }
-
-    /// <summary>
-    /// Sets the text of the multiple choice buttons with provided answers.
-    /// </summary>
-    /// <param name="theAnswers">An array of answer texts for the buttons.</param>
-    public void SetMultipleChoiceButtons(string[] theAnswers)
-    {
-        for (int i = 0; i < theAnswers.Length; i++)
+        /// <summary>
+        /// Sets the text of the question being displayed.
+        /// </summary>
+        /// <param name="theQuestionText">The text of the question.</param>
+        public void SetQuestionText(string theQuestionText)
         {
-            myButtonTexts[i].SetText(theAnswers[i]);
+            myQuestionText.SetText(theQuestionText);
         }
-    }
 
-    /// <summary>
-    /// Gets the button text for the users answer.
-    /// </summary>
-    public string GetButtonAnswer(string theIndex)
-    {
-        string answerText = myButtonTexts[Int32.Parse(theIndex) - 1].text;
-        Debug.Log("Button text: " + answerText);
-        return answerText;
-    }
+        /// <summary>
+        /// Sets the text of the multiple choice buttons with provided answers.
+        /// </summary>
+        /// <param name="theAnswers">An array of answer texts for the buttons.</param>
+        public void SetMultipleChoiceButtons(string[] theAnswers)
+        {
+            for (int i = 0; i < theAnswers.Length; i++)
+            {
+                myButtonTexts[i].SetText(theAnswers[i]);
+            }
+        }
+
+        /// <summary>
+        /// Gets the button text for the users answer.
+        /// </summary>
+        public string GetButtonAnswer(string theIndex)
+        {
+            string answerText = myButtonTexts[Int32.Parse(theIndex) - 1].text;
+            Debug.Log("Button text: " + answerText);
+            return answerText;
+        }
     
-    /// <summary>
-    /// Retrieves the text from the input field and sends it to the controller for processing.
-    /// </summary>
-    public void GetInputFieldText()
-    {
-        myController.SetAnswerInput(myInputField.text);
-        myInputField.SetTextWithoutNotify(null);
-    }
+        /// <summary>
+        /// Retrieves the text from the input field and sends it to the controller for processing.
+        /// </summary>
+        public void GetInputFieldText()
+        {
+            myController.SetAnswerInput(myInputField.text);
+            myInputField.SetTextWithoutNotify(null);
+        }
     
-    /// <summary>
-    /// Displays the result of the user's answer.
-    /// </summary>
-    /// <param name="isCorrect">Whether the user's answer is correct or not.</param>
-    public void ShowResult(bool isCorrect)
-    {
-        myResultWindow.SetActive(true);
-        myResultText.SetText(isCorrect ? "Correct!" : "Incorrect!");
-        UIControllerInGame.MyInstance.ResumeGame();
+        /// <summary>
+        /// Displays the result of the user's answer.
+        /// </summary>
+        /// <param name="theIsCorrect">Whether the user's answer is correct or not.</param>
+        public void ShowResult(bool theIsCorrect)
+        {
+            myResultWindow.SetActive(true);
+            myResultText.SetText(theIsCorrect ? "Correct!" : "Incorrect!");
+            UIControllerInGame.MyInstance.ResumeGame();
+        }
     }
 }

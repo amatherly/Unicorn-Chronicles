@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Common.Scripts.Maze;
 using UnityEngine;
 
 /// <summary>
