@@ -43,8 +43,12 @@ namespace Common.Scripts.Controller
         /// Pause menu GameObject.
         /// </summary>
         private GameObject myPauseMenu;
-
-
+        
+        /// <summary>
+        /// Mini Map GameObject.
+        /// </summary>
+        private GameObject myMiniMap;
+        
         /// <summary>
         /// Question window controller reference.
         /// </summary>
@@ -63,6 +67,8 @@ namespace Common.Scripts.Controller
         {
             myPauseMenu = GameObject.Find("PauseMenu");
             myPauseMenu.SetActive(false);
+            myMiniMap = GameObject.Find("MiniMap");
+            myMiniMap.SetActive(!myIsPaused);
             Cursor.SetCursor(myCursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
         }
@@ -92,8 +98,16 @@ namespace Common.Scripts.Controller
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 myIsPaused = !myIsPaused;
-                myPauseMenu.SetActive(myIsPaused);
-                Time.timeScale = myIsPaused ? 0f : 1f;
+                Debug.Log("ESC Pressed, Game is paused:" + myIsPaused);
+
+                if (myIsPaused)
+                {
+                    PauseGame();
+                }
+                else
+                {
+                    ResumeGame();
+                }
             }
         }
         
@@ -134,15 +148,21 @@ namespace Common.Scripts.Controller
         public void PauseGame()
         {
             Time.timeScale = 0;
+            myPauseMenu.SetActive(true);
+            myMiniMap.SetActive(false);
         }
 
         /// <summary>
-        /// Resumes the game by setting the time scale back to 1.
+        /// Pauses the game by setting the time scale to 0.
         /// </summary>
         public void ResumeGame()
         {
+            myIsPaused = false;
             Time.timeScale = 1;
+            myPauseMenu.SetActive(false);
+            myMiniMap.SetActive(true);
         }
+        
 
         /// <summary>
         /// Plays a UI sound using the specified audio clip index.

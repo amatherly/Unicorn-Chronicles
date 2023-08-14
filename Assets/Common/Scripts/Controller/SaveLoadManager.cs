@@ -163,7 +163,7 @@ namespace Common.Scripts.Controller
                 myNoSaveMenu.SetActive(true);
             }
         }
-        
+
         /// <summary>
         /// Starts a new game by deleting all saved data.
         /// </summary>
@@ -172,9 +172,10 @@ namespace Common.Scripts.Controller
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene("Game 2");
             UIControllerInGame.MyInstance.GetComponent<AudioSource>().Stop();
-            UIControllerInGame.MyInstance.ResumeGame();
+            UIControllerInGame.MyInstance.PauseGame();
             myPlayerController.MyCanMove = true;
         }
+
 
         /// <summary>
         /// Saves the state of a door within the maze.

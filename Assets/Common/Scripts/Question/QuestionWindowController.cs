@@ -100,6 +100,7 @@ namespace Common.Scripts.Question
         {
             UIControllerInGame.MyInstance.PlayUISound(0);
             UIControllerInGame.MyInstance.ShowNav(false);
+            Time.timeScale = 0;
 
             myCurrentQuestion = theQuestion;
             myIsCorrect = false;

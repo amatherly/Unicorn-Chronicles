@@ -54,7 +54,6 @@ namespace Common.Scripts.Question
         {
             myResultWindow.SetActive(false);
             gameObject.SetActive(true);
-            UIControllerInGame.MyInstance.PauseGame();
             myKeyCountText.SetText(GameObject.FindObjectOfType<PlayerController>().MyItemCount.ToString());
             if (myKeyCountText.text == "0")
             {
@@ -110,7 +109,6 @@ namespace Common.Scripts.Question
         {
             myResultWindow.SetActive(true);
             myResultText.SetText(theIsCorrect ? "Correct!" : "Incorrect!");
-            UIControllerInGame.MyInstance.ResumeGame();
         }
     }
 }
