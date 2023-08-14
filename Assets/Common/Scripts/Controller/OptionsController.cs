@@ -12,11 +12,9 @@ public class OptionsController : MonoBehaviour
     [SerializeField] private Slider mySpeedSlider;
     [SerializeField] private Slider myKeySlider;
     [SerializeField] private Toggle mySunToggle;
-
-
+    [SerializeField] private GameObject mySun;
     [SerializeField] private PlayerController myPlayer;
     [SerializeField] private CinemachineVirtualCamera myCamera;
-
     [SerializeField] private TMP_Text myKeyCount;
 
     void Start()
@@ -37,7 +35,7 @@ public class OptionsController : MonoBehaviour
         myKeySlider.onValueChanged.AddListener(UpdateKeyCount);
         myKeyCount.SetText(myPlayer.MyItemCount.ToString());
 
-        mySunToggle.isOn = GameObject.Find("Sun").activeSelf;
+        mySunToggle.isOn = mySun.activeSelf;
     }
 
 

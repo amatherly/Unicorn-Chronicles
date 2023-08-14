@@ -1,3 +1,5 @@
+using Singleton;
+using TMPro;
 using UnityEngine;
 
 namespace Common.Scripts.Controller
@@ -56,6 +58,12 @@ namespace Common.Scripts.Controller
         /// The number of items the player currently holds.
         /// </summary>
         [SerializeField] private int myItemCount;
+        
+        
+        /// <summary>
+        /// UI Key count HUD.
+        /// </summary>
+        [SerializeField] private TMP_Text myKeyCount;
 
 
         private void Start()
@@ -73,6 +81,7 @@ namespace Common.Scripts.Controller
 
         private void Update()
         {
+            myKeyCount.SetText(myItemCount.ToString());
             // Get input values for horizontal and vertical movement
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");

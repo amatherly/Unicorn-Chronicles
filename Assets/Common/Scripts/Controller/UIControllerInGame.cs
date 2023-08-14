@@ -1,3 +1,4 @@
+using Common.Scripts.Controller;
 using TMPro;
 using UnityEngine;
 
@@ -53,6 +54,7 @@ namespace Singleton
         /// Flag indicating if the game is paused.
         /// </summary>
         private bool myIsPaused;
+ 
 
         /// <summary>
         /// Initializes the UIControllerInGame instance and sets up initial UI elements.
