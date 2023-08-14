@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Random = System.Random;
+using Common.Scripts.Editor.Sql;
 using UnityEngine;
+using Random = System.Random;
 
-namespace Singleton
+namespace Common.Scripts.Question
 {
     /// <summary>
     /// Factory class responsible for managing questions.
@@ -19,7 +20,7 @@ namespace Singleton
         /// <summary>
         /// The Maze instance used in the game.
         /// </summary>
-        private static readonly Maze MAZE;
+        private static readonly global::Common.Scripts.Maze.Maze MAZE;
 
         /// <summary>
         /// The random number generator instance.
@@ -57,27 +58,45 @@ namespace Singleton
         /// </summary>
         private bool isNewGame = true;
         
+        /// <summary>
+        /// This method is called on the frame when a script is enabled the first time.
+        /// </summary>
         void Start()
         {
+            // Check if the game is a new game
             if (isNewGame)
             {
+                // Initialize the DataService with the database file
                 myDataService = new DataService("data.sqlite");
+                
+                // Initialize the array of unanswered questions
                 InitializeQuestionArray();
+                
+                // Get the QuestionWindowController component attached to this GameObject
                 myQuestionWindowController = GetComponent<QuestionWindowController>();
+                
+                // Mark that this is not a new game anymore
                 isNewGame = false;
             }
         }
 
+        /// <summary>
+        /// This method is called immediately after a scene is loaded, and before any other objects are set up.
+        /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private void Awake()
         {
+            // Check if there is an existing instance of the factory in the scene
             if (INSTANCE != null && INSTANCE != this)
             {
                 Debug.Log("There is already an instance of the factory in the scene");
             }
             else
             {
+                // Set the singleton instance to this instance
                 MyInstance = this;
+                
+                // Make the GameObject persist across scene loads
                 DontDestroyOnLoad(gameObject);
             }
         }
@@ -129,7 +148,6 @@ namespace Singleton
             }
         }
 
-
         /// <summary>
         /// Initializes questions from a saved state.
         /// </summary>
@@ -150,27 +168,38 @@ namespace Singleton
             set => INSTANCE = value; // Changed to public for SaveLoadManagerTests.cs
         }
 
+        /// <summary>
+        /// Gets the list of randomized questions.
+        /// </summary>
         public object MyRandomizedQuestions
         {
             get => myRandomizedQuestions;
         }
 
+        /// <summary>
+        /// Gets the collection of available questions.
+        /// </summary>
         public object MyQuestions
         {
             get => myQuestions;
         }
         
+        /// <summary>
+        /// Sets the DataService instance for managing data.
+        /// </summary>
         public DataService MyDataService
         {
-            get => myDataService;
             set => myDataService = value;
         }
         
+        /// <summary>
+        /// Sets the currently selected question.
+        /// </summary>
         public Question MyCurrentQuestion
         {
-            get => myCurrentQuestion;
             set => myCurrentQuestion = value;
         }
 
     }
+    
 }

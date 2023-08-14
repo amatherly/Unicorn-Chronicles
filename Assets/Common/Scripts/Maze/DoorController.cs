@@ -1,5 +1,5 @@
 using Common.Scripts.Controller;
-using Singleton;
+using Common.Scripts.Question;
 using UnityEngine;
 
 namespace Common.Scripts.Maze
@@ -25,8 +25,9 @@ namespace Common.Scripts.Maze
         /// <summary>
         /// Reference to the game's <c>Maze</c> script.
         /// </summary>
-        private global::Maze myMaze;
+        private Maze MAZE;
 
+        
         /// <summary>
         /// Called before the first frame update.
         /// </summary>
@@ -34,7 +35,7 @@ namespace Common.Scripts.Maze
         {
             myDoor = GetComponent<Door>();
             myQuestionFactory = QuestionFactory.MyInstance;
-            myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
+            MAZE = GameObject.Find("Maze").GetComponent<global::Common.Scripts.Maze.Maze>();
         }
 
         /// <summary>
@@ -52,7 +53,6 @@ namespace Common.Scripts.Maze
         /// </summary>
         private void CheckForInput()
         {
-
             if (Input.GetKeyDown(KeyCode.E) && myDoor.MyProximityTrigger)
             {
                 if (!myDoor.MyHasAttempted)
@@ -76,20 +76,19 @@ namespace Common.Scripts.Maze
         /// Called when the player enters the door's collider and sets its state
         /// accordingly.
         /// </summary>
-        /// <param name="other">The entity entering the collider.</param>
-        private void OnTriggerEnter(Collider other)
+        /// <param name="theOther">The entity entering the collider.</param>
+        private void OnTriggerEnter(Collider theOther)
         {
-            if (other.CompareTag("Player"))
+            if (theOther.CompareTag("Player"))
             {
                 myDoor.MyProximityTrigger = true;
-                myMaze.MyCurrentDoor = myDoor;
+                MAZE.MyCurrentDoor = myDoor;
 
                 if (!myDoor.MyHasAttempted)
                 {
                     UIControllerInGame.MyInstance.ShowNav(true);
 
                 }
-                // PlayerController.MyInstance.RotateCameraTowardDoor(myDoor.transform);
             }
         }
 
@@ -97,13 +96,13 @@ namespace Common.Scripts.Maze
         /// Called when the player exits the door's collider and sets its state
         /// accordingly.
         /// </summary>
-        /// <param name="other">The entity interacting with the collider.</param>
-        private void OnTriggerExit(Collider other)
+        /// <param name="theOther">The entity interacting with the collider.</param>
+        private void OnTriggerExit(Collider theOther)
         {
-            if (other.CompareTag("Player"))
+            if (theOther.CompareTag("Player"))
             {
                 myDoor.MyProximityTrigger = false;
-                myMaze.MyCurrentDoor = null;
+                MAZE.MyCurrentDoor = null;
                 UIControllerInGame.MyInstance.ShowNav(false);
             }
         }

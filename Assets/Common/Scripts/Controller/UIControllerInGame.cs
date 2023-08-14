@@ -1,8 +1,8 @@
-using Common.Scripts.Controller;
+using Common.Scripts.Question;
 using TMPro;
 using UnityEngine;
 
-namespace Singleton
+namespace Common.Scripts.Controller
 {
     /// <summary>
     /// Singleton class responsible for managing in-game UI elements and game pause functionality.
@@ -54,7 +54,7 @@ namespace Singleton
         /// Flag indicating if the game is paused.
         /// </summary>
         private bool myIsPaused;
- 
+        
 
         /// <summary>
         /// Initializes the UIControllerInGame instance and sets up initial UI elements.
@@ -96,8 +96,7 @@ namespace Singleton
                 Time.timeScale = myIsPaused ? 0f : 1f;
             }
         }
-
-
+        
         /// <summary>
         /// Displays the win or lose window based on the result.
         /// </summary>
@@ -159,7 +158,7 @@ namespace Singleton
         public static UIControllerInGame MyInstance
         {
             get => myInstance;
-            set => myInstance = value;
+            private set => myInstance = value;
         }
     }
 }

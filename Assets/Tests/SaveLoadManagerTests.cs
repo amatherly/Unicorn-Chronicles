@@ -5,8 +5,8 @@ namespace Tests
 {
     public class SaveLoadManagerTests
     {
-        private string myTestPlayer = "Test_PlayerPosition";
-        private string myTestItem = "Test_PlayerItem";
+        private string myTestPlayer = "_TestPlayerPosition";
+        private string myTestItem = "_TestItemCount";
        
 
         [SetUp]
@@ -16,7 +16,7 @@ namespace Tests
             PlayerPrefs.DeleteKey(myTestPlayer + "_x");
             PlayerPrefs.DeleteKey(myTestPlayer + "_y");
             PlayerPrefs.DeleteKey(myTestPlayer + "_z");
-            PlayerPrefs.DeleteKey(myTestItem + "_ItemCount");
+            PlayerPrefs.DeleteKey(myTestItem + "_TestItemCount");
         }
         
         [TearDown]
@@ -24,7 +24,6 @@ namespace Tests
         {
             PlayerPrefs.DeleteAll();
         }
-        
         
         [Test]
         public void TestSaveAndLoadPositionAndItemCount()
@@ -59,16 +58,16 @@ namespace Tests
         private void SaveMockItemCount(int theItemCount)
         {
 
-            PlayerPrefs.SetInt(myTestItem + "_ItemCount", theItemCount);
+            PlayerPrefs.SetInt(myTestItem + "_TestItemCount", theItemCount);
             PlayerPrefs.Save();
         }
 
 
         private int LoadMockItemCount()
         {
-            if (PlayerPrefs.HasKey(myTestItem + "_ItemCount"))
+            if (PlayerPrefs.HasKey(myTestItem + "_TestItemCount"))
             {
-                return PlayerPrefs.GetInt(myTestItem + "_ItemCount");
+                return PlayerPrefs.GetInt(myTestItem + "_TestItemCount");
             }
             else
             {

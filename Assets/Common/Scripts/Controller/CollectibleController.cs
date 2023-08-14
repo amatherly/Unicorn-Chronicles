@@ -3,21 +3,33 @@ using UnityEngine;
 
 namespace Common.Scripts.Controller
 {
+    /// <summary>
+    /// Manages collectible items in the game.
+    /// </summary>
     public class CollectibleController : MonoBehaviour
     {
+        /// <summary>
+        /// List of all collectible items in the game.
+        /// </summary>
         public List<ItemController>
             allMyItems = new List<ItemController>(); 
-
+        
+        
+        /// <summary>
+        /// Automatically populates the list of collectible items and performs initialization.
+        /// </summary>
         private void Awake()
         {
-            // Auto-populate the allKeys list with every Key in the scene
+            // Auto-populate the allMyKeys list with every Key in the scene
             allMyItems.AddRange(FindObjectsOfType<ItemController>());
 
-            // Just for testing, print out all the key IDs
-            foreach (var currKey in allMyItems)
-            {
-                Debug.Log("Key ID: " + currKey.myItemID);
-            }
+            // // Testing, print out all the key IDs
+            // foreach (var currKey in allMyItems)
+            // {
+            //     Debug.Log("Key ID: " + currKey.myItemID);
+            // }
         }
+        
     }
+    
 }

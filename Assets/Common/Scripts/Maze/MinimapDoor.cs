@@ -1,48 +1,51 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Script to handle color change of the doors on the
-/// minimap.
-/// </summary>
-public class MinimapDoor : MonoBehaviour
+namespace Common.Scripts.Maze
 {
-
     /// <summary>
-    /// The <c>Door</c> the minimap cell corresponds to.
+    /// Script to handle color change of the doors on the
+    /// minimap.
     /// </summary>
-    [SerializeField]
-    GameObject myDoor;
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    void Update()
+    public class MinimapDoor : MonoBehaviour
     {
-        ColorChange();
-    }
 
-    /// <summary>
-    /// Changes the color of the cell depending on the state
-    /// of its corresponding <c>Door</c>. Yellow if the door has
-    /// not been attempted, green if the question was answered correctly,
-    /// and red if the question was answered incorrectly.
-    /// </summary>
-    private void ColorChange()
-    {
-        Color newColor = Color.yellow;
-        Door door = myDoor.GetComponent<Door>();
+        /// <summary>
+        /// The <c>Door</c> the minimap cell corresponds to.
+        /// </summary>
+        [SerializeField]
+        GameObject myDoor;
 
-        if (door.MyHasAttempted && !door.MyLockState)
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
+        void Update()
         {
-            newColor = Color.green;
+            ColorChange();
         }
 
-        if (door.MyHasAttempted && door.MyLockState)
+        /// <summary>
+        /// Changes the color of the cell depending on the state
+        /// of its corresponding <c>Door</c>. Yellow if the door has
+        /// not been attempted, green if the question was answered correctly,
+        /// and red if the question was answered incorrectly.
+        /// </summary>
+        private void ColorChange()
         {
-            newColor = Color.red;
-        }
+            Color newColor = Color.yellow;
+            Door door = myDoor.GetComponent<Door>();
 
-        GetComponent<Image>().color = newColor;
+            if (door.MyHasAttempted && !door.MyLockState)
+            {
+                newColor = Color.green;
+            }
+
+            if (door.MyHasAttempted && door.MyLockState)
+            {
+                newColor = Color.red;
+            }
+
+            GetComponent<Image>().color = newColor;
+        }
     }
 }

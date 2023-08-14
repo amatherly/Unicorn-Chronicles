@@ -27,7 +27,7 @@ namespace Common.Scripts.Controller
         /// <summary>
         /// The Maze instance.
         /// </summary>
-        private global::Maze myMaze;
+        private global::Common.Scripts.Maze.Maze MAZE;
 
         /// <summary>
         /// The CharacterController component of the player character.
@@ -65,20 +65,31 @@ namespace Common.Scripts.Controller
         /// </summary>
         [SerializeField] private TMP_Text myKeyCount;
 
-
+        /// <summary>
+        /// Initializes player properties and references during the start of the game.
+        /// </summary>
         private void Start()
         {
-            myMaze = GameObject.Find("Maze").GetComponent<global::Maze>();
+            MAZE = GameObject.Find("Maze").GetComponent<global::Common.Scripts.Maze.Maze>();
             myCharacterController = GetComponent<CharacterController>();
             myAnimator = GetComponent<Animator>();
             myAudioSource = GetComponent<AudioSource>();
             myCameraTransform = GameObject.Find("CM vcam2").transform;
+            
+            // Set initial movement and rotation speed values
             mySpeed = 50f;
             myRotationSpeed = 5f;
+            
+            // Allow the player to move by default
             myCanMove = true;
+            
+            // Initialize the item count to zero
             myItemCount = 0;
         }
 
+        /// <summary>
+        /// Updates the player's movement and interactions based on user input.
+        /// </summary>
         private void Update()
         {
             myKeyCount.SetText(myItemCount.ToString());
@@ -128,25 +139,7 @@ namespace Common.Scripts.Controller
                 }
             }
         }
-
-
-        /// <summary>
-        /// Rotates the camera towards a specified object (unused in current version).
-        /// </summary>
-        /// <param name="theObject">The object to rotate towards.</param>
-        public void RotateCameraTowardDoor(Transform theObject)
-        {
-            // if (Input.GetAxis("Horizontal") > 0)
-            // {
-            //     myCameraTransform.eulerAngles += new Vector3(myCameraTransform.rotation.x, myCameraTransform.rotation.y + 10 * Time.deltaTime, myCameraTransform.rotation.z);
-            //
-            // }
-            // else
-            // {
-            //     myCameraTransform.eulerAngles += new Vector3(myCameraTransform.rotation.x, myCameraTransform.rotation.y - 10 * Time.deltaTime, myCameraTransform.rotation.z);
-            // }
-        }
-
+        
         /// <summary>
         /// Spends a key item.
         /// </summary>
@@ -161,14 +154,12 @@ namespace Common.Scripts.Controller
 
             return false;
         }
-
-
+        
         /// <summary>
         /// Gets or sets the movement speed of the player.
         /// </summary>
         public float MySpeed
         {
-            get => mySpeed;
             set => mySpeed = value;
         }
 
@@ -177,7 +168,6 @@ namespace Common.Scripts.Controller
         /// </summary>
         public bool MyCanMove
         {
-            get => myCanMove;
             set => myCanMove = value;
         }
 
@@ -190,11 +180,6 @@ namespace Common.Scripts.Controller
             set => myItemCount = value;
         }
         
-        public static PlayerController MyPlayerController
-        {
-            get => MyPlayerController;
-            set => MyPlayerController = value;
-        }
-        
     }
+    
 }

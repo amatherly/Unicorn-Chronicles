@@ -1,62 +1,65 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Script to handle proper color change of the rooms
-/// on the minimap.
-/// </summary>
-public class MinimapCell : MonoBehaviour
+namespace Common.Scripts.Maze
 {
-
     /// <summary>
-    /// Transparent white color.
+    /// Script to handle proper color change of the rooms
+    /// on the minimap.
     /// </summary>
-    private static readonly Color DEFAULT = new(1, 1, 1, .6f);
-
-    /// <summary>
-    /// Transparent light green color for visited rooms.
-    /// </summary>
-    private static readonly Color LIGHT_GREEN = new(.398f, .887f, .414f, .6f);
-
-    /// <summary>
-    /// Transparent light blue color for current room.
-    /// </summary>
-    private static readonly Color LIGHT_BLUE = new(.398f, .769f, .808f, .6f);
-
-    /// <summary>
-    /// The <c>Room</c> the minimap cell corresponds to.
-    /// </summary>
-    [SerializeField]
-    private GameObject myRoom;
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    void Update()
+    public class MinimapCell : MonoBehaviour
     {
-        ColorChange();
-    }
 
-    /// <summary>
-    /// Changes the color of the cell depending on the state of its
-    /// corresponding <c>Room</c>. White for unvisited rooms, green if
-    /// a room has been visited, and blue if the player is currently in
-    /// the room.
-    /// </summary>
-    internal void ColorChange()
-    {
-        Color newColor = DEFAULT;
+        /// <summary>
+        /// Transparent white color.
+        /// </summary>
+        private static readonly Color DEFAULT = new(1, 1, 1, .6f);
 
-        if (myRoom.GetComponent<Room>().MyHasVisited)
+        /// <summary>
+        /// Transparent light green color for visited rooms.
+        /// </summary>
+        private static readonly Color LIGHT_GREEN = new(.398f, .887f, .414f, .6f);
+
+        /// <summary>
+        /// Transparent light blue color for current room.
+        /// </summary>
+        private static readonly Color LIGHT_BLUE = new(.398f, .769f, .808f, .6f);
+
+        /// <summary>
+        /// The <c>Room</c> the minimap cell corresponds to.
+        /// </summary>
+        [SerializeField]
+        private GameObject myRoom;
+
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
+        void Update()
         {
-            newColor = LIGHT_GREEN;
+            ColorChange();
         }
 
-        if (myRoom.GetComponent<Room>().Equals(GameObject.Find("Maze").GetComponent<Maze>().MyCurrentRoom))
+        /// <summary>
+        /// Changes the color of the cell depending on the state of its
+        /// corresponding <c>Room</c>. White for unvisited rooms, green if
+        /// a room has been visited, and blue if the player is currently in
+        /// the room.
+        /// </summary>
+        internal void ColorChange()
         {
-            newColor = LIGHT_BLUE;
-        }
+            Color newColor = DEFAULT;
 
-        GetComponent<Image>().color = newColor;
+            if (myRoom.GetComponent<Room>().MyHasVisited)
+            {
+                newColor = LIGHT_GREEN;
+            }
+
+            if (myRoom.GetComponent<Room>().Equals(GameObject.Find("Maze").GetComponent<Maze>().MyCurrentRoom))
+            {
+                newColor = LIGHT_BLUE;
+            }
+
+            GetComponent<Image>().color = newColor;
+        }
     }
 }
