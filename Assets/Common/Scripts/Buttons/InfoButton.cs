@@ -6,9 +6,9 @@ namespace Buttons
 {
     public class InfoButton : MonoBehaviour
     {
-        public GameObject InfoPanel; 
+        public GameObject myInfoMenu; 
 
-        void Start()
+        private void Start()
         {
             Button btn = this.GetComponent<Button>();
             btn.onClick.AddListener(ShowInfo);
@@ -16,7 +16,7 @@ namespace Buttons
 
         void ShowInfo()
         {
-            InfoPanel.SetActive(true);
+            myInfoMenu.SetActive(true);
         }
     }
     
