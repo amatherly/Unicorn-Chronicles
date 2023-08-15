@@ -83,7 +83,6 @@ namespace Common.Scripts.Question
         /// <summary>
         /// This method is called immediately after a scene is loaded, and before any other objects are set up.
         /// </summary>
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private void Awake()
         {
             // Check if there is an existing instance of the factory in the scene
@@ -95,9 +94,6 @@ namespace Common.Scripts.Question
             {
                 // Set the singleton instance to this instance
                 MyInstance = this;
-                
-                // Make the GameObject persist across scene loads
-                DontDestroyOnLoad(gameObject);
             }
         }
 

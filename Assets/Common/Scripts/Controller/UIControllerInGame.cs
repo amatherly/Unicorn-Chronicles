@@ -44,6 +44,10 @@ namespace Common.Scripts.Controller
         /// </summary>
         private GameObject myPauseMenu;
 
+        /// <summary>
+        /// Mini Map GameObject.
+        /// </summary>
+        [SerializeField] private GameObject myMiniMap;
 
         /// <summary>
         /// Question window controller reference.
@@ -54,7 +58,7 @@ namespace Common.Scripts.Controller
         /// Flag indicating if the game is paused.
         /// </summary>
         private bool myIsPaused;
-        
+
 
         /// <summary>
         /// Initializes the UIControllerInGame instance and sets up initial UI elements.
@@ -63,6 +67,7 @@ namespace Common.Scripts.Controller
         {
             myPauseMenu = GameObject.Find("PauseMenu");
             myPauseMenu.SetActive(false);
+            myMiniMap.SetActive(!myIsPaused);
             Cursor.SetCursor(myCursorTexture, Vector2.zero, CursorMode.Auto);
             Cursor.visible = true;
         }
@@ -80,7 +85,6 @@ namespace Common.Scripts.Controller
             else
             {
                 MyInstance = this;
-                DontDestroyOnLoad(gameObject);
             }
         }
 
@@ -92,11 +96,17 @@ namespace Common.Scripts.Controller
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 myIsPaused = !myIsPaused;
-                myPauseMenu.SetActive(myIsPaused);
-                Time.timeScale = myIsPaused ? 0f : 1f;
+                if (myIsPaused)
+                {
+                    PauseGame();
+                }
+                else
+                {
+                    ResumeGame();
+                }
             }
         }
-        
+
         /// <summary>
         /// Displays the win or lose window based on the result.
         /// </summary>
@@ -134,15 +144,21 @@ namespace Common.Scripts.Controller
         public void PauseGame()
         {
             Time.timeScale = 0;
+            myPauseMenu.SetActive(true);
+            myMiniMap.SetActive(false);
         }
 
         /// <summary>
-        /// Resumes the game by setting the time scale back to 1.
+        /// Pauses the game by setting the time scale to 0.
         /// </summary>
         public void ResumeGame()
         {
+            myIsPaused = false;
             Time.timeScale = 1;
+            myPauseMenu.SetActive(false);
+            myMiniMap.SetActive(true);
         }
+
 
         /// <summary>
         /// Plays a UI sound using the specified audio clip index.
