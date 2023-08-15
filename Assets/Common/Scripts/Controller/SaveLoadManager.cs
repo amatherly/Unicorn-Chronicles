@@ -19,27 +19,27 @@ namespace Common.Scripts.Controller
         /// DoorController associated with this SaveLoadManager.
         /// </summary>
         private DoorController myDoorController;
-        
+
         /// <summary>
         /// Global Maze object used in the game.
         /// </summary>
         private global::Common.Scripts.Maze.Maze MAZE;
-        
+
         /// <summary>
         /// PlayerController managing the player's actions and state.
         /// </summary>
         private PlayerController myPlayerController;
-        
+
         /// <summary>
         /// Door object used for door-related operations.
         /// </summary>
         private Door myDoor;
-        
+
         /// <summary>
         /// ItemController managing individual collectable items in the game.
         /// </summary>
         private ItemController myItemController;
-       
+
         /// <summary>
         /// CollectibleController responsible for handling collectibles.
         /// </summary>
@@ -54,17 +54,17 @@ namespace Common.Scripts.Controller
         /// GameObject representing the "No Save" menu.
         /// </summary>
         public GameObject myNoSaveMenu;
-        
+
         /// <summary>
         /// The GameObject representing the options menu.
         /// </summary>
         public GameObject myOptionsMenu;
-        
-    
+
+
         [SerializeField] private CinemachineVirtualCamera myVirtualCamera;
 
-        
-    
+
+
         /// <summary>
         /// Initializes references and components during the start of the game.
         /// </summary>
@@ -74,7 +74,7 @@ namespace Common.Scripts.Controller
             myPlayerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
             myCollectibleController = FindObjectOfType<CollectibleController>();
         }
-        
+
         /// <summary>
         /// Saves the current game state.
         /// </summary>
@@ -92,17 +92,17 @@ namespace Common.Scripts.Controller
                 JsonUtility.ToJson(myPlayerController.transform.position));
 
             // Save door states in maze
-            foreach (var currDoor  in MAZE.GetComponentsInChildren<DoorController>())
+            foreach (var currDoor in MAZE.GetComponentsInChildren<DoorController>())
             {
                 SaveDoorState(currDoor);
             }
-            
+
             // Save the virtual camera's FOV
             PlayerPrefs.SetFloat("VirtualCameraFOV", myVirtualCamera.m_Lens.FieldOfView);
 
             // Save the sun toggle state
             PlayerPrefs.SetInt("SunToggle", mySun.activeSelf ? 1 : 0);
-            
+
             // Save the player's speed
             PlayerPrefs.SetFloat("PlayerSpeed", myPlayerController.MySpeed);
 
@@ -111,7 +111,7 @@ namespace Common.Scripts.Controller
 
             PlayerPrefs.Save();
         }
-        
+
         /// <summary>
         /// Loads a previously saved game state.
         /// </summary>
@@ -143,16 +143,16 @@ namespace Common.Scripts.Controller
                 {
                     mySun.SetActive(PlayerPrefs.GetInt("SunToggle") == 1);
                 }
-                
+
                 // Load the player's speed
                 if (PlayerPrefs.HasKey("PlayerSpeed"))
                 {
                     myPlayerController.MySpeed = PlayerPrefs.GetFloat("PlayerSpeed");
                 }
-                
+
                 LoadItemState();
                 LoadMinimap();
-                
+
 
                 // Load question states in maze
                 QuestionFactory.MyInstance.InitializeQuestionsFromSave();
@@ -210,7 +210,7 @@ namespace Common.Scripts.Controller
             PlayerPrefs.SetFloat(currDoorID + "_ScaleY", currDoorScale.y);
             PlayerPrefs.SetFloat(currDoorID + "_ScaleZ", currDoorScale.z);
         }
-        
+
         /// <summary>
         /// Loads the state of a door within the maze.
         /// </summary>
@@ -220,7 +220,7 @@ namespace Common.Scripts.Controller
             myDoor = theDoor.GetComponent<Door>();
 
             string currDoorID = myDoor.myDoorID;
-            
+
             if (PlayerPrefs.HasKey(currDoorID + "_LockState"))
             {
                 myDoor.MyLockState = PlayerPrefs.GetInt(currDoorID + "_LockState") == 1;
@@ -252,7 +252,7 @@ namespace Common.Scripts.Controller
                 Debug.Log("No saved state found for door with ID: " + currDoorID);
             }
         }
-        
+
         /// <summary>
         /// Saves the state of the minimap, including visited rooms and their doors.
         /// </summary>
@@ -267,11 +267,12 @@ namespace Common.Scripts.Controller
                     visitedRooms.Add($"{currRoom.MyRow},{currRoom.MyCol}");
                 }
             }
+
             PlayerPrefs.SetString("VisitedRooms", string.Join(";", visitedRooms));
             SaveMinimapDoors();
             PlayerPrefs.Save();
         }
-        
+
         /// <summary>
         /// Loads the state of the minimap, restoring visited rooms and their doors.
         /// </summary>
@@ -287,15 +288,17 @@ namespace Common.Scripts.Controller
                     string[] currPos = currRoomPos.Split(',');
                     visitedRooms.Add(new Vector2Int(int.Parse(currPos[0]), int.Parse(currPos[1])));
                 }
+
                 Room[] allRooms = FindObjectsOfType<Room>();
                 foreach (Room currRoom in allRooms)
                 {
                     currRoom.MyHasVisited = visitedRooms.Contains(new Vector2Int(currRoom.MyRow, currRoom.MyCol));
                 }
             }
+
             LoadMinimapDoors();
         }
-        
+
         /// <summary>
         /// Saves the state of doors within the minimap.
         /// </summary>
@@ -309,9 +312,10 @@ namespace Common.Scripts.Controller
                 PlayerPrefs.SetInt($"{doorKeyBase}_HasAttempted", currDoor.MyHasAttempted ? 1 : 0);
                 PlayerPrefs.SetInt($"{doorKeyBase}_LockState", currDoor.MyLockState ? 1 : 0);
             }
+
             PlayerPrefs.Save();
         }
-        
+
         /// <summary>
         /// Loads the state of doors within the minimap.
         /// </summary>
@@ -334,31 +338,33 @@ namespace Common.Scripts.Controller
         /// </summary>
         private void SaveItemState()
         {
-            if(myCollectibleController == null)
+            if (myCollectibleController == null)
             {
                 Debug.LogError("myCollectibleController is null");
                 return;
             }
-            
+
             // Collect active key IDs
             List<int> allActiveItems = new List<int>();
-            foreach (var currItem  in myCollectibleController.allMyItems)
+            foreach (var currItem in myCollectibleController.allMyItems)
             {
-                if(currItem == null)
+                if (currItem == null)
                 {
                     // Debug.LogError("A key in myAllItems list is null");
                     continue;
                 }
+
                 if (currItem.gameObject.activeSelf)
                 {
                     allActiveItems.Add(Convert.ToInt32(currItem.myItemID.ToString()));
                 }
             }
+
             // Save active keys
             PlayerPrefs.SetString("keysInScene", string.Join(",", allActiveItems));
             PlayerPrefs.Save();
         }
-        
+
         /// <summary>
         /// Loads the state of collectible items in the scene.
         /// </summary>
@@ -375,9 +381,7 @@ namespace Common.Scripts.Controller
                 key.gameObject.SetActive(savedItemIDs.Contains(key.myItemID));
             }
         }
-        
+
     }
-    
-    
 }
 

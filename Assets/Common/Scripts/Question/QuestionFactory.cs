@@ -95,9 +95,6 @@ namespace Common.Scripts.Question
             {
                 // Set the singleton instance to this instance
                 MyInstance = this;
-                
-                // Make the GameObject persist across scene loads
-                DontDestroyOnLoad(gameObject);
             }
         }
 

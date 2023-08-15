@@ -86,7 +86,6 @@ namespace Common.Scripts.Controller
             else
             {
                 MyInstance = this;
-                DontDestroyOnLoad(gameObject);
             }
         }
 
