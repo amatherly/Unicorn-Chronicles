@@ -18,16 +18,16 @@ namespace Common.Scripts.Controller
         /// <summary>
         /// Automatically populates the list of collectible items and performs initialization.
         /// </summary>
-        private void Awake()
+        private void Start()
         {
             // Auto-populate the allMyKeys list with every Key in the scene
             allMyItems.AddRange(FindObjectsOfType<ItemController>());
 
-            // // Testing, print out all the key IDs
-            // foreach (var currKey in allMyItems)
-            // {
-            //     Debug.Log("Key ID: " + currKey.myItemID);
-            // }
+            // Testing, print out all the key IDs
+            foreach (var currKey in allMyItems)
+            {
+                Debug.Log("Key ID: " + currKey.myItemID);
+            }
         }
         
     }
