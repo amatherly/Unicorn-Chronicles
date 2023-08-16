@@ -98,7 +98,7 @@ namespace Common.Scripts.Question
         public void GetInputFieldText()
         {
             myController.SetAnswerInput(myInputField.text);
-            myInputField.SetTextWithoutNotify(null);
+            // myInputField.SetTextWithoutNotify(null);
         }
     
         /// <summary>

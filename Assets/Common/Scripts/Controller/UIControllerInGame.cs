@@ -95,14 +95,17 @@ namespace Common.Scripts.Controller
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                myIsPaused = !myIsPaused;
-                if (myIsPaused)
+                if(new Vector3(Input.GetAxis("Horizontal"), 0 , Input.GetAxis("Vertical")).magnitude == 0)
                 {
-                    PauseGame();
-                }
-                else
-                {
-                    ResumeGame();
+                    myIsPaused = !myIsPaused;
+                    if (myIsPaused)
+                    {
+                        PauseGame();
+                    }
+                    else
+                    {
+                        ResumeGame();
+                    }  
                 }
             }
         }

@@ -19,8 +19,8 @@ public class OptionsController : MonoBehaviour
 
     void Start()
     {
-        myFOVSlider.minValue = 2f;
-        myFOVSlider.maxValue = 20f;
+        myFOVSlider.minValue = 40f;
+        myFOVSlider.maxValue = 80f;
         myFOVSlider.value = myCamera.m_Lens.FieldOfView;
         myFOVSlider.onValueChanged.AddListener(UpdateFOV);
 
