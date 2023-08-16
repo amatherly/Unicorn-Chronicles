@@ -372,6 +372,7 @@ namespace Common.Scripts.Controller
             // Set the keys to active or inactive based on the saved data
             foreach (var key in myCollectibleController.allMyItems)
             {
+                if(key != null)
                 key.gameObject.SetActive(savedItemIDs.Contains(key.myItemID));
             }
         }
