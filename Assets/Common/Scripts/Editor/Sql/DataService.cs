@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using SQLite4Unity3d;
 using UnityEngine;
 #if !UNITY_EDITOR
@@ -18,10 +19,10 @@ namespace Common.Scripts.Editor.Sql
 		/// Initializes a new instance of the DataService class with the specified database name.
 		/// </summary>
 		/// <param name="theDatabaseName">The name of the database.</param>
-		public DataService(string theDatabaseName)
+		public DataService(string DatabaseName)
 		{
 #if UNITY_EDITOR
-			var dbPath = string.Format(@"Assets/StreamingAssets/{0}", theDatabaseName);
+			var dbPath = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
 #else
         // check if file exists in Application.persistentDataPath
         var filepath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
