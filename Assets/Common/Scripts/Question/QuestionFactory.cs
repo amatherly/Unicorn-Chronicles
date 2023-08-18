@@ -40,8 +40,7 @@ public class QuestionFactory : MonoBehaviour
     /// The DataService instance for managing data.
     /// </summary>
     private DataService myDataService;
-
-
+    
     /// <summary>
     /// The controller for managing question windows.
     /// </summary>
@@ -72,19 +71,12 @@ public class QuestionFactory : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // Check if the game is a new game
         if (isNewGame)
         {
             // Initialize the DataService with the database file
             myDataService = new DataService("data.sqlite");
-
-            // Initialize the array of unanswered questions
             InitializeQuestionArray();
-
-            // Get the QuestionWindowController component attached to this GameObject
             myQuestionWindowController = GetComponent<QuestionWindowController>();
-
-            // Mark that this is not a new game anymore
             isNewGame = false;
         }
     }
@@ -203,5 +195,4 @@ public class QuestionFactory : MonoBehaviour
     {
         set => myCurrentQuestion = value;
     }
-
 }

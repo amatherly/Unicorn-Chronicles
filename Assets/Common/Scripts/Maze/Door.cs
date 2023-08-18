@@ -132,7 +132,6 @@ public class Door : MonoBehaviour
             {
                 StopCoroutine(myAnimation);
             }
-
             myAnimation = StartCoroutine(DoRotationClose());
         }
     }

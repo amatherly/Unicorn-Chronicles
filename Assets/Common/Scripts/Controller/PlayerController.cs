@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// The rotation speed of the player.
     /// </summary>
-    private static float ROTATE_SPEED;
+    private static readonly float ROTATE_SPEED = 5f;
 
     /// <summary>
     /// The movement speed of the player.
@@ -67,9 +67,6 @@ public class PlayerController : MonoBehaviour
         myCharacterController = GetComponent<CharacterController>();
         myAnimator = GetComponent<Animator>();
         myAudioSource = GetComponent<AudioSource>();
-
-        ROTATE_SPEED = 5f;
-
         mySpeed = 40f;
         myCanMove = true;
         myItemCount = 0;
