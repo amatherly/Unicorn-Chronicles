@@ -4748,7 +4748,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245906927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1266, y: 1.72, z: 618}
+  m_LocalPosition: {x: 520.4, y: 1.72, z: 634.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5637,14 +5637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fa7e05b858da64ea72612dc7b13d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFOVSlider: {fileID: 658988422}
-  mySpeedSlider: {fileID: 494140392}
-  myKeySlider: {fileID: 1376306031}
-  mySunToggle: {fileID: 1361029519}
-  mySun: {fileID: 705507993}
-  myPlayer: {fileID: 1195344556}
-  myCamera: {fileID: 1467805017}
-  myKeyCount: {fileID: 28859726}
 --- !u!222 &290752217
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5726,14 +5718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fa7e05b858da64ea72612dc7b13d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFOVSlider: {fileID: 658988422}
-  mySpeedSlider: {fileID: 494140392}
-  myKeySlider: {fileID: 1376306031}
-  mySunToggle: {fileID: 1361029519}
-  mySun: {fileID: 705507993}
-  myPlayer: {fileID: 1195344556}
-  myCamera: {fileID: 1467805017}
-  myKeyCount: {fileID: 1678543869}
 --- !u!1 &293007985 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 444bdd942bb77af4e8ab0ae6d0cc7bd4, type: 3}
@@ -19703,7 +19687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30efa6eca6c47b5bd62c8a518f8bdea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allMyItems: []
+  myItemList: []
 --- !u!4 &1013791040 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3634909312789715921, guid: 522b1c3a08ac24460b08433a4d844d01, type: 3}
@@ -28558,7 +28542,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467805016}
   m_LocalRotation: {x: 0.41469327, y: -0, z: -0, w: 0.9099613}
-  m_LocalPosition: {x: 1259, y: 102, z: 546}
+  m_LocalPosition: {x: 513.4, y: 102, z: 562.5}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33889,7 +33873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692664895}
   m_LocalRotation: {x: 0.41469327, y: -0, z: -0, w: 0.9099613}
-  m_LocalPosition: {x: 1259, y: 102, z: 546}
+  m_LocalPosition: {x: 513.4, y: 102, z: 562.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
