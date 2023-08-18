@@ -1,6 +1,9 @@
-using System.Collections.Generic;
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using Common.Scripts.Controller;
-using Common.Scripts.Question;
 using UnityEngine;
 
 namespace Common.Scripts.Maze
@@ -8,6 +11,12 @@ namespace Common.Scripts.Maze
     /// <summary>
     /// Class <c>Maze</c> handles win/lose conditions and game state.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class Maze : MonoBehaviour
     {
         /// <summary>
@@ -40,13 +49,8 @@ namespace Common.Scripts.Maze
         /// A 2D array representation of the <c>Room</c> scripts in the maze.
         /// </summary>
         [SerializeField] private Room[,] myRooms;
-
-
-        /// <summary>
-        /// A list of all doors present in the maze.
-        /// </summary>
-        public List<DoorController> myAllDoors;
-
+        
+        
 
         /// <summary>
         /// Called before the first frame update.

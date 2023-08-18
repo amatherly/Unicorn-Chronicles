@@ -5,18 +5,18 @@ namespace Tests
 {
     public class SaveLoadManagerTests
     {
-        private string myTestPlayer = "_TestPlayerPosition";
-        private string myTestItem = "_TestItemCount";
+        private string PLAYER_POS = "_TestPlayerPosition";
+        private string ITEM = "_TestItemCount";
        
 
         [SetUp]
         public void SetUp()
         {
             // Ensure PlayerPrefs is clean before each test
-            PlayerPrefs.DeleteKey(myTestPlayer + "_x");
-            PlayerPrefs.DeleteKey(myTestPlayer + "_y");
-            PlayerPrefs.DeleteKey(myTestPlayer + "_z");
-            PlayerPrefs.DeleteKey(myTestItem + "_TestItemCount");
+            PlayerPrefs.DeleteKey(PLAYER_POS + "_x");
+            PlayerPrefs.DeleteKey(PLAYER_POS + "_y");
+            PlayerPrefs.DeleteKey(PLAYER_POS + "_z");
+            PlayerPrefs.DeleteKey(PLAYER_POS + "_TestItemCount");
         }
         
         [TearDown]
@@ -49,40 +49,38 @@ namespace Tests
 
         private void SaveMockPosition(Vector3 position)
         {
-            PlayerPrefs.SetFloat(myTestPlayer + "_x", position.x);
-            PlayerPrefs.SetFloat(myTestPlayer + "_y", position.y);
-            PlayerPrefs.SetFloat(myTestPlayer + "_z", position.z);
+            PlayerPrefs.SetFloat(PLAYER_POS + "_x", position.x);
+            PlayerPrefs.SetFloat(PLAYER_POS + "_y", position.y);
+            PlayerPrefs.SetFloat(PLAYER_POS + "_z", position.z);
             PlayerPrefs.Save();
         }
         
         private void SaveMockItemCount(int theItemCount)
         {
 
-            PlayerPrefs.SetInt(myTestItem + "_TestItemCount", theItemCount);
+            PlayerPrefs.SetInt(ITEM + "_TestItemCount", theItemCount);
             PlayerPrefs.Save();
         }
-
-
+        
         private int LoadMockItemCount()
         {
-            if (PlayerPrefs.HasKey(myTestItem + "_TestItemCount"))
+            if (PlayerPrefs.HasKey(ITEM + "_TestItemCount"))
             {
-                return PlayerPrefs.GetInt(myTestItem + "_TestItemCount");
+                return PlayerPrefs.GetInt(ITEM + "_TestItemCount");
             }
             else
             {
                 return 0; // Return zero if the item doesn't exist
             }
         }
-
-
+        
         private Vector3 LoadMockPosition()
         {
-            if (PlayerPrefs.HasKey(myTestPlayer + "_x") && PlayerPrefs.HasKey(myTestPlayer + "_y") && PlayerPrefs.HasKey(myTestPlayer + "_z"))
+            if (PlayerPrefs.HasKey(PLAYER_POS + "_x") && PlayerPrefs.HasKey(PLAYER_POS + "_y") && PlayerPrefs.HasKey(PLAYER_POS + "_z"))
             {
-                float x = PlayerPrefs.GetFloat(myTestPlayer + "_x");
-                float y = PlayerPrefs.GetFloat(myTestPlayer + "_y");
-                float z = PlayerPrefs.GetFloat(myTestPlayer + "_z");
+                float x = PlayerPrefs.GetFloat(PLAYER_POS + "_x");
+                float y = PlayerPrefs.GetFloat(PLAYER_POS + "_y");
+                float z = PlayerPrefs.GetFloat(PLAYER_POS + "_z");
                 return new Vector3(x, y, z);
             }
             else

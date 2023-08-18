@@ -1,3 +1,8 @@
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +11,12 @@ namespace Common.Scripts.Maze
     /// <summary>
     /// Class <c>Room</c> stores room state.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class Room : MonoBehaviour
     {
 
