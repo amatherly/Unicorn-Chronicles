@@ -100,7 +100,7 @@ public class DataService
 	/// Marks a specific question as answered in the database.
 	/// </summary>
 	/// <param name="theQuestionId">The ID of the question to mark as answered.</param>
-	public void MarkQuestionAsAnswered(Question theQuestionId)
+	public void MarkQuestionAsAnswered(int theQuestionId)
 	{
 		myConnection.Execute("UPDATE Question SET IsAnswered = 1 WHERE myQuestionID = ?", theQuestionId);
 	}

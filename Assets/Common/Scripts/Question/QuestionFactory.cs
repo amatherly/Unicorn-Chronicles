@@ -120,6 +120,7 @@ public class QuestionFactory : MonoBehaviour
     public void DisplayWindow()
     {
         myCurrentQuestion = GetRandomQuestion();
+        myCurrentQuestion.MyIsAnswered = true;  
         myQuestionWindowController.InitializeWindow(myCurrentQuestion);
     }
 
@@ -193,6 +194,7 @@ public class QuestionFactory : MonoBehaviour
     /// </summary>
     public DataService MyDataService
     {
+        get => myDataService;
         set => myDataService = value;
     }
 

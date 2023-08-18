@@ -174,6 +174,7 @@ public class SaveLoadManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         UIControllerInGame.MyInstance.GetComponent<AudioSource>().Stop();
         UIControllerInGame.MyInstance.PauseGame();
+        DataService.ResetQuestionStateInDatabase();
         // SceneManager.LoadScene("Game 2");
     }
 

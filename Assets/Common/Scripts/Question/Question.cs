@@ -92,7 +92,14 @@ public class Question
     public bool MyIsAnswered
     {
         get => myIsAnswered;
-        set => myIsAnswered = value;
+        set
+        {
+            myIsAnswered = value;
+            if (value)
+            {
+                QuestionFactory.MyInstance.MyDataService.MarkQuestionAsAnswered(MyQuestionID);
+            }
+        }
     }
 
     /// <summary>

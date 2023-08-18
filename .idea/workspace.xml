@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="250c8671-cad6-4e11-8513-5e9fe934c728" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Common/Prefabs/Nav.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Common/Prefabs/Nav.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Common/Scenes/Game 2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Common/Scenes/Game 2.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Common/Scripts/Controller/SaveLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Common/Scripts/Controller/SaveLoadManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Common/Scripts/Editor/Sql/DataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Common/Scripts/Editor/Sql/DataService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Common/Scripts/Question/Question.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Common/Scripts/Question/Question.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Common/Scripts/Question/QuestionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Common/Scripts/Question/QuestionFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/data.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StreamingAssets/data.sqlite" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +24,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "New__Caroline",
     "last_opened_file_path": "/Users/caroline"
