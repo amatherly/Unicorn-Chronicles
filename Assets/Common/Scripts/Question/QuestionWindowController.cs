@@ -25,13 +25,13 @@ namespace Common.Scripts.Question
         /// Sound index for an incorrect answer.
         /// </summary>
         private static readonly int INCORRECT_SOUND = 3;
-        
+
 
         /// <summary>
         /// The ID for the Multiple Choice question type.
         /// </summary>
         private static readonly int MULT_CHOICE_ID = 2;
-        
+
         /// <summary>
         /// The Maze instance used in the game.
         /// </summary>
@@ -51,11 +51,6 @@ namespace Common.Scripts.Question
         /// The currently displayed question.
         /// </summary>
         private Question myCurrentQuestion;
-        
-        /// <summary>
-        /// The currently displayed question.
-        /// </summary>
-        [SerializeField] private Animator myAnimator;
 
         /// <summary>
         /// The user's input for the answer.
@@ -92,7 +87,6 @@ namespace Common.Scripts.Question
         /// </summary>
         private void Start()
         {
-            // Find and assign the Maze instance used in the game
             MAZE = GameObject.Find("Maze").GetComponent<global::Common.Scripts.Maze.Maze>();
         }
 
@@ -110,7 +104,8 @@ namespace Common.Scripts.Question
             myIsCorrect = false;
             int ID = theQuestion.MyQuestionID;
 
-            Debug.Log(string.Format("Instantiating window type {0} with {1}.", myCurrentQuestion.MyQuestionID, myCurrentQuestion));
+            Debug.Log(string.Format("Instantiating window type {0} with {1}.", myCurrentQuestion.MyQuestionID,
+                myCurrentQuestion));
 
             switch (ID)
             {
@@ -183,7 +178,6 @@ namespace Common.Scripts.Question
                 UIControllerInGame.MyInstance.PlayUISound(INCORRECT_SOUND);
             }
 
-
             if (myIsCorrect)
             {
                 MAZE.MyCurrentDoor.Open();
@@ -196,17 +190,18 @@ namespace Common.Scripts.Question
         /// <summary>
         /// Sets the user's answer input for the question.
         /// </summary>
-        /// <param name="theAnswerInput">The user's answer input.</param>
-        public void SetAnswerInput(string theAnswerInput)
+        /// <param name="theAnswerInput">The user's answer input.
+        /// CANNOT BE FINAL BECAUSE IT IS ATTACHED TO A BUTTON! </param>
+        public void SetAnswerInput(string theAnswerInput) 
         {
-            Debug.Log("User Answered: " + theAnswerInput);
-
             if (myCurrentQuestion.MyQuestionID == MULT_CHOICE_ID && !myIsCorrect)
             {
-                theAnswerInput = myView.GetButtonAnswer(theAnswerInput);
+                myAnswerInput = myView.GetButtonAnswer(theAnswerInput);
             }
-
-            myAnswerInput = theAnswerInput;
+            else
+            {
+                myAnswerInput = theAnswerInput;
+            }
             CheckAnswer();
         }
 
@@ -217,6 +212,7 @@ namespace Common.Scripts.Question
         {
             PlayerController player = FindObjectOfType<PlayerController>();
             myAnswerInput = myCurrentQuestion.MyAnswer;
+            
             if (player.SpendKey())
             {
                 myIsCorrect = true;

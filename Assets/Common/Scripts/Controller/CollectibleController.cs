@@ -26,7 +26,7 @@ namespace Common.Scripts.Controller
             // Testing, print out all the key IDs
             foreach (var currKey in allMyItems)
             {
-                Debug.Log("Key ID: " + currKey.myItemID);
+                // Debug.Log("Key ID: " + currKey.myItemID);
             }
         }
         

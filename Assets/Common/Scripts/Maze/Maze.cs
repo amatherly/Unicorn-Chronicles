@@ -11,10 +11,20 @@ namespace Common.Scripts.Maze
     public class Maze : MonoBehaviour
     {
         /// <summary>
+        /// Number of Rows in the maze.
+        /// </summary>
+        private static readonly int ROWS = 4;
+
+
+        /// <summary>
+        /// Number of Columns in the maze.
+        /// </summary>
+        private static readonly int COLS = 4;
+
+        /// <summary>
         /// Boolean value indicating whether or not the game has been lost.
         /// </summary>
-        [SerializeField] 
-        private bool myLoseCondition;
+        [SerializeField] private bool myLoseCondition;
 
         /// <summary>
         /// The player's current <c>Room</c> in the maze.
@@ -30,7 +40,7 @@ namespace Common.Scripts.Maze
         /// A 2D array representation of the <c>Room</c> scripts in the maze.
         /// </summary>
         [SerializeField] private Room[,] myRooms;
-    
+
 
         /// <summary>
         /// A list of all doors present in the maze.
@@ -68,50 +78,6 @@ namespace Common.Scripts.Maze
             }
         }
 
-        /// <summary>
-        /// Accessor and mutator for the <c>myCurrentRoom</c> field.
-        /// </summary>
-        public Room MyCurrentRoom
-        {
-            get => myCurrentRoom;
-            set => myCurrentRoom = value;
-        }
-
-        /// <summary>
-        /// Accessor for the starting room of the maze.
-        /// </summary>
-        /// <returns> The starting room of the maze. </returns>
-        public Room GetDefaultRoom
-        {
-            get => myRooms[3, 0];
-        }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myCurrentDoor</c> field.
-        /// </summary>
-        public Door MyCurrentDoor
-        {
-            get => myCurrentDoor;
-            set => myCurrentDoor = value;
-        }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myLoseCondition</c> field.
-        /// </summary>
-        public bool MyLoseCondition
-        {
-            get => myLoseCondition;
-            set => myLoseCondition = value;
-        }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myRooms</c> field.
-        /// </summary>
-        public Room[,] MyRooms
-        {
-            get => myRooms;
-            set => myRooms = value;
-        }
 
         /// <summary>
         /// Private helper method to populate the <c>myRooms</c> field with the
@@ -119,22 +85,31 @@ namespace Common.Scripts.Maze
         /// </summary>
         private void PopulateMaze()
         {
-            myRooms[0, 0] = GameObject.Find("Room 1-1").GetComponent<Room>();
-            myRooms[0, 1] = GameObject.Find("Room 1-2").GetComponent<Room>();
-            myRooms[0, 2] = GameObject.Find("Room 1-3").GetComponent<Room>();
-            myRooms[0, 3] = GameObject.Find("Room 1-4").GetComponent<Room>();
-            myRooms[1, 0] = GameObject.Find("Room 2-1").GetComponent<Room>();
-            myRooms[1, 1] = GameObject.Find("Room 2-2").GetComponent<Room>();
-            myRooms[1, 2] = GameObject.Find("Room 2-3").GetComponent<Room>();
-            myRooms[1, 3] = GameObject.Find("Room 2-4").GetComponent<Room>();
-            myRooms[2, 0] = GameObject.Find("Room 3-1").GetComponent<Room>();
-            myRooms[2, 1] = GameObject.Find("Room 3-2").GetComponent<Room>();
-            myRooms[2, 2] = GameObject.Find("Room 3-3").GetComponent<Room>();
-            myRooms[2, 3] = GameObject.Find("Room 3-4").GetComponent<Room>();
-            myRooms[3, 0] = GameObject.Find("Room 4-1").GetComponent<Room>();
-            myRooms[3, 1] = GameObject.Find("Room 4-2").GetComponent<Room>();
-            myRooms[3, 2] = GameObject.Find("Room 4-3").GetComponent<Room>();
-            myRooms[3, 3] = GameObject.Find("Room 4-4").GetComponent<Room>();
+            // myRooms[0, 0] = GameObject.Find("Room 1-1").GetComponent<Room>();
+            // myRooms[0, 1] = GameObject.Find("Room 1-2").GetComponent<Room>();
+            // myRooms[0, 2] = GameObject.Find("Room 1-3").GetComponent<Room>();
+            // myRooms[0, 3] = GameObject.Find("Room 1-4").GetComponent<Room>();
+            // myRooms[1, 0] = GameObject.Find("Room 2-1").GetComponent<Room>();
+            // myRooms[1, 1] = GameObject.Find("Room 2-2").GetComponent<Room>();
+            // myRooms[1, 2] = GameObject.Find("Room 2-3").GetComponent<Room>();
+            // myRooms[1, 3] = GameObject.Find("Room 2-4").GetComponent<Room>();
+            // myRooms[2, 0] = GameObject.Find("Room 3-1").GetComponent<Room>();
+            // myRooms[2, 1] = GameObject.Find("Room 3-2").GetComponent<Room>();
+            // myRooms[2, 2] = GameObject.Find("Room 3-3").GetComponent<Room>();
+            // myRooms[2, 3] = GameObject.Find("Room 3-4").GetComponent<Room>();
+            // myRooms[3, 0] = GameObject.Find("Room 4-1").GetComponent<Room>();
+            // myRooms[3, 1] = GameObject.Find("Room 4-2").GetComponent<Room>();
+            // myRooms[3, 2] = GameObject.Find("Room 4-3").GetComponent<Room>();
+            // myRooms[3, 3] = GameObject.Find("Room 4-4").GetComponent<Room>();
+
+            for (int i = 0; i < ROWS; i++)
+            {
+                for (int j = 0; j < COLS; j++)
+                {
+                    string roomName = $"Room {i + 1}-{j + 1}";
+                    myRooms[i, j] = GameObject.Find(roomName).GetComponent<Room>();
+                }
+            }
         }
 
 
@@ -208,6 +183,50 @@ namespace Common.Scripts.Maze
 
             return result;
         }
-    
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myCurrentRoom</c> field.
+        /// </summary>
+        public Room MyCurrentRoom
+        {
+            get => myCurrentRoom;
+            set => myCurrentRoom = value;
+        }
+
+        /// <summary>
+        /// Accessor for the starting room of the maze.
+        /// </summary>
+        /// <returns> The starting room of the maze. </returns>
+        public Room GetDefaultRoom
+        {
+            get => myRooms[3, 0];
+        }
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myCurrentDoor</c> field.
+        /// </summary>
+        public Door MyCurrentDoor
+        {
+            get => myCurrentDoor;
+            set => myCurrentDoor = value;
+        }
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myLoseCondition</c> field.
+        /// </summary>
+        public bool MyLoseCondition
+        {
+            get => myLoseCondition;
+            set => myLoseCondition = value;
+        }
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myRooms</c> field.
+        /// </summary>
+        public Room[,] MyRooms
+        {
+            get => myRooms;
+            set => myRooms = value;
+        }
     }
 }

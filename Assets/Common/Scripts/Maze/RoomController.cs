@@ -38,9 +38,7 @@ namespace Common.Scripts.Maze
             {
                 myMaze.MyCurrentRoom = myRoom;
                 myRoom.MyHasVisited = true;
-
             }
         }
-    
     }
 }

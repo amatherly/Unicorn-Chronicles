@@ -12,7 +12,7 @@ namespace Common.Scripts.Controller
         /// <summary>
         /// The single instance of the UIController.
         /// </summary>
-        private static UIControllerInGame myInstance;
+        private static UIControllerInGame MY_INSTANCE;
 
         /// <summary>
         /// Array of audio clips for UI sounds.
@@ -78,7 +78,7 @@ namespace Common.Scripts.Controller
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private void Awake()
         {
-            if (myInstance != null && myInstance != this)
+            if (MY_INSTANCE != null && MY_INSTANCE != this)
             {
                 Debug.Log("There is already an instance of the UIController in the scene!");
             }
@@ -114,7 +114,7 @@ namespace Common.Scripts.Controller
         /// Displays the win or lose window based on the result.
         /// </summary>
         /// <param name="theResult">True for a win, false for a loss.</param>
-        public void SetWinOrLoseWindow(bool theResult)
+        public void SetWinOrLoseWindow(in bool theResult)
         {
             myResultWindow.SetActive(true);
             string resultText;
@@ -136,7 +136,7 @@ namespace Common.Scripts.Controller
         /// Shows or hides the navigation popup.
         /// </summary>
         /// <param name="theIsShowing">True to show the popup, false to hide it.</param>
-        public void ShowNav(bool theIsShowing)
+        public void ShowNav(in bool theIsShowing)
         {
             myNavPopup.SetActive(theIsShowing);
         }
@@ -166,7 +166,7 @@ namespace Common.Scripts.Controller
         /// <summary>
         /// Plays a UI sound using the specified audio clip index.
         /// </summary>
-        public void PlayUISound(int theAudioClipIndex)
+        public void PlayUISound(in int theAudioClipIndex)
         {
             myAudioSource.PlayOneShot(myAudioClips[theAudioClipIndex]);
         }
@@ -176,8 +176,8 @@ namespace Common.Scripts.Controller
         /// </summary>
         public static UIControllerInGame MyInstance
         {
-            get => myInstance;
-            private set => myInstance = value;
+            get => MY_INSTANCE;
+            private set => MY_INSTANCE = value;
         }
     }
 }

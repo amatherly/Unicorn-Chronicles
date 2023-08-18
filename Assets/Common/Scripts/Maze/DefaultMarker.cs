@@ -9,19 +9,24 @@ namespace Common.Scripts.Maze
     public class DefaultMarker : MonoBehaviour
     {
         /// <summary>
+        /// The shader property ID for the emission color.
+        /// </summary>
+        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+        
+        /// <summary>
         /// How fast the glow pulsates.
         /// </summary>
-        public float PULSE_SPEED = 1.0f;
+        private static readonly float PULSE_SPEED = 1.0f;
         
         /// <summary>
         /// Minimum emission value for the glow.
         /// </summary>
-        public float MIN_EMISS = 0.2f;
+        private static readonly float MIN_EMISS = 0.2f;
         
         /// <summary>
         /// Maximum emission value for the glow.
         /// </summary>
-        public float MAX_EMISS = 1.0f; 
+        private static readonly float MAX_EMISS = 1.0f; 
 
         /// <summary>
         /// The material associated with the SpriteRenderer for controlling emission.
@@ -33,11 +38,6 @@ namespace Common.Scripts.Maze
         /// </summary>
         private Color myInitColor;
         
-        /// <summary>
-        /// The shader property ID for the emission color.
-        /// </summary>
-        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
-
         
         /// <summary>
         /// Initializes the marker's material and initial emission color.

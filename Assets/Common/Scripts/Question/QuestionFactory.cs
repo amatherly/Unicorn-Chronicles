@@ -92,8 +92,7 @@ namespace Common.Scripts.Question
             }
             else
             {
-                // Set the singleton instance to this instance
-                MyInstance = this;
+                INSTANCE = this;
             }
         }
 
@@ -149,7 +148,7 @@ namespace Common.Scripts.Question
         /// </summary>
         public void InitializeQuestionsFromSave()
         {
-            var allQuestions = myDataService.GetQuestion();
+            IEnumerable<Question> allQuestions = myDataService.GetQuestion();
             myQuestions = allQuestions.Where(q => PlayerPrefs.GetInt("QuestionAnswered_" + q.MyQuestionID, 0) == 0);
             myRandomizedQuestions = myQuestions.OrderBy(a => RANDOM.Next()).ToList();
         }
@@ -161,7 +160,7 @@ namespace Common.Scripts.Question
         public static QuestionFactory MyInstance
         {
             get => INSTANCE;
-            set => INSTANCE = value; // Changed to public for SaveLoadManagerTests.cs
+            // private set => INSTANCE = value; // Changed to public for SaveLoadManagerTests.cs
         }
 
         /// <summary>
@@ -195,7 +194,5 @@ namespace Common.Scripts.Question
         {
             set => myCurrentQuestion = value;
         }
-
     }
-    
 }

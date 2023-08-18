@@ -8,7 +8,6 @@ namespace Common.Scripts.Maze
     /// </summary>
     public class Door : MonoBehaviour
     {
-
         /// <summary>
         /// Constant for rotate animation speed.
         /// </summary>
@@ -22,27 +21,23 @@ namespace Common.Scripts.Maze
         /// <summary>
         /// Boolean indicating whether or not the <c>Door</c> is open.
         /// </summary>
-        [SerializeField]
-        private bool myOpenState;
+        [SerializeField] private bool myOpenState;
 
         /// <summary>
         /// Boolean indicating whether or not the <c>Door</c> is locked.
         /// </summary>
-        [SerializeField]
-        private bool myLockState;
+        [SerializeField] private bool myLockState;
 
         /// <summary>
         /// Boolean indicating whether or not a question has been attempted.
         /// </summary>
-        [SerializeField]
-        private bool myHasAttempted;
+        [SerializeField] private bool myHasAttempted;
 
         /// <summary>
         /// Boolean indicating whether the <c>Door</c> is horizontal or vertical so that
         /// the animation will run as expected.
         /// </summary>
-        [SerializeField]
-        private bool myHorizontalState;
+        [SerializeField] private bool myHorizontalState;
 
         /// <summary>
         /// Boolean indicating whether or not the player is within proximity of the
@@ -131,67 +126,7 @@ namespace Common.Scripts.Maze
                 myAnimation = StartCoroutine(DoRotationClose());
             }
         }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myProximityTrigger</c> field.
-        /// </summary>
-        public bool MyProximityTrigger
-        {
-            get => myProximityTrigger;
-            set => myProximityTrigger = value;
-        }
-
-        /// <summary>
-        /// Accessor for the <c>myStartingRotation</c> field.
-        /// </summary>
-        public Vector3 MyStartingRotation
-        {
-            get => myStartingRotation; 
-        }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myOpenState</c> field.
-        /// </summary>
-        public bool MyOpenState
-        {
-            get => myOpenState;
-            set => myOpenState = value;
-        }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myLockState</c> field.
-        /// </summary>
-        public bool MyLockState
-        {
-            get => myLockState;
-            set => myLockState = value;
-        }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myAnimation</c> field.
-        /// </summary>
-        public Coroutine MyAnimation
-        {
-            get => myAnimation;
-            set => myAnimation = value;
-        }
-    
-        /// <summary>
-        /// Accessor and mutator for the <c>myHasAttempted</c> field.
-        /// </summary>
-        public bool MyHasAttempted
-        {
-            get => myHasAttempted;
-            set => myHasAttempted = value;
-        }
-
-        /// <summary>
-        /// Accessor and mutator for the <c>myPlayer</c> field.
-        /// </summary>
-        public GameObject MyPlayer
-        {
-            set => myPlayer = value;
-        }
+        
 
         /// <summary>
         /// Assigns unique ID to doors inside maze. 
@@ -257,7 +192,66 @@ namespace Common.Scripts.Maze
                 time += Time.deltaTime * ROTATE_SPEED;
             }
         }
-    
-    
+        
+        /// <summary>
+        /// Accessor and mutator for the <c>myProximityTrigger</c> field.
+        /// </summary>
+        public bool MyProximityTrigger
+        {
+            get => myProximityTrigger;
+            set => myProximityTrigger = value;
+        }
+
+        // /// <summary>
+        // /// Accessor for the <c>myStartingRotation</c> field.
+        // /// </summary>
+        // public Vector3 MyStartingRotation
+        // {
+        //     get => myStartingRotation;
+        // }
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myOpenState</c> field.
+        /// </summary>
+        public bool MyOpenState
+        {
+            get => myOpenState;
+            set => myOpenState = value;
+        }
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myLockState</c> field.
+        /// </summary>
+        public bool MyLockState
+        {
+            get => myLockState;
+            set => myLockState = value;
+        }
+
+        // /// <summary>
+        // /// Accessor and mutator for the <c>myAnimation</c> field.
+        // /// </summary>
+        // public Coroutine MyAnimation
+        // {
+        //     get => myAnimation;
+        //     set => myAnimation = value;
+        // }
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myHasAttempted</c> field.
+        /// </summary>
+        public bool MyHasAttempted
+        {
+            get => myHasAttempted;
+            set => myHasAttempted = value;
+        }
+
+        /// <summary>
+        /// Accessor and mutator for the <c>myPlayer</c> field.
+        /// </summary>
+        public GameObject MyPlayer
+        {
+            set => myPlayer = value;
+        }
     }
 }

@@ -10,14 +10,14 @@ namespace Common.Scripts.Controller
     {
 
         /// <summary>
-        /// The movement speed of the player.
-        /// </summary>
-        private static float mySpeed;
-
-        /// <summary>
         /// The rotation speed of the player.
         /// </summary>
-        private static float myRotationSpeed;
+        private static float ROTATE_SPEED;
+        
+        /// <summary>
+        /// The movement speed of the player.
+        /// </summary>
+        private float mySpeed;
 
         /// <summary>
         /// The CharacterController component of the player character.
@@ -39,12 +39,10 @@ namespace Common.Scripts.Controller
         /// </summary>
         [SerializeField] private bool myCanMove;
         
-
         /// <summary>
         /// The number of items the player currently holds.
         /// </summary>
         [SerializeField] private int myItemCount;
-        
         
         /// <summary>
         /// UI Key count HUD.
@@ -60,14 +58,10 @@ namespace Common.Scripts.Controller
             myAnimator = GetComponent<Animator>();
             myAudioSource = GetComponent<AudioSource>();
             
-            // Set initial movement and rotation speed values
-            mySpeed = 50f;
-            myRotationSpeed = 5f;
-            
-            // Allow the player to move by default
+            ROTATE_SPEED = 5f;
+
+            mySpeed = 40f;
             myCanMove = true;
-            
-            // Initialize the item count to zero
             myItemCount = 0;
         }
 
@@ -77,6 +71,7 @@ namespace Common.Scripts.Controller
         private void Update()
         {
             myKeyCount.SetText(myItemCount.ToString());
+            
             // Get input values for horizontal and vertical movement
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
@@ -88,10 +83,8 @@ namespace Common.Scripts.Controller
             // Check if the player is moving (inputMagnitude > 0)
             if (inputMagnitude > 0)
             {
-                // Set the "isWalking" parameter in the Animator to true, triggering the walking animation
                 myAnimator.SetBool("isWalking", true);
 
-                // Check if the player can move
                 if (myCanMove)
                 {
                     // Play the walking audio if it's not already playing
@@ -100,18 +93,14 @@ namespace Common.Scripts.Controller
                         myAudioSource.Play();
                     }
 
-                    // Move the character based on input and speed
+                    // Move and rotate the character based on input and speed
                     _ = myCharacterController.Move(moveDirection * mySpeed * Time.deltaTime);
-
-                    // Calculate the target angle for rotation based on the input direction
+                    
                     float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-
-                    // Create a target rotation based on the target angle
                     Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-
-                    // Smoothly interpolate the character's rotation towards the target rotation
+                    
                     transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation,
-                        Time.deltaTime * myRotationSpeed);
+                        Time.deltaTime * ROTATE_SPEED);
                 }
             }
             if(myCharacterController.velocity == Vector3.zero || inputMagnitude == 0)

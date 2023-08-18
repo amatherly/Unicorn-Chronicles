@@ -58,7 +58,7 @@ namespace Common.Scripts.Question
         /// </summary>
         /// <param name="theAnswerInput">The user's answer input.</param>
         /// <returns>True if the answer is correct, false otherwise.</returns>
-        public bool CheckUserAnswer(string theAnswerInput)
+        public bool CheckUserAnswer(in string theAnswerInput)
         {
             return string.Equals(theAnswerInput, myAnswer, StringComparison.OrdinalIgnoreCase);
         }
