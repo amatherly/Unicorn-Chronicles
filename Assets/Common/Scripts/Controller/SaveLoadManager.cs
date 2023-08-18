@@ -1,20 +1,50 @@
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using System;
 using System.Collections.Generic;
 using Cinemachine;
 using Common.Scripts.Maze;
 using Common.Scripts.Question;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
+
 
 namespace Common.Scripts.Controller
 {
     /// <summary>
     /// Manages saving and loading game state for the Trivia Maze game.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class SaveLoadManager : MonoBehaviour
     {
+        /// <summary>
+        /// GameObject representing the sun object.
+        /// </summary>
+        [SerializeField] private GameObject mySun;
+
+        /// <summary>
+        /// GameObject representing the "No Save" menu.
+        /// </summary>
+        [SerializeField] public GameObject myNoSaveMenu;
+
+        /// <summary>
+        /// The GameObject representing the options menu.
+        /// </summary>
+        [SerializeField] public GameObject myOptionsMenu;
+
+        /// <summary>
+        /// A reference to the Cinemachine Virtual Camera used in the scene.
+        /// This allows for programmatic control and manipulation of the camera's properties and behaviors.
+        /// </summary>
+        [SerializeField] private CinemachineVirtualCamera myVirtualCamera;
+
         /// <summary>
         /// DoorController associated with this SaveLoadManager.
         /// </summary>
@@ -23,7 +53,7 @@ namespace Common.Scripts.Controller
         /// <summary>
         /// Global Maze object used in the game.
         /// </summary>
-        private global::Common.Scripts.Maze.Maze MAZE;
+        private Maze.Maze MAZE;
 
         /// <summary>
         /// PlayerController managing the player's actions and state.
@@ -45,28 +75,9 @@ namespace Common.Scripts.Controller
         /// </summary>
         private CollectibleController myCollectibleController;
 
-        /// <summary>
-        /// GameObject representing the sun object.
-        /// </summary>
-        [SerializeField] private GameObject mySun;
-
-        /// <summary>
-        /// GameObject representing the "No Save" menu.
-        /// </summary>
-        public GameObject myNoSaveMenu;
-
-        /// <summary>
-        /// The GameObject representing the options menu.
-        /// </summary>
-        public GameObject myOptionsMenu;
-
-
-        [SerializeField] private CinemachineVirtualCamera myVirtualCamera;
-
-
-        /// <summary>
-        /// Initializes references and components during the start of the game.
-        /// </summary>
+        // /// <summary>
+        // /// Initializes references and components during the start of the game.
+        // /// </summary>
         private void Start()
         {
             MAZE = GameObject.Find("Maze").GetComponent<global::Common.Scripts.Maze.Maze>();
@@ -79,19 +90,13 @@ namespace Common.Scripts.Controller
         /// </summary>
         public void SaveGame()
         {
-            if (MAZE == null)
-            {
-                Debug.LogError("Maze object is not initialized.");
-                return;
-            }
-
             // Save player state in maze
-            PlayerPrefs.SetInt("PlayerItemCount", myPlayerController.MyItemCount);
             PlayerPrefs.SetString("PlayerPosition",
                 JsonUtility.ToJson(myPlayerController.transform.position));
+            PlayerPrefs.SetInt("PlayerItemCount", myPlayerController.MyItemCount);
 
             // Save door states in maze
-            foreach (var currDoor in MAZE.GetComponentsInChildren<DoorController>())
+            foreach (DoorController currDoor in MAZE.GetComponentsInChildren<DoorController>())
             {
                 SaveDoorState(currDoor);
             }
@@ -118,7 +123,9 @@ namespace Common.Scripts.Controller
         {
             if (PlayerPrefs.HasKey("PlayerPosition"))
             {
+                // set no save menu object activity state to off
                 myNoSaveMenu.SetActive(false);
+
                 // Load Player state in maze
                 myPlayerController.transform.position =
                     JsonUtility.FromJson<Vector3>(PlayerPrefs.GetString("PlayerPosition"));
@@ -126,7 +133,7 @@ namespace Common.Scripts.Controller
                     PlayerPrefs.GetInt("PlayerItemCount", myPlayerController.MyItemCount);
 
                 // Load door states in maze
-                foreach (var currDoor in MAZE.GetComponentsInChildren<DoorController>())
+                foreach (DoorController currDoor in MAZE.GetComponentsInChildren<DoorController>())
                 {
                     LoadDoorState(currDoor);
                 }
@@ -152,7 +159,6 @@ namespace Common.Scripts.Controller
                 LoadItemState();
                 LoadMinimap();
 
-
                 // Load question states in maze
                 QuestionFactory.MyInstance.InitializeQuestionsFromSave();
             }
@@ -171,43 +177,23 @@ namespace Common.Scripts.Controller
             PlayerPrefs.DeleteAll();
             UIControllerInGame.MyInstance.GetComponent<AudioSource>().Stop();
             UIControllerInGame.MyInstance.PauseGame();
-            SceneManager.LoadScene("Game 2");
-            myPlayerController.MyCanMove = true;
+            // SceneManager.LoadScene("Game 2");
         }
-
-
+        
         /// <summary>
         /// Saves the state of a door within the maze.
         /// </summary>
         /// <param name="theDoor">The DoorController of the door to save.</param>
         private void SaveDoorState(in DoorController theDoor)
         {
-            myDoor = theDoor.GetComponent<Door>();
+            Door door = theDoor.GetComponent<Door>();
 
-            string currDoorID = myDoor.myDoorID;
+            string currDoorID = door.MyDoorID;
 
-            PlayerPrefs.SetInt(currDoorID + "_LockState", myDoor.MyLockState ? 1 : 0);
-            PlayerPrefs.SetInt(currDoorID + "_HasAttempted", myDoor.MyHasAttempted ? 1 : 0);
+            PlayerPrefs.SetInt(currDoorID + "_LockState", door.MyLockState ? 1 : 0);
+            PlayerPrefs.SetInt(currDoorID + "_HasAttempted", door.MyHasAttempted ? 1 : 0);
+            SaveTransformState(currDoorID, theDoor.transform);
 
-            Transform myDoorTransform = theDoor.transform;
-
-            // Save position
-            Vector3 currDoorPos = myDoorTransform.position;
-            PlayerPrefs.SetFloat(currDoorID + "_PosX", currDoorPos.x);
-            PlayerPrefs.SetFloat(currDoorID + "_PosY", currDoorPos.y);
-            PlayerPrefs.SetFloat(currDoorID + "_PosZ", currDoorPos.z);
-
-            // Save rotation
-            Vector3 currDoorRot = myDoorTransform.eulerAngles;
-            PlayerPrefs.SetFloat(currDoorID + "_RotX", currDoorRot.x);
-            PlayerPrefs.SetFloat(currDoorID + "_RotY", currDoorRot.y);
-            PlayerPrefs.SetFloat(currDoorID + "_RotZ", currDoorRot.z);
-
-            // Save scale
-            Vector3 currDoorScale = myDoorTransform.localScale;
-            PlayerPrefs.SetFloat(currDoorID + "_ScaleX", currDoorScale.x);
-            PlayerPrefs.SetFloat(currDoorID + "_ScaleY", currDoorScale.y);
-            PlayerPrefs.SetFloat(currDoorID + "_ScaleZ", currDoorScale.z);
         }
 
         /// <summary>
@@ -216,39 +202,15 @@ namespace Common.Scripts.Controller
         /// <param name="theDoor">The DoorController of the door to load state for.</param>
         private void LoadDoorState(in DoorController theDoor)
         {
-            myDoor = theDoor.GetComponent<Door>();
-
-            string currDoorID = myDoor.myDoorID;
+            Door door = theDoor.GetComponent<Door>();
+            string currDoorID = door.MyDoorID;
 
             if (PlayerPrefs.HasKey(currDoorID + "_LockState"))
             {
-                myDoor.MyLockState = PlayerPrefs.GetInt(currDoorID + "_LockState") == 1;
-                myDoor.MyHasAttempted = PlayerPrefs.GetInt(currDoorID + "_HasAttempted") == 1;
+                door.MyLockState = PlayerPrefs.GetInt(currDoorID + "_LockState") == 1;
+                door.MyHasAttempted = PlayerPrefs.GetInt(currDoorID + "_HasAttempted") == 1;
 
-                // Load position
-                Vector3 position;
-                position.x = PlayerPrefs.GetFloat(currDoorID + "_PosX");
-                position.y = PlayerPrefs.GetFloat(currDoorID + "_PosY");
-                position.z = PlayerPrefs.GetFloat(currDoorID + "_PosZ");
-                myDoor.transform.position = position;
-
-                // Load rotation
-                Vector3 eulerAngles;
-                eulerAngles.x = PlayerPrefs.GetFloat(currDoorID + "_RotX");
-                eulerAngles.y = PlayerPrefs.GetFloat(currDoorID + "_RotY");
-                eulerAngles.z = PlayerPrefs.GetFloat(currDoorID + "_RotZ");
-                theDoor.transform.rotation = Quaternion.Euler(eulerAngles);
-
-                // Load scale
-                Vector3 scale;
-                scale.x = PlayerPrefs.GetFloat(currDoorID + "_ScaleX");
-                scale.y = PlayerPrefs.GetFloat(currDoorID + "_ScaleY");
-                scale.z = PlayerPrefs.GetFloat(currDoorID + "_ScaleZ");
-                theDoor.transform.localScale = scale;
-            }
-            else
-            {
-                Debug.Log("No saved state found for door with ID: " + currDoorID);
+                LoadTransformState(currDoorID, theDoor.transform);
             }
         }
 
@@ -259,8 +221,11 @@ namespace Common.Scripts.Controller
         {
             Room[] allRooms = FindObjectsOfType<Room>();
             List<string> visitedRooms = new List<string>();
+
             foreach (Room currRoom in allRooms)
             {
+                if (currRoom == null) continue;
+
                 if (currRoom.MyHasVisited)
                 {
                     visitedRooms.Add($"{currRoom.MyRow},{currRoom.MyCol}");
@@ -271,33 +236,40 @@ namespace Common.Scripts.Controller
             SaveMinimapDoors();
             PlayerPrefs.Save();
         }
-
+        
         /// <summary>
         /// Loads the state of the minimap, restoring visited rooms and their doors.
         /// </summary>
         private void LoadMinimap()
         {
+            HashSet<Vector2Int> visitedRooms = new HashSet<Vector2Int>();
+
             if (PlayerPrefs.HasKey("VisitedRooms"))
             {
-                string savedRoom = PlayerPrefs.GetString("VisitedRooms");
-                List<Vector2Int> visitedRooms = new List<Vector2Int>();
+                string savedRoomData = PlayerPrefs.GetString("VisitedRooms");
 
-                foreach (string currRoomPos in savedRoom.Split(';'))
+                foreach (string currRoomPos in savedRoomData.Split(';'))
                 {
-                    string[] currPos = currRoomPos.Split(',');
-                    visitedRooms.Add(new Vector2Int(int.Parse(currPos[0]), int.Parse(currPos[1])));
-                }
+                    Vector2Int? parsedPos = ParseVector2Int(currRoomPos);
 
-                Room[] allRooms = FindObjectsOfType<Room>();
-                foreach (Room currRoom in allRooms)
-                {
-                    currRoom.MyHasVisited = visitedRooms.Contains(new Vector2Int(currRoom.MyRow, currRoom.MyCol));
+                    if (parsedPos.HasValue)
+                    {
+                        visitedRooms.Add(parsedPos.Value);
+                    }
                 }
+            }
+
+            Room[] allRooms = FindObjectsOfType<Room>();
+            foreach (Room currRoom in allRooms)
+            {
+                if (currRoom == null) continue;
+
+                currRoom.MyHasVisited = visitedRooms.Contains(new Vector2Int(currRoom.MyRow, currRoom.MyCol));
             }
 
             LoadMinimapDoors();
         }
-
+        
         /// <summary>
         /// Saves the state of doors within the minimap.
         /// </summary>
@@ -306,15 +278,15 @@ namespace Common.Scripts.Controller
             Door[] allDoors = FindObjectsOfType<Door>();
             foreach (Door currDoor in allDoors)
             {
-                string doorKeyBase =
+                string theDoorKey =
                     $"Door_{currDoor.transform.position}"; // Unique ID for doors 
-                PlayerPrefs.SetInt($"{doorKeyBase}_HasAttempted", currDoor.MyHasAttempted ? 1 : 0);
-                PlayerPrefs.SetInt($"{doorKeyBase}_LockState", currDoor.MyLockState ? 1 : 0);
+                PlayerPrefs.SetInt($"{theDoorKey}_HasAttempted", currDoor.MyHasAttempted ? 1 : 0);
+                PlayerPrefs.SetInt($"{theDoorKey}_LockState", currDoor.MyLockState ? 1 : 0);
             }
 
             PlayerPrefs.Save();
         }
-
+        
         /// <summary>
         /// Loads the state of doors within the minimap.
         /// </summary>
@@ -331,25 +303,18 @@ namespace Common.Scripts.Controller
                 }
             }
         }
-
+        
         /// <summary>
         /// Saves the state of collectible items in the scene.
         /// </summary>
         private void SaveItemState()
         {
-            if (myCollectibleController == null)
-            {
-                Debug.LogError("myCollectibleController is null");
-                return;
-            }
-
             // Collect active key IDs
             List<int> allActiveItems = new List<int>();
-            foreach (var currItem in myCollectibleController.allMyItems)
+            foreach (ItemController currItem in myCollectibleController.allMyItems)
             {
                 if (currItem == null)
                 {
-                    // Debug.LogError("A key in myAllItems list is null");
                     continue;
                 }
 
@@ -363,7 +328,7 @@ namespace Common.Scripts.Controller
             PlayerPrefs.SetString("keysInScene", string.Join(",", allActiveItems));
             PlayerPrefs.Save();
         }
-
+        
         /// <summary>
         /// Loads the state of collectible items in the scene.
         /// </summary>
@@ -375,11 +340,84 @@ namespace Common.Scripts.Controller
             );
 
             // Set the keys to active or inactive based on the saved data
-            foreach (var key in myCollectibleController.allMyItems)
+            foreach (ItemController key in myCollectibleController.allMyItems)
             {
                 if (key != null)
                     key.gameObject.SetActive(savedItemIDs.Contains(key.myItemID));
             }
         }
+        
+        /// <summary>
+        /// Saves a Vector3 value to PlayerPrefs.
+        /// </summary>
+        /// <param name="key">The key used for saving the vector's components.</param>
+        /// <param name="value">The Vector3 value to be saved.</param>
+        private static void SaveVector3(string key, Vector3 value)
+        {
+            PlayerPrefs.SetFloat(key + "_x", value.x);
+            PlayerPrefs.SetFloat(key + "_y", value.y);
+            PlayerPrefs.SetFloat(key + "_z", value.z);
+        }
+
+        /// <summary>
+        /// Retrieves a Vector3 value from PlayerPrefs.
+        /// </summary>
+        /// <param name="key">The key used for fetching the vector's components from PlayerPrefs.</param>
+        /// <returns>A Vector3 containing the values from PlayerPrefs.</returns>
+        private static Vector3 GetVector3(string key)
+        {
+            Vector3 result;
+            result.x = PlayerPrefs.GetFloat(key + "_x");
+            result.y = PlayerPrefs.GetFloat(key + "_y");
+            result.z = PlayerPrefs.GetFloat(key + "_z");
+            return result;
+        }
+
+        /// <summary>
+        /// Saves the position, rotation, and scale of a Transform to PlayerPrefs.
+        /// </summary>
+        /// <param name="id">A unique identifier for the Transform being saved. It acts as a prefix to distinguish different Transform data.</param>
+        /// <param name="transform">The Transform whose state you want to save.</param>
+        private static void SaveTransformState(string id, Transform transform)
+        {
+            SaveVector3(id + "_Pos", transform.position);
+            SaveVector3(id + "_Rot", transform.eulerAngles);
+            SaveVector3(id + "_Scale", transform.localScale);
+        }
+
+        /// <summary>
+        /// Loads the position, rotation, and scale of a Transform from PlayerPrefs.
+        /// </summary>
+        /// <param name="id">The unique identifier for the Transform data you want to load.</param>
+        /// <param name="transform">The Transform where the loaded data will be applied.</param>
+        private static void LoadTransformState(string id, Transform transform)
+        {
+            transform.position = GetVector3(id + "_Pos");
+            transform.rotation = Quaternion.Euler(GetVector3(id + "_Rot"));
+            transform.localScale = GetVector3(id + "_Scale");
+        }
+
+        /// <summary>
+        /// Converts a comma-separated string to a Vector2Int value.
+        /// </summary>
+        /// <param name="data">A string containing two comma-separated integer values.</param>
+        /// <returns>A Vector2Int containing the parsed values, or null if the parsing fails.</returns>
+        private static Vector2Int? ParseVector2Int(string data)
+        {
+            string[] parts = data.Split(',');
+
+            if (parts.Length != 2) return null;
+
+            if (int.TryParse(parts[0], out int x) && int.TryParse(parts[1], out int y))
+            {
+                return new Vector2Int(x, y);
+            }
+
+            return null;
+        }
+        
     }
+    
 }
+
+

@@ -1,10 +1,21 @@
-﻿using System;
+﻿/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
+using System;
 
 namespace Common.Scripts.Question
 {
     /// <summary>
     /// Represents a question, ID, and answer pair from a Database.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class Question
     {
         /// <summary>

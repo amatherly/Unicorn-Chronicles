@@ -1,3 +1,8 @@
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using Common.Scripts.Question;
 using TMPro;
 using UnityEngine;
@@ -7,6 +12,12 @@ namespace Common.Scripts.Controller
     /// <summary>
     /// Singleton class responsible for managing in-game UI elements and game pause functionality.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class UIControllerInGame : MonoBehaviour
     {
         /// <summary>

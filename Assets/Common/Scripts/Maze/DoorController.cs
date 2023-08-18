@@ -1,3 +1,8 @@
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using Common.Scripts.Controller;
 using Common.Scripts.Question;
 using UnityEngine;
@@ -8,6 +13,12 @@ namespace Common.Scripts.Maze
     /// <summary>
     /// Controller class to handle player interactions with each door's <c>GameObject</c>.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class DoorController : MonoBehaviour
     {
 

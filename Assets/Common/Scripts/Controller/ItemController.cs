@@ -1,3 +1,8 @@
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using UnityEngine;
 
 namespace Common.Scripts.Controller
@@ -6,6 +11,12 @@ namespace Common.Scripts.Controller
     /// Simple class to increment the <c>myItemCount</c> field of the
     /// <c>Player</c> script and handle animation.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     [System.Serializable]
     public class ItemController : MonoBehaviour
     {
@@ -48,7 +59,7 @@ namespace Common.Scripts.Controller
         void Update()
         {
             // Moves the item in the pattern of a sin wave.
-            var thePosition = transform.position;
+            Vector3 thePosition = transform.position;
             float newY = Mathf.Sin(Time.time * SPEED) * HEIGHT + thePosition.y;
             thePosition = new Vector3(thePosition.x, newY, thePosition.z);
             transform.position = thePosition;

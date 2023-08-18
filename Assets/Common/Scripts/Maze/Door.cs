@@ -1,3 +1,8 @@
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using System.Collections;
 using UnityEngine;
 
@@ -6,6 +11,12 @@ namespace Common.Scripts.Maze
     /// <summary>
     /// Class <c>Door</c> contains state and handles open/close animations.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class Door : MonoBehaviour
     {
         /// <summary>
@@ -69,9 +80,9 @@ namespace Common.Scripts.Maze
         /// <summary>
         /// Unique name so that <c>Door</c> state can be individually captured for save/load.
         /// </summary>
-        public string myDoorID; // Unique Door ID
-
-
+        private string myDoorID;
+        
+        
         /// <summary>
         /// Called when the Script instance is being loaded.
         /// </summary>
@@ -252,6 +263,15 @@ namespace Common.Scripts.Maze
         public GameObject MyPlayer
         {
             set => myPlayer = value;
+        }
+        
+        /// <summary>
+        /// Accessor and mutator for the <c>myDoorID</c> field.
+        /// </summary>
+        public string MyDoorID
+        {
+            get => myDoorID;
+            set => myDoorID = value;
         }
     }
 }

@@ -1,3 +1,8 @@
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using System.Linq;
 using Common.Scripts.Controller;
 using UnityEngine;
@@ -9,6 +14,12 @@ namespace Common.Scripts.Question
     /// <summary>
     /// Manages the question windows and user interactions.
     /// </summary>
+    /// <author>JJ Coldiron</author>
+    /// <author>Caroline El Jazmi</author>
+    /// <author>Brodi Matherly</author>
+    /// <remarks>
+    /// Developed using Unity [Version 2021.3.23f1].
+    /// </remarks>
     public class QuestionWindowController : MonoBehaviour
     {
         /// <summary>
