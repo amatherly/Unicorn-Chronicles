@@ -6,7 +6,6 @@
 using Common.Scripts.Maze;
 using UnityEngine;
 
-
 /// <summary>
 /// Class <c>Maze</c> handles win/lose conditions and game state.
 /// </summary>
@@ -22,7 +21,6 @@ public class Maze : MonoBehaviour
     /// Number of Rows in the maze.
     /// </summary>
     private static readonly int ROWS = 4;
-
 
     /// <summary>
     /// Number of Columns in the maze.
@@ -56,7 +54,7 @@ public class Maze : MonoBehaviour
     /// </summary>
     void Start()
     {
-        myRooms = new Room[4, 4];
+        myRooms = new Room[ROWS, COLS];
         PopulateMaze();
         myCurrentRoom = myRooms[3, 0];
         GameObject.Find("Thinking Unicorn").GetComponent<Animator>().SetBool("isWon", false);
@@ -69,13 +67,11 @@ public class Maze : MonoBehaviour
     {
         if (myLoseCondition)
         {
-            Debug.Log("wow you're bad at this");
             UIControllerInGame.MyInstance.SetWinOrLoseWindow(myLoseCondition);
         }
 
         if (myCurrentRoom.MyWinRoom)
         {
-            Debug.Log("You win!");
             UIControllerInGame.MyInstance.SetWinOrLoseWindow(myLoseCondition);
             GameObject.Find("Thinking Unicorn").GetComponent<Animator>().SetBool("isWon", true);
         }
@@ -88,23 +84,6 @@ public class Maze : MonoBehaviour
     /// </summary>
     private void PopulateMaze()
     {
-        // myRooms[0, 0] = GameObject.Find("Room 1-1").GetComponent<Room>();
-        // myRooms[0, 1] = GameObject.Find("Room 1-2").GetComponent<Room>();
-        // myRooms[0, 2] = GameObject.Find("Room 1-3").GetComponent<Room>();
-        // myRooms[0, 3] = GameObject.Find("Room 1-4").GetComponent<Room>();
-        // myRooms[1, 0] = GameObject.Find("Room 2-1").GetComponent<Room>();
-        // myRooms[1, 1] = GameObject.Find("Room 2-2").GetComponent<Room>();
-        // myRooms[1, 2] = GameObject.Find("Room 2-3").GetComponent<Room>();
-        // myRooms[1, 3] = GameObject.Find("Room 2-4").GetComponent<Room>();
-        // myRooms[2, 0] = GameObject.Find("Room 3-1").GetComponent<Room>();
-        // myRooms[2, 1] = GameObject.Find("Room 3-2").GetComponent<Room>();
-        // myRooms[2, 2] = GameObject.Find("Room 3-3").GetComponent<Room>();
-        // myRooms[2, 3] = GameObject.Find("Room 3-4").GetComponent<Room>();
-        // myRooms[3, 0] = GameObject.Find("Room 4-1").GetComponent<Room>();
-        // myRooms[3, 1] = GameObject.Find("Room 4-2").GetComponent<Room>();
-        // myRooms[3, 2] = GameObject.Find("Room 4-3").GetComponent<Room>();
-        // myRooms[3, 3] = GameObject.Find("Room 4-4").GetComponent<Room>();
-
         for (int i = 0; i < ROWS; i++)
         {
             for (int j = 0; j < COLS; j++)
@@ -125,7 +104,7 @@ public class Maze : MonoBehaviour
     /// <param name="theCheck">A 2D array of booleans indicating whether a room has
     /// already been traversed.</param>
     /// <returns>Boolean indicating whether or not the lose condition is satisfied.</returns>
-    public bool CheckLoseCondition(int theRow, int theCol, bool[,] theCheck)
+    public bool CheckLoseCondition(in int theRow, in int theCol, in bool[,] theCheck)
     {
         const int NORTH = 0;
         const int EAST = 1;

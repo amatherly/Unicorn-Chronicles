@@ -70,7 +70,7 @@ public class SaveLoadManager : MonoBehaviour
     /// <summary>
     /// CollectibleController responsible for handling collectibles.
     /// </summary>
-    private CollectibleController myCollectibleController;
+    private ItemManager myItemManager;
 
     // /// <summary>
     // /// Initializes references and components during the start of the game.
@@ -79,7 +79,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         MAZE = GameObject.Find("Maze").GetComponent<Maze>();
         myPlayerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
-        myCollectibleController = FindObjectOfType<CollectibleController>();
+        myItemManager = FindObjectOfType<ItemManager>();
     }
 
     /// <summary>
@@ -308,7 +308,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         // Collect active key IDs
         List<int> allActiveItems = new List<int>();
-        foreach (ItemController currItem in myCollectibleController.allMyItems)
+        foreach (ItemController currItem in myItemManager.myItemList)
         {
             if (currItem == null)
             {
@@ -337,7 +337,7 @@ public class SaveLoadManager : MonoBehaviour
         );
 
         // Set the keys to active or inactive based on the saved data
-        foreach (ItemController key in myCollectibleController.allMyItems)
+        foreach (ItemController key in myItemManager.myItemList)
         {
             if (key != null)
                 key.gameObject.SetActive(savedItemIDs.Contains(key.myItemID));

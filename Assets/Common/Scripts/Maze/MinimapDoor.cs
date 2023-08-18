@@ -6,7 +6,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
 /// <summary>
 /// Script to handle color change of the doors on the
 /// minimap.

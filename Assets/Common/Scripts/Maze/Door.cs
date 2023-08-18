@@ -6,7 +6,6 @@
 using System.Collections;
 using UnityEngine;
 
-
 /// <summary>
 /// Class <c>Door</c> contains state and handles open/close animations.
 /// </summary>
@@ -136,7 +135,6 @@ public class Door : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// Assigns unique ID to doors inside maze. 
     /// </summary>
@@ -211,14 +209,6 @@ public class Door : MonoBehaviour
         set => myProximityTrigger = value;
     }
 
-    // /// <summary>
-    // /// Accessor for the <c>myStartingRotation</c> field.
-    // /// </summary>
-    // public Vector3 MyStartingRotation
-    // {
-    //     get => myStartingRotation;
-    // }
-
     /// <summary>
     /// Accessor and mutator for the <c>myOpenState</c> field.
     /// </summary>
@@ -236,15 +226,6 @@ public class Door : MonoBehaviour
         get => myLockState;
         set => myLockState = value;
     }
-
-    // /// <summary>
-    // /// Accessor and mutator for the <c>myAnimation</c> field.
-    // /// </summary>
-    // public Coroutine MyAnimation
-    // {
-    //     get => myAnimation;
-    //     set => myAnimation = value;
-    // }
 
     /// <summary>
     /// Accessor and mutator for the <c>myHasAttempted</c> field.

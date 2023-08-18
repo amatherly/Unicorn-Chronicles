@@ -5,7 +5,6 @@
 
 using UnityEngine;
 
-
 /// <summary>
 /// Controller class to handle player interactions with each door's <c>GameObject</c>.
 /// </summary>

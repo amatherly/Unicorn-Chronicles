@@ -6,9 +6,9 @@
 using Common.Scripts.Maze;
 using UnityEngine;
 
-
 /// <summary>
-/// Controller class to handle player interactions with each room's <c>GameObject</c>.
+/// Controller class to handle player interactions with each room's
+/// <c>GameObject</c>.
 /// </summary>
 /// <author>JJ Coldiron</author>
 /// <author>Caroline El Jazmi</author>
@@ -20,7 +20,8 @@ public class RoomController : MonoBehaviour
 {
 
     /// <summary>
-    /// The <c>Room</c> script of the <c>GameObject</c> shared by the <c>RoomController</c>.
+    /// The <c>Room</c> script of the <c>GameObject</c> shared by the
+    /// <c>RoomController</c>.
     /// </summary>
     private Room myRoom;
 

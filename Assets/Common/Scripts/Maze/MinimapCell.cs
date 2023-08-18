@@ -7,7 +7,6 @@ using Common.Scripts.Maze;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 /// <summary>
 /// Script to handle proper color change of the rooms
 /// on the minimap.
