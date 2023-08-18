@@ -24073,7 +24073,7 @@ MonoBehaviour:
     ESC
     to pause/menu
 
-    
+
 
 '
   m_isRightToLeft: 0
@@ -25044,7 +25044,7 @@ MonoBehaviour:
 
     Caroline El Jazmi
 
-    
+
 
     University
     of Washington Tacoma
@@ -32143,6 +32143,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8352205567817653532, guid: b6a871e5aba4041efbe7c12cc94a2337, type: 3}
   m_PrefabInstance: {fileID: 4108172698101898097}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1626760897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 143632, guid: 1bcfccf592472944baab9167f5b7218b, type: 3}
+  m_PrefabInstance: {fileID: 105503632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1626760900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626760897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115522a8a4234af1b74ac402029c1aa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1629359323
 GameObject:
   m_ObjectHideFlags: 0
@@ -41018,7 +41035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913d747a533bc854098257dcd078b60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myAnimator: {fileID: 0}
   myTFWindowPrefab: {fileID: 1586880769}
   myMultipleChoiceWindowPrefab: {fileID: 684664013}
   myInputFieldWindowPrefab: {fileID: 1577208494}
