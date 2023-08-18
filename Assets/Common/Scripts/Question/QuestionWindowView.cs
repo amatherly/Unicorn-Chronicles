@@ -65,7 +65,7 @@ namespace Common.Scripts.Question
         /// Sets the text of the question being displayed.
         /// </summary>
         /// <param name="theQuestionText">The text of the question.</param>
-        public void SetQuestionText(string theQuestionText)
+        public void SetQuestionText(in string theQuestionText)
         {
             myQuestionText.SetText(theQuestionText);
         }
@@ -74,7 +74,7 @@ namespace Common.Scripts.Question
         /// Sets the text of the multiple choice buttons with provided answers.
         /// </summary>
         /// <param name="theAnswers">An array of answer texts for the buttons.</param>
-        public void SetMultipleChoiceButtons(string[] theAnswers)
+        public void SetMultipleChoiceButtons(in string[] theAnswers)
         {
             for (int i = 0; i < theAnswers.Length; i++)
             {
@@ -85,10 +85,9 @@ namespace Common.Scripts.Question
         /// <summary>
         /// Gets the button text for the users answer.
         /// </summary>
-        public string GetButtonAnswer(string theIndex)
+        public string GetButtonAnswer(in string theIndex)
         {
             string answerText = myButtonTexts[Int32.Parse(theIndex) - 1].text;
-            Debug.Log("Button text: " + answerText);
             return answerText;
         }
     
@@ -98,14 +97,14 @@ namespace Common.Scripts.Question
         public void GetInputFieldText()
         {
             myController.SetAnswerInput(myInputField.text);
-            myInputField.SetTextWithoutNotify(null);
+            // myInputField.SetTextWithoutNotify(null);
         }
     
         /// <summary>
         /// Displays the result of the user's answer.
         /// </summary>
         /// <param name="theIsCorrect">Whether the user's answer is correct or not.</param>
-        public void ShowResult(bool theIsCorrect)
+        public void ShowResult(in bool theIsCorrect)
         {
             myResultWindow.SetActive(true);
             myResultText.SetText(theIsCorrect ? "Correct!" : "Incorrect!");

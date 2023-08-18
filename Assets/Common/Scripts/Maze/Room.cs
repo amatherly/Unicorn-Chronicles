@@ -60,7 +60,7 @@ namespace Common.Scripts.Maze
         /// <returns>
         /// Boolean indicating whether or not the <c>Room</c> scripts are the same.
         /// </returns>
-        public bool Equals(Room theOther)
+        public bool Equals(in Room theOther)
         {
             return theOther.MyRow == myRow && theOther.MyCol == myCol;
         }

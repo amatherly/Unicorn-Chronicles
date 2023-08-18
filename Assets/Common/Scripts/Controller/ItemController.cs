@@ -9,16 +9,20 @@ namespace Common.Scripts.Controller
     [System.Serializable]
     public class ItemController : MonoBehaviour
     {
-
+        /// <summary>
+        /// Pickup sound index.
+        /// </summary>
+        public static readonly int PICKUP_SOUND_ID = 4;
+        
         /// <summary>
         /// Speed of the item's bobbing animation.
         /// </summary>
-        public static readonly float SPEED = 5f;
+        public static readonly float SPEED = 15f;
 
         /// <summary>
         /// Height variance of the item's bobbing animation.
         /// </summary>
-        public static readonly float HEIGHT = 0.0075f;
+        public static readonly float HEIGHT = 0.05f;
 
         /// <summary>
         /// Reference to the <c>Player</c> script.
@@ -35,7 +39,7 @@ namespace Common.Scripts.Controller
         /// </summary>
         void Start()
         {
-            myPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            myPlayer = FindObjectOfType<PlayerController>();
         }
 
         /// <summary>
@@ -43,6 +47,7 @@ namespace Common.Scripts.Controller
         /// </summary>
         void Update()
         {
+            // Moves the item in the pattern of a sin wave.
             var thePosition = transform.position;
             float newY = Mathf.Sin(Time.time * SPEED) * HEIGHT + thePosition.y;
             thePosition = new Vector3(thePosition.x, newY, thePosition.z);
@@ -54,15 +59,14 @@ namespace Common.Scripts.Controller
         /// the player's <c>myItemCount</c> and destroy the <c>GameObject</c>.
         /// </summary>
         /// <param name="theOther"></param>
-        private void OnTriggerEnter(Collider theOther)
+        private void OnTriggerEnter(Collider theOther) // Unity methods cannot use in parameters!!!
         {
             if (theOther.CompareTag("Player"))
             {
                 myPlayer.MyItemCount += 1;
-                FindObjectOfType<UIControllerInGame>().PlayUISound(4);
+                FindObjectOfType<UIControllerInGame>().PlayUISound(PICKUP_SOUND_ID);
                 Destroy(gameObject);
             }
         }
-    
     }
 }
