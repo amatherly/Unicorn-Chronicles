@@ -1,5 +1,4 @@
 using System.Collections;
-using Common.Scripts.Question;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 

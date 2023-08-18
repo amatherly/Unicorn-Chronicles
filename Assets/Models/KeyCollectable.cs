@@ -1,4 +1,3 @@
-using Common.Scripts.Controller;
 using UnityEngine;
 
 namespace Models

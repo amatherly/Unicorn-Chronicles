@@ -1,12 +1,24 @@
-using System;
-using System.Net.Http.Headers;
+/*
+ * Unicorn Chronicles: Dark Forest Trivia
+ * Summer 2023
+ */
+
 using Cinemachine;
-using Common.Scripts.Controller;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionsController : MonoBehaviour
+
+/// <summary>
+/// Class to handle options functions and behaviors.
+/// </summary>
+/// <author>JJ Coldiron</author>
+/// <author>Caroline El Jazmi</author>
+/// <author>Brodi Matherly</author>
+/// <remarks>
+/// Developed using Unity [Version 2021.3.23f1].
+/// </remarks>
+public class OptionsMenuView : MonoBehaviour
 {
     /// <summary>
     /// Minimum value for the FOV slider.
@@ -92,7 +104,7 @@ public class OptionsController : MonoBehaviour
         mySpeedSlider.maxValue = SPEED_MAX_VALUE;
         mySpeedSlider.value = myPlayer.MySpeed;
         mySpeedSlider.onValueChanged.AddListener(UpdateSpeed);
-        
+
         myKeySlider.minValue = KEY_MIN_VALUE;
         myKeySlider.maxValue = KEY_MAX_VALUE;
         myKeySlider.value = myPlayer.MyItemCount;
@@ -101,7 +113,7 @@ public class OptionsController : MonoBehaviour
 
         mySunToggle.isOn = mySun.activeSelf;
     }
-    
+
 
     /// <summary>
     /// Updates the field of view based on the given value.
@@ -130,4 +142,5 @@ public class OptionsController : MonoBehaviour
         myPlayer.MyItemCount = (int)theValue;
         myKeyCount.SetText(myPlayer.MyItemCount.ToString());
     }
+
 }
