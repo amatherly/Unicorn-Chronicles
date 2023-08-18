@@ -27,7 +27,7 @@ public class ItemController : MonoBehaviour
     /// <summary>
     /// Speed of the item's bobbing animation.
     /// </summary>
-    public static readonly float SPEED = 15f;
+    public static readonly float SPEED = 5f;
 
     /// <summary>
     /// Height variance of the item's bobbing animation.
