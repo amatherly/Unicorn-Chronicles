@@ -140,4 +140,12 @@ public class Question
                theOtherQuestion.MyAnswer.Equals(MyAnswer) && theOtherQuestion.MyQuestion.Equals(MyQuestion);
     }
 
+    /// <summary>
+    /// Override of the default hash function.
+    /// </summary>
+    /// <returns> A hash code for the current object. </returns>
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }

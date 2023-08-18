@@ -6,7 +6,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// Manages collectible items in the game.
 /// </summary>
@@ -16,13 +15,12 @@ using UnityEngine;
 /// <remarks>
 /// Developed using Unity [Version 2021.3.23f1].
 /// </remarks>
-public class CollectibleController : MonoBehaviour
+public class ItemManager : MonoBehaviour
 {
     /// <summary>
     /// List of all collectible items in the game.
     /// </summary>
-    public List<ItemController>
-        allMyItems = new();
+    public List<ItemController> myItemList = new();
 
 
     /// <summary>
@@ -31,7 +29,7 @@ public class CollectibleController : MonoBehaviour
     private void Start()
     {
         // Auto-populate the allMyKeys list with every Key in the scene
-        allMyItems.AddRange(FindObjectsOfType<ItemController>());
+        myItemList.AddRange(FindObjectsOfType<ItemController>());
     }
 
 }

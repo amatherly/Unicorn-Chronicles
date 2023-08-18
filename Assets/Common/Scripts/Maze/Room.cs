@@ -27,7 +27,8 @@ namespace Common.Scripts.Maze
         private bool myHasVisited;
 
         /// <summary>
-        /// Boolean indicating whether or not the <c>Room</c> is the maze's designated win room.
+        /// Boolean indicating whether or not the <c>Room</c> is the maze's
+        /// designated win room.
         /// </summary>
         [SerializeField]
         private bool myWinRoom;
@@ -45,11 +46,11 @@ namespace Common.Scripts.Maze
         private int myCol;
 
         /// <summary>
-        /// A <c>List</c> of the <c>Door</c> scripts contained in the room. Index 0 corresponds
-        /// to the north <c>Door</c>. Index 1 corresponds to the <c>East</c> door. Index 2
-        /// corresponds to the South <c>Door</c>. Index 3 corresponds to the West <c>Door</c>.
-        /// Directions that do not have a <c>Door</c> are populated by an empty <c>GameObject</c>
-        /// named "no-door".
+        /// A <c>List</c> of the <c>Door</c> scripts contained in the room. Index 0
+        /// corresponds to the north <c>Door</c>. Index 1 corresponds to the <c>East</c>
+        /// door. Index 2 corresponds to the South <c>Door</c>. Index 3 corresponds to
+        /// the West <c>Door</c>. Directions that do not have a <c>Door</c> are populated by
+        /// an empty <c>GameObject</c> named "no-door".
         /// </summary>
         [SerializeField]
         private List<GameObject> myDoors;
