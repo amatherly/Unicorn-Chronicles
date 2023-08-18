@@ -44,7 +44,7 @@ public class QuestionWindowController : MonoBehaviour
     /// <summary>
     /// The Maze instance used in the game.
     /// </summary>
-    private Maze MAZE;
+    private static Maze MAZE;
 
     /// <summary>
     /// The UI controller instance for the in-game UI.
@@ -113,9 +113,6 @@ public class QuestionWindowController : MonoBehaviour
         myIsCorrect = false;
         int ID = theQuestion.MyQuestionID;
 
-        Debug.Log(string.Format("Instantiating window type {0} with {1}.", myCurrentQuestion.MyQuestionID,
-            myCurrentQuestion));
-
         switch (ID)
         {
             case 1:
@@ -152,6 +149,7 @@ public class QuestionWindowController : MonoBehaviour
 
         string[] words = myCurrentQuestion.MyAnswer.Split(',');
         string[] randomizedAnswers = words.OrderBy(x => RANDOM.Next()).ToArray();
+        
         myCurrentQuestion.MyAnswer = words[0];
         myView.SetQuestionText(myCurrentQuestion.MyQuestion);
         myView.SetMultipleChoiceButtons(randomizedAnswers);

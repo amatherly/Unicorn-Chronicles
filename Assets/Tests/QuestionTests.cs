@@ -31,6 +31,37 @@ namespace Tests
             Assert.False(myTestQuestion1.CheckUserAnswer("wrongAnswer"));
             Assert.True(myTestQuestion1.CheckUserAnswer("test"));
         }
+        
+        /// <summary>
+        /// Tests the CheckUserAnswer method of the Question class with case change.
+        /// </summary>
+        [Test]
+        public void CheckAnswerTest_IgnoresCase()
+        {
+            Assert.False(myTestQuestion1.CheckUserAnswer("WroNgAnSwer"));
+            Assert.True(myTestQuestion1.CheckUserAnswer("TEST"));
+            Assert.True(myTestQuestion1.CheckUserAnswer("Test"));
+            Assert.True(myTestQuestion1.CheckUserAnswer("test"));
+        }
+        
+        /// <summary>
+        /// Tests the CheckUserAnswer method of the Question class.
+        /// </summary>
+        [Test]
+        public void ToStringTest()
+        {
+            Assert.AreEqual("Question: This is a question? Answer: test ID: 1", myTestQuestion1.ToString());
+        }
+        
+        /// <summary>
+        /// Tests the CheckUserAnswer method of the Question class.
+        /// </summary>
+        [Test]
+        public void EqualsOverrideTest()
+        {
+            Assert.AreNotEqual(myTestQuestion1, new Question(1, "This is not a question", "test", true));
+            Assert.AreEqual(myTestQuestion1, new Question(1, "This is a question?", "test", false));
+        }
     
         /// <summary>
         /// Tests the constructor of the Question class.

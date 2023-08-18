@@ -64,10 +64,6 @@ public class QuestionWindowView : MonoBehaviour
         myResultWindow.SetActive(false);
         gameObject.SetActive(true);
         myKeyCountText.SetText(GameObject.FindObjectOfType<PlayerController>().MyItemCount.ToString());
-        if (myKeyCountText.text == "0")
-        {
-            GameObject.Find("HintButton").GetComponent<Button>().enabled = false;
-        }
     }
 
     /// <summary>

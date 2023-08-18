@@ -75,43 +75,7 @@ public class Question
     {
         return string.Equals(theAnswerInput, myAnswer, StringComparison.OrdinalIgnoreCase);
     }
-
-
-    /// <summary>
-    /// Gets or sets the question's ID.
-    /// </summary>
-    public int MyQuestionID
-    {
-        get => myQuestionID;
-        set => myQuestionID = value;
-    }
-
-    /// <summary>
-    /// Gets or sets a flag indicating whether the question is answered.
-    /// </summary>
-    public bool MyIsAnswered
-    {
-        get => myIsAnswered;
-        set => myIsAnswered = value;
-    }
-
-    /// <summary>
-    /// Gets or sets the question text.
-    /// </summary>
-    public string MyQuestion
-    {
-        get => myQuestion;
-        set => myQuestion = value;
-    }
-
-    /// <summary>
-    /// Gets or sets the correct answer text.
-    /// </summary>
-    public string MyAnswer
-    {
-        get => myAnswer;
-        set => myAnswer = value;
-    }
+    
 
     /// <summary>
     /// Returns a formatted string representation of the question.
@@ -147,5 +111,44 @@ public class Question
     public override int GetHashCode()
     {
         return base.GetHashCode();
+    }
+    
+    
+    // THESE ACCESSORS ARE USED BY THE DATA_SERVICE!
+
+    /// <summary>
+    /// Gets or sets the question's ID.
+    /// </summary>
+    public int MyQuestionID
+    {
+        get => myQuestionID;
+        set => myQuestionID = value;
+    }
+
+    /// <summary>
+    /// Gets or sets a flag indicating whether the question is answered.
+    /// </summary>
+    public bool MyIsAnswered
+    {
+        get => myIsAnswered;
+        set => myIsAnswered = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the question text.
+    /// </summary>
+    public string MyQuestion
+    {
+        get => myQuestion;
+        set => myQuestion = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the correct answer text.
+    /// </summary>
+    public string MyAnswer
+    {
+        get => myAnswer;
+        set => myAnswer = value;
     }
 }

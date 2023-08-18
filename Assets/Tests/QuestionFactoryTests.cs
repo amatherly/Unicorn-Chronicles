@@ -41,16 +41,11 @@ namespace Tests
         {
             GameObject gameObject = new GameObject();
             myMockQF = gameObject.AddComponent<QuestionFactory>();
-            // Connect to mock questions database
             mockDataService = new("testsDB.db");
         
             // Set the DataService instance for the mock QuestionFactory
             myMockQF.MyDataService = mockDataService;
-            
-            // Initialize the question array for testing
             myMockQF.InitializeQuestionArray();
-        
-            // Define the mock questions
             myMockQuestions = new List<Question>
             {
                 QUESTION_1,
