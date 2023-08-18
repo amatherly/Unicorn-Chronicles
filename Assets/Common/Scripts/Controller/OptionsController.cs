@@ -18,7 +18,7 @@ using UnityEngine.UI;
 /// <remarks>
 /// Developed using Unity [Version 2021.3.23f1].
 /// </remarks>
-public class OptionsController : MonoBehaviour
+public class OptionsMenuView : MonoBehaviour
 {
     /// <summary>
     /// Minimum value for the FOV slider.
